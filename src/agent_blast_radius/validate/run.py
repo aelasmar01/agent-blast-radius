@@ -22,7 +22,18 @@ def build_plans(
     plans = []
     for entry in entries:
         resolution = resolve_role(entry.role)
-        plans.append((entry, plan_draws(entry.role, resolution, per_policy=per_policy, seed=seed)))
+        plans.append(
+            (
+                entry,
+                plan_draws(
+                    entry.role,
+                    resolution,
+                    per_policy=per_policy,
+                    seed=seed,
+                    known_resources=entry.resource_policy_map.keys(),
+                ),
+            )
+        )
     return plans
 
 
@@ -39,7 +50,9 @@ def run(
     for entry, plan in build_plans(entries, per_policy=per_policy, seed=seed):
         resolution = resolve_role(entry.role)
         decisions: dict[tuple, str] = {}
-        for request in batch(entry.documents, plan.draws):
+        for request in batch(
+            entry.documents, plan.draws, entry.resource_policy_map, entry.caller_arn
+        ):
             verdicts = simulator.simulate(request)
             for action, verdict in verdicts.items():
                 decisions[(action, request.resource, request.context)] = verdict
@@ -59,7 +72,7 @@ def dry_run(entries: list[CorpusEntry], *, per_policy: int, seed: int, out=None)
     total_draws = 0
     total_calls = 0
     for entry, plan in build_plans(entries, per_policy=per_policy, seed=seed):
-        calls = len(batch(entry.documents, plan.draws))
+        calls = len(batch(entry.documents, plan.draws, entry.resource_policy_map, entry.caller_arn))
         total_draws += len(plan.draws)
         total_calls += calls
         strata = " ".join(f"{k}={v}" for k, v in sorted(plan.by_stratum().items()))

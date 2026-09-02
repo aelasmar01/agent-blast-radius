@@ -33,6 +33,18 @@ STRATA_DENY = (
 )
 
 
+#: IAM ``ContextKeyTypeEnum`` for each modeled condition operator. Derived from the
+#: operator, never from the value: a tag whose value is the string "true" is a string,
+#: not a boolean, and guessing from the value shape silently mistypes it. There is no
+#: ``arn`` member in the enum, so ``ArnLike`` keys go over the wire as strings.
+CONTEXT_KEY_TYPES = {
+    "StringEquals": "string",
+    "StringLike": "string",
+    "ArnLike": "string",
+    "Bool": "boolean",
+}
+
+
 @dataclass(frozen=True, slots=True)
 class Draw:
     action: str
@@ -41,10 +53,17 @@ class Draw:
     stratum: str
     expected: Decision
     note: str = ""
+    #: key -> IAM ContextKeyTypeEnum, for the ``ContextEntries`` of a simulate call.
+    context_types: tuple[tuple[str, str], ...] = ()
 
     @property
     def context_dict(self) -> dict[str, str]:
         return dict(self.context)
+
+    @property
+    def context_type_dict(self) -> dict[str, str]:
+        declared = dict(self.context_types)
+        return {key: declared.get(key, "string") for key, _ in self.context}
 
 
 @dataclass
@@ -94,11 +113,25 @@ def resolver_decision(
 # --- helpers ----------------------------------------------------------------------------
 
 
-def concretize(pattern: str) -> str | None:
-    """A concrete ARN matching a resource pattern, or None for ``*``."""
+def concretize(pattern: str, known: Iterable[str] = ()) -> str | None:
+    """A concrete ARN matching a resource pattern, or None for ``*``.
+
+    Prefers a *real* ARN from ``known`` over a synthetic one. That matters for the
+    flagship case: ``iam:PassRole`` on ``role/*`` concretized to ``role/x`` names nothing,
+    and AWS has no trust policy to evaluate against it. Concretized to an actual role in
+    the deployment, the draw carries that role's trust policy as ``ResourcePolicy`` and
+    tests the precondition the whole PassRole chain depends on.
+    """
     if pattern == "*":
         return None
+    for candidate in sorted(known):
+        if arn_util.matches(pattern, candidate):
+            return candidate
     return pattern.replace("*", "x").replace("?", "a")
+
+
+def _context_types(conditions: tuple[Condition, ...]) -> tuple[tuple[str, str], ...]:
+    return tuple((c.key, CONTEXT_KEY_TYPES.get(c.operator, "string")) for c in conditions)
 
 
 def _satisfying_context(conditions: tuple[Condition, ...]) -> tuple[tuple[str, str], ...]:
@@ -163,7 +196,12 @@ def _wildcard_siblings(action: str, granted: frozenset[str]) -> list[str]:
 
 
 def plan_draws(
-    role: Role, resolution: Resolution, *, per_policy: int = 40, seed: int = 0
+    role: Role,
+    resolution: Resolution,
+    *,
+    per_policy: int = 40,
+    seed: int = 0,
+    known_resources: Iterable[str] = (),
 ) -> DrawPlan:
     rng = random.Random(f"{seed}:{role.name}")
     half = per_policy // 2
@@ -175,6 +213,7 @@ def plan_draws(
     # refusal and is exactly what the matrix's `unsupported` row measures.
     refuses = any(u.kind in ("NotAction", "NotResource") for u in resolution.unsupported)
     deny_expected: Decision = "unsupported" if refuses else "deny"
+    known = tuple(known_resources)
     caps = sorted(resolution.capabilities, key=lambda c: (c.action, c.resource))
     granted = frozenset(c.action for c in caps)
     patterns_for: dict[str, set[str]] = {}
@@ -214,13 +253,13 @@ def plan_draws(
     n_uncond = half - n_flagged - n_cond
     for c in sample(unconditional, n_uncond):
         plan.draws.append(
-            Draw(c.action, concretize(c.resource), (), "allow-unconditional", "allow")
+            Draw(c.action, concretize(c.resource, known), (), "allow-unconditional", "allow")
         )
     for c in sample(conditioned, n_cond):
         plan.draws.append(
             Draw(
                 c.action,
-                concretize(c.resource),
+                concretize(c.resource, known),
                 _satisfying_context(c.conditions),
                 "allow-conditioned",
                 "allow",
@@ -230,11 +269,12 @@ def plan_draws(
         plan.draws.append(
             Draw(
                 c.action,
-                concretize(c.resource),
+                concretize(c.resource, known),
                 _satisfying_context(c.conditions),
                 "allow-flagged",
                 "allow-flagged",
                 note=",".join(c.residue.unmodeled_keys),
+                context_types=_context_types(c.conditions),
             )
         )
 
@@ -251,6 +291,7 @@ def plan_draws(
                     _satisfying_context(c.conditions),
                     "wrong-resource",
                     deny_expected,
+                    context_types=_context_types(c.conditions),
                 )
             )
     for c in sample(conditioned, half // 5 or 1):
@@ -258,9 +299,16 @@ def plan_draws(
         # Breaking one statement's condition only denies the action if that statement is
         # the sole grant. In a 40-statement managed policy the same action is often
         # granted several times over, and the resolver is right to still allow it.
-        if ctx and _sole_grant(caps, c, concretize(c.resource), dict(ctx)):
+        if ctx and _sole_grant(caps, c, concretize(c.resource, known), dict(ctx)):
             deny.append(
-                Draw(c.action, concretize(c.resource), ctx, "condition-fail", deny_expected)
+                Draw(
+                    c.action,
+                    concretize(c.resource, known),
+                    ctx,
+                    "condition-fail",
+                    deny_expected,
+                    context_types=_context_types(c.conditions),
+                )
             )
     # One boundary probe per granted service, so iam:* policies don't crowd out the rest.
     by_service: dict[str, list[Capability]] = {}

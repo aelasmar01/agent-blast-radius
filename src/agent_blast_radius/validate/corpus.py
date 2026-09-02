@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -21,6 +22,19 @@ class CorpusEntry:
     role: Role
     #: Raw JSON documents, exactly what goes into ``PolicyInputList``.
     documents: tuple[str, ...]
+    #: Resource ARN -> the resource-based policy governing it. In practice the trust
+    #: policies of every role in the deployment, which is what makes iam:PassRole and
+    #: sts:AssumeRole decidable — the flagship finding is unsound without them.
+    resource_policies: tuple[tuple[str, str], ...] = ()
+
+    @property
+    def caller_arn(self) -> str:
+        """Who AWS should treat as the caller. Required alongside any resource policy."""
+        return self.role.arn
+
+    @property
+    def resource_policy_map(self) -> dict[str, str]:
+        return dict(self.resource_policies)
 
     @property
     def trust_policy_json(self) -> str | None:
@@ -43,10 +57,19 @@ def render_trust_policy(trust: TrustPolicy) -> str | None:
     )
 
 
+#: IAM accepts only alphanumeric ``Sid`` values in identity policies. The IR synthesizes
+#: readable ones like ``statement[0]`` for provenance, which AWS rejects outright with
+#: MalformedPolicyDocument — so they are dropped on the way back out. A Sid carries no
+#: evaluation semantics, and every corpus policy without explicit Sids depends on this.
+VALID_SID = re.compile(r"[A-Za-z0-9]+")
+
+
 def _document_json(doc: PolicyDocument) -> str:
     statements = []
     for s in doc.statements:
-        raw: dict = {"Sid": s.sid, "Effect": s.effect.value}
+        raw: dict = {"Effect": s.effect.value}
+        if VALID_SID.fullmatch(s.sid):
+            raw = {"Sid": s.sid, **raw}
         if s.actions:
             raw["Action"] = list(s.actions)
         if s.not_actions:
@@ -89,9 +112,19 @@ def load_managed_corpus(path: Path) -> list[CorpusEntry]:
 
 
 def load_fixture_corpus(path: Path) -> list[CorpusEntry]:
-    """Every role of a deployment as its own corpus entry, group ``fixture``."""
+    """Every role of a deployment as its own corpus entry, group ``fixture``.
+
+    Each entry carries the trust policies of *every* role in the deployment, because a
+    draw against ``iam:PassRole`` on some other role's ARN is only decidable with that
+    role's trust policy in hand.
+    """
     target = path / "agent.yaml" if path.is_dir() else path
     deployment: Deployment = deployment_from_dict(yaml.safe_load(target.read_text()))
+    resource_policies = tuple(
+        (r.arn, rendered)
+        for r in deployment.roles
+        if r.arn and (rendered := render_trust_policy(r.trust_policy)) is not None
+    )
     out: list[CorpusEntry] = []
     for role in deployment.roles:
         docs = tuple(_document_json(d) for d in role.identity_policies)
@@ -99,5 +132,13 @@ def load_fixture_corpus(path: Path) -> list[CorpusEntry]:
             entry = managed._load().get(arn)
             if entry:
                 docs += (json.dumps(entry["d"]),)
-        out.append(CorpusEntry(name=role.name, group="fixture", role=role, documents=docs))
+        out.append(
+            CorpusEntry(
+                name=role.name,
+                group="fixture",
+                role=role,
+                documents=docs,
+                resource_policies=resource_policies,
+            )
+        )
     return out

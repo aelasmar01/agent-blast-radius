@@ -280,6 +280,7 @@ build order.
 | Reporting (schema 1.0.0) + CI mode with independent exit codes | done |
 | Offline pre-flight + cassette record/replay | done, in CI |
 | Live authorization probe (10/10) | done |
+| Test suite | 181 tests, 93% line coverage |
 | **Differential run vs `iam:SimulateCustomPolicy`** | **harness done; first live run pending a credential** |
 
 ### Known limits

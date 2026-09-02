@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 import pytest
@@ -162,3 +163,111 @@ def test_platform_declared_gating_can_be_overridden(tmp_path):
         )
     )
     assert next(t for t in dep.tools if t.name == "run_maintenance_job").gating is Gating.NONE
+
+
+# --- nested modules -------------------------------------------------------------------
+#
+# Driven by a plan real Terraform produced (fixtures/nested-modules), not a hand-written
+# approximation: the two shapes that matter here — module-relative addresses under
+# `configuration` versus absolute ones under `planned_values`, and cross-module wiring
+# through input variables — are exactly the things a guessed fixture gets wrong.
+
+NESTED = Path("fixtures/nested-modules/plan.json")
+
+
+def _nested_infra():
+    return terraform.parse(json.loads(NESTED.read_text()), account_id="000000000000")
+
+
+def test_nested_module_role_is_found_and_fully_populated():
+    infra = _nested_infra()
+    assert [r.name for r in infra.roles] == ["nested-exec-role"]
+    role = infra.roles[0]
+    assert role.arn == "arn:aws:iam::000000000000:role/nested-exec-role"
+    assert role.trust_policy.trusts_service("lambda.amazonaws.com")
+    # Inline policy and managed attachment both live inside the module and are found via
+    # module-relative references that only resolve once the module path is prefixed back.
+    assert [p.name for p in role.identity_policies] == ["inline"]
+    assert role.managed_policy_arns == (
+        "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+    )
+
+
+def test_lambda_role_link_resolves_through_an_input_variable():
+    """The Lambda says `role = var.role_arn`; only the parent module knows what that is."""
+    assert _nested_infra().function_roles == {"nested_tool": "nested-exec-role"}
+
+
+def test_nested_module_role_resolves_to_capabilities():
+    from agent_blast_radius.iam.resolver import resolve_role
+
+    res = resolve_role(_nested_infra().roles[0])
+    assert {"s3:GetObject", "logs:PutLogEvents"} <= res.actions
+    assert res.unsupported == ()
+
+
+def test_variable_chain_terminates_on_a_cycle():
+    """A var that resolves to itself must return None, not recurse forever."""
+    from agent_blast_radius.parsers.terraform import _resolve_role_refs
+
+    bindings = {"module.a": {"x": ("module.a", ["var.x"])}}
+    assert _resolve_role_refs(["var.x"], "module.a", bindings) is None
+
+
+def test_role_without_a_static_name_is_rejected():
+    plan = {
+        "planned_values": {
+            "root_module": {
+                "resources": [
+                    {
+                        "address": "aws_iam_role.x",
+                        "type": "aws_iam_role",
+                        "name": "x",
+                        "values": {"assume_role_policy": "{}"},
+                    }
+                ]
+            }
+        },
+        "configuration": {"root_module": {"resources": []}},
+    }
+    with pytest.raises(IRValidationError, match="name_prefix is not supported"):
+        terraform.parse(plan, account_id="000000000000")
+
+
+def test_attachment_without_a_static_policy_arn_is_rejected():
+    plan = {
+        "planned_values": {
+            "root_module": {
+                "resources": [
+                    {
+                        "address": "aws_iam_role.x",
+                        "type": "aws_iam_role",
+                        "name": "x",
+                        "values": {"name": "r", "assume_role_policy": "{}"},
+                    },
+                    {
+                        "address": "aws_iam_role_policy_attachment.a",
+                        "type": "aws_iam_role_policy_attachment",
+                        "name": "a",
+                        "values": {},
+                    },
+                ]
+            }
+        },
+        "configuration": {
+            "root_module": {
+                "resources": [
+                    {
+                        "address": "aws_iam_role_policy_attachment.a",
+                        "type": "aws_iam_role_policy_attachment",
+                        "name": "a",
+                        "expressions": {
+                            "role": {"references": ["aws_iam_role.x.id", "aws_iam_role.x"]}
+                        },
+                    }
+                ]
+            }
+        },
+    }
+    with pytest.raises(IRValidationError, match="static policy_arn"):
+        terraform.parse(plan, account_id="000000000000")

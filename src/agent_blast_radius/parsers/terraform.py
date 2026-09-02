@@ -27,19 +27,75 @@ def _walk_values(module: dict[str, Any]):
         yield from _walk_values(child)
 
 
-def _walk_config(module: dict[str, Any]):
-    yield from module.get("resources", [])
-    for call in (module.get("module_calls") or {}).values():
-        yield from _walk_config(call.get("module", {}))
+def _index_config(
+    module: dict[str, Any],
+    path: str = "",
+    config: dict[str, tuple[dict[str, Any], str]] | None = None,
+    var_bindings: dict[str, dict[str, tuple[str, list[str]]]] | None = None,
+) -> tuple[dict[str, tuple[dict[str, Any], str]], dict[str, dict[str, tuple[str, list[str]]]]]:
+    """Index the ``configuration`` block by *absolute* address.
+
+    Two things make this necessary. Addresses under ``configuration`` are relative to
+    their module (``aws_iam_role.exec``) while addresses under ``planned_values`` are
+    absolute (``module.agent.aws_iam_role.exec``), so the two only join once the module
+    path is prefixed back on. And a module's inputs are bound in the *parent's*
+    ``module_calls[...].expressions``, which is the only place a cross-module reference
+    can be followed.
+    """
+    config = {} if config is None else config
+    var_bindings = {} if var_bindings is None else var_bindings
+    for resource in module.get("resources", []):
+        address = f"{path}.{resource['address']}" if path else resource["address"]
+        config[address] = (resource.get("expressions", {}), path)
+    for name, call in (module.get("module_calls") or {}).items():
+        child = f"{path}.module.{name}" if path else f"module.{name}"
+        var_bindings[child] = {
+            var: (path, (expr or {}).get("references") or [])
+            for var, expr in (call.get("expressions") or {}).items()
+        }
+        _index_config(call.get("module", {}), child, config, var_bindings)
+    return config, var_bindings
 
 
-def _role_ref(expressions: dict[str, Any], attr: str) -> str | None:
-    """The ``aws_iam_role.<name>`` a resource attribute references, if any."""
+def _role_ref(
+    expressions: dict[str, Any],
+    attr: str,
+    module_path: str = "",
+    var_bindings: dict[str, dict[str, tuple[str, list[str]]]] | None = None,
+) -> str | None:
+    """The absolute ``aws_iam_role`` address a resource attribute references, if any.
+
+    Follows ``var.x`` one module outward at a time, because wiring a role into a child
+    module through an input variable is how real Terraform is written — the Lambda says
+    ``role = var.role_arn`` and only the parent knows which role that is.
+    """
     refs = (expressions.get(attr) or {}).get("references") or []
+    return _resolve_role_refs(refs, module_path, var_bindings or {})
+
+
+def _resolve_role_refs(
+    refs: list[str],
+    module_path: str,
+    var_bindings: dict[str, dict[str, tuple[str, list[str]]]],
+    depth: int = 0,
+) -> str | None:
+    if depth > 16:  # cyclic or pathological module nesting
+        return None
     for ref in refs:
         parts = ref.split(".")
         if len(parts) >= 2 and parts[0] == "aws_iam_role":
-            return f"aws_iam_role.{parts[1]}"
+            local = f"aws_iam_role.{parts[1]}"
+            return f"{module_path}.{local}" if module_path else local
+    for ref in refs:
+        parts = ref.split(".")
+        if len(parts) >= 2 and parts[0] == "var":
+            binding = var_bindings.get(module_path, {}).get(parts[1])
+            if binding is None:
+                continue
+            parent_path, parent_refs = binding
+            found = _resolve_role_refs(parent_refs, parent_path, var_bindings, depth + 1)
+            if found:
+                return found
     return None
 
 
@@ -76,9 +132,7 @@ def parse(plan: dict[str, Any], *, account_id: str, source: str = "") -> ParsedI
     values = {
         r["address"]: r for r in _walk_values(plan.get("planned_values", {}).get("root_module", {}))
     }
-    config = {
-        r["address"]: r for r in _walk_config(plan.get("configuration", {}).get("root_module", {}))
-    }
+    config, var_bindings = _index_config(plan.get("configuration", {}).get("root_module", {}))
 
     # Role resource address -> role name.
     role_names: dict[str, str] = {}
@@ -100,9 +154,9 @@ def parse(plan: dict[str, Any], *, account_id: str, source: str = "") -> ParsedI
         inline.setdefault(name, [])
 
     for address, res in values.items():
-        expressions = config.get(address, {}).get("expressions", {})
+        expressions, module_path = config.get(address, ({}, ""))
         if res["type"] == "aws_iam_role_policy":
-            ref = _role_ref(expressions, "role")
+            ref = _role_ref(expressions, "role", module_path, var_bindings)
             role = role_names.get(ref or "")
             if role is None:
                 raise IRValidationError(
@@ -114,7 +168,7 @@ def parse(plan: dict[str, Any], *, account_id: str, source: str = "") -> ParsedI
             )
             inline[role].append(doc)
         elif res["type"] == "aws_iam_role_policy_attachment":
-            ref = _role_ref(expressions, "role")
+            ref = _role_ref(expressions, "role", module_path, var_bindings)
             role = role_names.get(ref or "")
             if role is None:
                 raise IRValidationError(
@@ -129,7 +183,8 @@ def parse(plan: dict[str, Any], *, account_id: str, source: str = "") -> ParsedI
     for address, res in values.items():
         if res["type"] != "aws_lambda_function":
             continue
-        ref = _role_ref(config.get(address, {}).get("expressions", {}), "role")
+        expressions, module_path = config.get(address, ({}, ""))
+        ref = _role_ref(expressions, "role", module_path, var_bindings)
         role = role_names.get(ref or "")
         fn = res["values"].get("function_name")
         if role is None or not fn:

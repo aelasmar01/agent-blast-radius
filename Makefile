@@ -14,3 +14,7 @@ fixture-plan:
 	  && terraform plan -input=false -out=tfplan >/dev/null \
 	  && terraform show -json tfplan > ../plan.json && rm -f tfplan
 	@echo "wrote $(FIXTURE)/plan.json"
+	cd fixtures/nested-modules/terraform && terraform init -input=false >/dev/null \
+	  && terraform plan -input=false -out=tfplan >/dev/null \
+	  && terraform show -json tfplan > ../plan.json && rm -f tfplan
+	@echo "wrote fixtures/nested-modules/plan.json"
