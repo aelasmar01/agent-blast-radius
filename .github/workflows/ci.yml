@@ -46,6 +46,20 @@ jobs:
           name: fixture-report
           path: report.json
 
+  # Offline pre-flight over the whole corpus. A lint pass, not validation: it shares the
+  # resolver's assumptions and cannot catch a misread of IAM semantics. It does catch a
+  # resolver that contradicts a deliberately-constructed boundary case.
+  validate-preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: uv pip install --system -e .
+      - run: agent-blast-radius validate --fixture fixtures/overprivileged-agent --preflight
+
   # The wheel must install and run cold, with no repo checkout, from uvx.
   cold-install:
     runs-on: ubuntu-latest

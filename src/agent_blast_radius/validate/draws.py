@@ -168,6 +168,13 @@ def plan_draws(
     rng = random.Random(f"{seed}:{role.name}")
     half = per_policy // 2
     plan = DrawPlan()
+    # A policy with a skipped NotAction/NotResource statement makes the resolver unable
+    # to claim "deny" about anything it did not positively allow. Deny-expected draws on
+    # such a policy expect `unsupported`, not `deny` — the resolver is declining, not
+    # answering. AWS may still say allowed or denied; that spread is the cost of the
+    # refusal and is exactly what the matrix's `unsupported` row measures.
+    refuses = any(u.kind in ("NotAction", "NotResource") for u in resolution.unsupported)
+    deny_expected: Decision = "unsupported" if refuses else "deny"
     caps = sorted(resolution.capabilities, key=lambda c: (c.action, c.resource))
     granted = frozenset(c.action for c in caps)
     patterns_for: dict[str, set[str]] = {}
@@ -238,12 +245,23 @@ def plan_draws(
         mutated = _mutate_resource(c.resource, patterns_for[c.action])
         if mutated:
             deny.append(
-                Draw(c.action, mutated, _satisfying_context(c.conditions), "wrong-resource", "deny")
+                Draw(
+                    c.action,
+                    mutated,
+                    _satisfying_context(c.conditions),
+                    "wrong-resource",
+                    deny_expected,
+                )
             )
     for c in sample(conditioned, half // 5 or 1):
         ctx = _failing_context(c.conditions)
-        if ctx:
-            deny.append(Draw(c.action, concretize(c.resource), ctx, "condition-fail", "deny"))
+        # Breaking one statement's condition only denies the action if that statement is
+        # the sole grant. In a 40-statement managed policy the same action is often
+        # granted several times over, and the resolver is right to still allow it.
+        if ctx and _sole_grant(caps, c, concretize(c.resource), dict(ctx)):
+            deny.append(
+                Draw(c.action, concretize(c.resource), ctx, "condition-fail", deny_expected)
+            )
     # One boundary probe per granted service, so iam:* policies don't crowd out the rest.
     by_service: dict[str, list[Capability]] = {}
     for c in caps:
@@ -257,17 +275,22 @@ def plan_draws(
         c = rng.choice(by_service[service])
         siblings = _wildcard_siblings(c.action, granted)
         if siblings:
-            deny.append(Draw(rng.choice(sorted(siblings)), None, (), "wildcard-boundary", "deny"))
+            deny.append(
+                Draw(rng.choice(sorted(siblings)), None, (), "wildcard-boundary", deny_expected)
+            )
             boundary += 1
     denied_actions = sorted(_explicitly_denied(role, granted))
     for a in rng.sample(denied_actions, min(len(denied_actions), half // 5 or 1)):
-        deny.append(Draw(a, None, (), "explicit-deny", "deny"))
-    for a in sorted(_notaction_excluded(role))[: half // 5 or 1]:
+        deny.append(Draw(a, None, (), "explicit-deny", deny_expected))
+    # An excluded action that some *other* statement allows anyway is not a refusal case;
+    # the resolver answers it positively and is right to. Draw only from the genuinely
+    # unanswerable remainder.
+    for a in sorted(_notaction_excluded(role) - granted)[: half // 5 or 1]:
         deny.append(Draw(a, None, (), "notaction-excluded", "unsupported"))
     # Uniform tail: sanity floor.
     universe = sorted(action_db.expand("*") - granted)
     for a in rng.sample(universe, min(4, len(universe))):
-        deny.append(Draw(a, None, (), "uniform", "deny"))
+        deny.append(Draw(a, None, (), "uniform", deny_expected))
 
     plan.draws.extend(deny[:half] if len(deny) > half else deny)
     return plan
@@ -285,6 +308,7 @@ def _explicitly_denied(role: Role, granted: frozenset[str]) -> set[str]:
 
 
 def _notaction_excluded(role: Role) -> set[str]:
+    """Actions inside a NotAction exclusion, i.e. ones the skipped statement would grant."""
     out: set[str] = set()
     docs, _ = role_documents(role)
     for doc in docs:
@@ -292,3 +316,28 @@ def _notaction_excluded(role: Role) -> set[str]:
             for pattern in s.not_actions:
                 out |= set(action_db.expand(pattern))
     return out
+
+
+def _sole_grant(
+    capabilities: list[Capability],
+    capability: Capability,
+    resource: str | None,
+    context: dict[str, str],
+) -> bool:
+    """Is ``capability`` the only one granting its action on ``resource`` in this context?
+
+    Used to keep ``condition-fail`` draws honest: breaking one statement's condition is
+    only a denial when no other statement grants the same thing.
+    """
+    for other in capabilities:
+        if other is capability or other.action.lower() != capability.action.lower():
+            continue
+        if resource is None:
+            if other.resource != "*":
+                continue
+        elif not arn_util.matches(other.resource, resource):
+            continue
+        if other.conditions and not cond_util.evaluate(other.conditions, context):
+            continue
+        return False
+    return True

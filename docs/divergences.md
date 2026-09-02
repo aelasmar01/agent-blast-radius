@@ -17,6 +17,14 @@ them; the first live run is the source for the initial set.
 | D5 | Simulation with no `ResourceArns` | Resolver answers `deny` unless a capability is on `*` | Matches AWS | AWS evaluates against `*`; recorded here because it is easy to get wrong the other way |
 | D6 | Unknown action (not in the snapshot) | Kept literally, recorded as `unknown_action` | Over-report + flag | A new service must not vanish from the report because the snapshot is stale |
 
+## Before the first live run
+
+`agent-blast-radius validate --preflight` passes on all independently-derived draws
+across the 44-policy corpus. That is a lint result, not a validation result — it cannot
+find a misunderstanding of IAM semantics, because it shares them. The rows above are
+predictions of where the live run will diverge, not observations. Replace them with
+observed evidence after the first run.
+
 ## How to add an entry
 
 1. Find the row in `validate/results/<date>.md` — usually the "over-reports" table or

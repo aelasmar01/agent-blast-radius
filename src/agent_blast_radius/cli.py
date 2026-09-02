@@ -18,7 +18,7 @@ from pathlib import Path
 
 from . import __version__
 from .analyze import analyze
-from .ci import EXIT_INPUT_ERROR, evaluate, load_fail_if
+from .ci import EXIT_CLEAN, EXIT_FINDINGS, EXIT_INPUT_ERROR, evaluate, load_fail_if
 from .errors import AgentBlastRadiusError
 from .loaders import find_deployment_file, load_deployment
 from .report.terminal import render
@@ -58,6 +58,8 @@ def cmd_scan(args: argparse.Namespace) -> int:
 
 
 def cmd_validate(args: argparse.Namespace) -> int:
+    from .validate.preflight import preflight
+    from .validate.preflight import render as render_preflight
     from .validate.run import dry_run, load_corpus, run, write_results
 
     entries = load_corpus(
@@ -67,24 +69,50 @@ def cmd_validate(args: argparse.Namespace) -> int:
     if not entries:
         print("error: nothing to validate; pass --corpus and/or --fixture", file=sys.stderr)
         return EXIT_ERROR
+
     if args.dry_run:
         dry_run(entries, per_policy=args.per_policy, seed=args.seed)
         return 0
-    try:
-        from .validate.simulate import BotoSimulator
-    except ImportError:
+
+    if args.preflight:
+        result = preflight(entries, per_policy=args.per_policy, seed=args.seed)
+        render_preflight(result)
+        return EXIT_CLEAN if result.ok else EXIT_FINDINGS
+
+    if args.replay:
+        from .validate.cassette import ReplaySimulator
+
+        simulator = ReplaySimulator(Path(args.replay))
+        print(f"replaying {len(simulator)} recorded exchanges (no AWS calls)", file=sys.stderr)
+    else:
+        try:
+            from .validate.simulate import BotoSimulator
+        except ImportError:
+            print(
+                "error: boto3 is required for a live run; install agent-blast-radius[validate]",
+                file=sys.stderr,
+            )
+            return EXIT_ERROR
+        simulator = BotoSimulator(calls_per_second=args.rate)
         print(
-            "error: boto3 is required for a live run; install agent-blast-radius[validate]",
+            f"validating {len(entries)} policies against iam:SimulateCustomPolicy",
             file=sys.stderr,
         )
-        return EXIT_ERROR
-    simulator = BotoSimulator(calls_per_second=args.rate)
-    print(f"validating {len(entries)} policies against iam:SimulateCustomPolicy", file=sys.stderr)
+
+    recorder = None
+    if args.record:
+        from .validate.cassette import RecordingSimulator
+
+        recorder = RecordingSimulator(simulator, Path(args.record))
+        simulator = recorder
+
     matrix = run(entries, simulator, per_policy=args.per_policy, seed=args.seed)
     md, js = write_results(matrix, Path(args.out), title="Resolver vs iam:SimulateCustomPolicy")
     under, over = len(matrix.under_reports), len(matrix.over_reports)
     print(f"\n{under} silent under-reports, {over} over-reports", file=sys.stderr)
-    print(f"wrote {md} and {js} ({simulator.calls} API calls)", file=sys.stderr)
+    print(f"wrote {md} and {js} ({simulator.calls} calls)", file=sys.stderr)
+    if recorder is not None:
+        print(f"recorded cassette: {recorder.save()}", file=sys.stderr)
     return 0
 
 
@@ -130,6 +158,16 @@ def build_parser() -> argparse.ArgumentParser:
     )
     validate.add_argument(
         "--dry-run", action="store_true", help="print the draw plan and call budget only"
+    )
+    validate.add_argument(
+        "--preflight",
+        action="store_true",
+        help="offline lint: check the resolver against each draw's own expectation, no AWS. "
+        "Shares the resolver's assumptions, so passing is not evidence of correctness.",
+    )
+    validate.add_argument("--record", metavar="PATH", help="write a cassette of every exchange")
+    validate.add_argument(
+        "--replay", metavar="PATH", help="replay a cassette instead of calling AWS"
     )
     validate.set_defaults(func=cmd_validate)
 

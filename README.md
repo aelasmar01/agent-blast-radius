@@ -182,6 +182,11 @@ numbers. The output is a confusion matrix, not an agreement rate; the cell that 
 *resolver says deny, AWS says allowed*. See [validate/results](validate/results/README.md) and
 [docs/divergences.md](docs/divergences.md).
 
+An offline `--preflight` mode checks the resolver against each draw's own expectation with no AWS
+account, and runs in CI. It is a lint pass, not validation: it shares the resolver's assumptions and
+cannot catch a misread of IAM semantics, so passing it is not evidence of correctness. `--record`
+and `--replay` turn one live run into a permanent, credential-free regression corpus.
+
 ## Install and run
 
 ```bash
