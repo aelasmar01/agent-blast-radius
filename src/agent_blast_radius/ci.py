@@ -69,8 +69,25 @@ def load_fail_if(deployment_file: Path, policy_file: Path | None = None) -> Fail
 
 
 @dataclass
+class Finding:
+    """One thing that is wrong, plus every gate that objects to it.
+
+    Grouped this way on purpose: a single escalation chain can trip both
+    ``escalation_chains_found`` and ``max_chain_depth``, and reporting it once per gate
+    turns three chains into six lines and invites the reader to think the count is broken.
+    One finding, one line, with the gates it tripped named.
+    """
+
+    subject: str
+    gates: list[str] = field(default_factory=list)
+
+    def __str__(self) -> str:
+        return f"[{', '.join(self.gates)}] {self.subject}"
+
+
+@dataclass
 class Verdict:
-    findings: list[str] = field(default_factory=list)
+    findings: list[Finding] = field(default_factory=list)
     incomplete: list[str] = field(default_factory=list)
 
     @property
@@ -85,6 +102,16 @@ class Verdict:
 
 def evaluate(report: Report, fail_if: FailIf) -> Verdict:
     v = Verdict()
+    by_subject: dict[str, Finding] = {}
+
+    def trip(subject: str, gate: str) -> None:
+        finding = by_subject.get(subject)
+        if finding is None:
+            finding = Finding(subject)
+            by_subject[subject] = finding
+            v.findings.append(finding)
+        if gate not in finding.gates:
+            finding.gates.append(gate)
 
     if fail_if.reachable_actions_matching:
         # One line per (pattern, principal, resource, provenance), not per action:
@@ -99,24 +126,27 @@ def evaluate(report: Report, fail_if: FailIf) -> Verdict:
         for (pattern, principal, depth, resource, provenance), actions in groups.items():
             sample = ", ".join(actions[:3]) + (", ..." if len(actions) > 3 else "")
             count = f"{len(actions)} actions" if len(actions) > 1 else actions[0]
-            v.findings.append(
+            trip(
                 f"{pattern!r} matches {count} on {resource} as {principal} (depth {depth}): "
-                f"{sample}  <- {', '.join(provenance)}"
+                f"{sample}  <- {', '.join(provenance)}",
+                "reachable_actions_matching",
             )
 
     chains = list(report.escalation_chains)
     if report.account_admin:
         chains.append(report.account_admin)
-    if fail_if.escalation_chains_found and chains:
-        for c in chains:
-            v.findings.append(f"escalation chain {c.rule} -> {c.grants} (depth {c.depth})")
-    if fail_if.max_chain_depth is not None:
-        for c in chains:
-            if c.depth <= fail_if.max_chain_depth:
-                v.findings.append(
-                    f"chain {c.rule} -> {c.grants} at depth {c.depth} "
-                    f"<= max_chain_depth {fail_if.max_chain_depth}"
-                )
+    for c in chains:
+        within_depth = fail_if.max_chain_depth is not None and c.depth <= fail_if.max_chain_depth
+        if not (fail_if.escalation_chains_found or within_depth):
+            continue
+        depth = f"depth {c.depth}"
+        if within_depth:
+            depth += f", within max_chain_depth {fail_if.max_chain_depth}"
+        subject = f"chain {c.rule} -> {c.grants} ({depth})"
+        if fail_if.escalation_chains_found:
+            trip(subject, "escalation_chains_found")
+        if within_depth:
+            trip(subject, "max_chain_depth")
 
     if fail_if.unsupported_statements:
         for u in report.unsupported:
@@ -124,7 +154,5 @@ def evaluate(report: Report, fail_if: FailIf) -> Verdict:
                 f"{u.kind} at {u.role}/{u.policy}#{u.sid}" + (f": {u.detail}" if u.detail else "")
             )
 
-    # De-duplicate while keeping order.
-    v.findings = list(dict.fromkeys(v.findings))
     v.incomplete = list(dict.fromkeys(v.incomplete))
     return v

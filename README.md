@@ -16,6 +16,10 @@ uvx agent-blast-radius scan ./fixtures/overprivileged-agent
 That sentence is the whole project. Everything in this repo exists to make it provable against a
 real fixture, in CI, before deployment — not in production telemetry after the fact.
 
+**Zero silent under-reports across 1,148 draws against AWS's own policy engine** — the analyzer
+never once called an action unreachable that `iam:SimulateCustomPolicy` would have permitted.
+[How that was measured ↓](#validation)
+
 ---
 
 ## What it looks like
@@ -62,23 +66,19 @@ ESCALATION CHAINS (1)
 REACHABLE CAPABILITIES (199)
   ... (full output in docs/post.md)
 
-
 UNSUPPORTED (0)
   none — the analysis is complete for the constructs this tool models
 
 Reachability is not exploitability: this is what the tool graph permits if the model
 can be induced to make the calls, not a prediction that it will.
 
-FAIL: 9 finding(s) tripped fail_if:
-  - 'iam:*' matches 190 actions on * as incident-response-role (depth 1): iam:AcceptDelegationRequest, iam:AddClientIDToOpenIDConnectProvider, iam:AddRoleToInstanceProfile, ...  <- incident-response-role/break-glass#BreakGlass
-  - 'iam:*' matches iam:PassRole on arn:aws:iam::000000000000:role/* as agent-execution-role (depth 0): iam:PassRole  <- agent-execution-role/helper-deploy#PassRoleToLambda
-  - 'kms:Decrypt' matches kms:Decrypt on * as incident-response-role (depth 1): kms:Decrypt  <- incident-response-role/break-glass#BreakGlass
-  - escalation chain passrole-lambda-createfunction -> incident-response-role (depth 1)
-  - escalation chain iam-attachrolepolicy-self -> all_actions (depth 2)
-  - escalation chain iam-putrolepolicy-self -> all_actions (depth 2)
-  - chain passrole-lambda-createfunction -> incident-response-role at depth 1 <= max_chain_depth 2
-  - chain iam-attachrolepolicy-self -> all_actions at depth 2 <= max_chain_depth 2
-  - chain iam-putrolepolicy-self -> all_actions at depth 2 <= max_chain_depth 2
+FAIL: 6 finding(s) tripped fail_if:
+  - [reachable_actions_matching] 'iam:*' matches 190 actions on * as incident-response-role (depth 1): iam:AcceptDelegationRequest, iam:AddClientIDToOpenIDConnectProvider, iam:AddRoleToInstanceProfile, ...  <- incident-response-role/break-glass#BreakGlass
+  - [reachable_actions_matching] 'iam:*' matches iam:PassRole on arn:aws:iam::000000000000:role/* as agent-execution-role (depth 0): iam:PassRole  <- agent-execution-role/helper-deploy#PassRoleToLambda
+  - [reachable_actions_matching] 'kms:Decrypt' matches kms:Decrypt on * as incident-response-role (depth 1): kms:Decrypt  <- incident-response-role/break-glass#BreakGlass
+  - [escalation_chains_found, max_chain_depth] chain passrole-lambda-createfunction -> incident-response-role (depth 1, within max_chain_depth 2)
+  - [escalation_chains_found, max_chain_depth] chain iam-attachrolepolicy-self -> all_actions (depth 2, within max_chain_depth 2)
+  - [escalation_chains_found, max_chain_depth] chain iam-putrolepolicy-self -> all_actions (depth 2, within max_chain_depth 2)
 $ echo $?
 1
 ```
@@ -297,9 +297,8 @@ from that same model. There is no score.
 
 ## Status
 
-v0.1.0 on [PyPI](https://pypi.org/project/agent-blast-radius/). Feature-complete against the
-[project plan](agent-blast-radius-analyzer-plan.md); see [docs/roadmap.md](docs/roadmap.md) for the
-build order.
+v0.2.0 on [PyPI](https://pypi.org/project/agent-blast-radius/). Feature-complete; see
+[docs/roadmap.md](docs/roadmap.md) for the build order and what was deliberately left out.
 
 | Component | State |
 |---|---|

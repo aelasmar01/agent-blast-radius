@@ -186,16 +186,13 @@ UNSUPPORTED (0)
 Reachability is not exploitability: this is what the tool graph permits if the model
 can be induced to make the calls, not a prediction that it will.
 
-FAIL: 9 finding(s) tripped fail_if:
-  - 'iam:*' matches 190 actions on * as incident-response-role (depth 1): iam:AcceptDelegationRequest, iam:AddClientIDToOpenIDConnectProvider, iam:AddRoleToInstanceProfile, ...  <- incident-response-role/break-glass#BreakGlass
-  - 'iam:*' matches iam:PassRole on arn:aws:iam::000000000000:role/* as agent-execution-role (depth 0): iam:PassRole  <- agent-execution-role/helper-deploy#PassRoleToLambda
-  - 'kms:Decrypt' matches kms:Decrypt on * as incident-response-role (depth 1): kms:Decrypt  <- incident-response-role/break-glass#BreakGlass
-  - escalation chain passrole-lambda-createfunction -> incident-response-role (depth 1)
-  - escalation chain iam-attachrolepolicy-self -> all_actions (depth 2)
-  - escalation chain iam-putrolepolicy-self -> all_actions (depth 2)
-  - chain passrole-lambda-createfunction -> incident-response-role at depth 1 <= max_chain_depth 2
-  - chain iam-attachrolepolicy-self -> all_actions at depth 2 <= max_chain_depth 2
-  - chain iam-putrolepolicy-self -> all_actions at depth 2 <= max_chain_depth 2
+FAIL: 6 finding(s) tripped fail_if:
+  - [reachable_actions_matching] 'iam:*' matches 190 actions on * as incident-response-role (depth 1): iam:AcceptDelegationRequest, iam:AddClientIDToOpenIDConnectProvider, iam:AddRoleToInstanceProfile, ...  <- incident-response-role/break-glass#BreakGlass
+  - [reachable_actions_matching] 'iam:*' matches iam:PassRole on arn:aws:iam::000000000000:role/* as agent-execution-role (depth 0): iam:PassRole  <- agent-execution-role/helper-deploy#PassRoleToLambda
+  - [reachable_actions_matching] 'kms:Decrypt' matches kms:Decrypt on * as incident-response-role (depth 1): kms:Decrypt  <- incident-response-role/break-glass#BreakGlass
+  - [escalation_chains_found, max_chain_depth] chain passrole-lambda-createfunction -> incident-response-role (depth 1, within max_chain_depth 2)
+  - [escalation_chains_found, max_chain_depth] chain iam-attachrolepolicy-self -> all_actions (depth 2, within max_chain_depth 2)
+  - [escalation_chains_found, max_chain_depth] chain iam-putrolepolicy-self -> all_actions (depth 2, within max_chain_depth 2)
 $ echo $?
 1
 ```

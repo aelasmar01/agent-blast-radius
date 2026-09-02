@@ -111,3 +111,33 @@ def test_scan_on_missing_deployment_errors(tmp_path, capsys):
 def test_no_subcommand_is_a_usage_error():
     with pytest.raises(SystemExit):
         main([])
+
+
+def test_a_chain_tripping_two_gates_is_reported_once(capsys):
+    """One finding, one line, with both gates named.
+
+    A chain within max_chain_depth also trips escalation_chains_found. Reporting it under
+    each gate turns three chains into six lines and reads as a counting bug.
+    """
+    assert main(["scan", str(FIXTURE), "-q"]) == EXIT_FINDINGS
+    lines = [ln for ln in capsys.readouterr().err.splitlines() if ln.startswith("  - ")]
+    chain_lines = [ln for ln in lines if "passrole-lambda-createfunction" in ln]
+    assert len(chain_lines) == 1, chain_lines
+    assert "[escalation_chains_found, max_chain_depth]" in chain_lines[0]
+    assert len(lines) == 6
+
+
+def test_depth_wording_is_not_an_inverted_comparison(capsys):
+    """`at depth 1 <= max_chain_depth 2` reads backwards on first pass."""
+    main(["scan", str(FIXTURE), "-q"])
+    err = capsys.readouterr().err
+    assert "within max_chain_depth 2" in err
+    assert "<=" not in err
+
+
+def test_finding_count_matches_reported_lines(capsys):
+    main(["scan", str(FIXTURE), "-q"])
+    err = capsys.readouterr().err
+    header = next(ln for ln in err.splitlines() if ln.startswith("FAIL:"))
+    n = int(header.split()[1])
+    assert n == len([ln for ln in err.splitlines() if ln.startswith("  - ")])

@@ -10,8 +10,7 @@ Deliberately **not** done, so the omissions read as choices: per-tool action att
 operators beyond the four modeled, resource-based policies past trust policies, and IAM
 users/groups. Each is in the scope table or the divergences doc with a reason.
 
-Hard boundary: 6–8 weekends. Full reasoning lives in
-[`agent-blast-radius-analyzer-plan.md`](../agent-blast-radius-analyzer-plan.md).
+Hard boundary: 6–8 weekends.
 
 ## Blocking questions — answer both before W1
 
