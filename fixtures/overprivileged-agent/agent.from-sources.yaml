@@ -1,0 +1,35 @@
+# The same deployment as agent.yaml, assembled from source documents instead of
+# written out by hand. Tests assert the two produce an equivalent Deployment.
+#
+#   sources     what to parse: roles + Lambda->role links from the Terraform plan,
+#               tool names + argument schemas from an MCP manifest and a Bedrock
+#               action group (functions in one group share one Lambda, hence one role).
+#   annotations per tool, what no document can say: which inputs an attacker
+#               influences, whether output re-enters the model, and gating unless the
+#               platform declares it (Bedrock requireConfirmation does; MCP does not).
+#
+# Every tool needs an entry, even an empty one. Gating is never assumed.
+
+name: overprivileged-agent
+account_id: "000000000000"
+schema_version: "0.1.0"
+
+sources:
+  terraform_plan: plan.json
+  mcp_tools: mcp-tools.json
+  bedrock_action_groups: [bedrock-action-group.json]
+
+annotations:
+  read_support_ticket:
+    gating: none
+    tainted_inputs: [ticket_id]
+    returns_external_data: true
+  query_customer_record:
+    gating: none
+  call_internal_api:
+    gating: none
+  deploy_helper: {}                  # gating declared by Bedrock: DISABLED -> none
+  run_maintenance_job: {}            # gating declared by Bedrock: ENABLED -> approval_required
+  rotate_credentials:
+    gating: approval_required
+    role: incident-response-role     # explicit; MCP manifests carry no role link

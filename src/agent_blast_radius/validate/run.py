@@ -63,10 +63,8 @@ def dry_run(entries: list[CorpusEntry], *, per_policy: int, seed: int, out=None)
         total_draws += len(plan.draws)
         total_calls += calls
         strata = " ".join(f"{k}={v}" for k, v in sorted(plan.by_stratum().items()))
-        print(
-            f"{entry.name:60s} [{entry.group}] draws={len(plan.draws):3d} calls={calls:3d}  {strata}",
-            file=out,
-        )
+        head = f"{entry.name:60s} [{entry.group}] draws={len(plan.draws):3d} calls={calls:3d}"
+        print(f"{head}  {strata}", file=out)
     print(
         f"\n{len(entries)} policies, {total_draws} draws, {total_calls} SimulateCustomPolicy calls",
         file=out,

@@ -146,7 +146,7 @@ implemented yet. See [docs/roadmap.md](docs/roadmap.md) for the build order and
 | IR (tools, roles, policies, taint, gating) | done |
 | IAM resolver (identity + managed + trust, Deny, wildcards, conditions) | done |
 | Differential validation vs `iam:SimulateCustomPolicy` | harness done; first live run pending |
-| MCP / Bedrock parsers | not started |
+| MCP / Bedrock / Terraform parsers + annotation overlay | done |
 | Reachability fixpoint + rule pack | rule pack format drafted |
 | Reporting + CI mode | not started |
 

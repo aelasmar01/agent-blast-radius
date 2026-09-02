@@ -1,0 +1,33 @@
+{
+  "agentActionGroup": {
+    "agentId": "AGENT0000X",
+    "agentVersion": "DRAFT",
+    "actionGroupId": "AG000000X",
+    "actionGroupName": "helper-ops",
+    "actionGroupState": "ENABLED",
+    "actionGroupExecutor": {
+      "lambda": "arn:aws:lambda:us-east-1:000000000000:function:deploy_helper"
+    },
+    "functionSchema": {
+      "functions": [
+        {
+          "name": "deploy_helper",
+          "description": "Creates and invokes short-lived Lambda helpers for ad-hoc work.",
+          "parameters": {
+            "code_uri": {"type": "string", "required": true},
+            "handler": {"type": "string", "required": false}
+          },
+          "requireConfirmation": "DISABLED"
+        },
+        {
+          "name": "run_maintenance_job",
+          "description": "Same execution role as deploy_helper, but every run needs a human.",
+          "parameters": {
+            "job": {"type": "string", "required": true}
+          },
+          "requireConfirmation": "ENABLED"
+        }
+      ]
+    }
+  }
+}

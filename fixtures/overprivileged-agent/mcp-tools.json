@@ -1,0 +1,42 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "tools": [
+      {
+        "name": "read_support_ticket",
+        "description": "Fetches a customer-authored support ticket from S3.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {"ticket_id": {"type": "string"}},
+          "required": ["ticket_id"]
+        }
+      },
+      {
+        "name": "query_customer_record",
+        "description": "DynamoDB query against the customer table.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {"customer_id": {"type": "string"}},
+          "required": ["customer_id"]
+        }
+      },
+      {
+        "name": "call_internal_api",
+        "description": "Signed request to an internal service.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {"path": {"type": "string"}, "body": {"type": "object"}}
+        }
+      },
+      {
+        "name": "rotate_credentials",
+        "description": "Break-glass rotation. Human approval required per invocation.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {"secret_arn": {"type": "string"}}
+        }
+      }
+    ]
+  }
+}

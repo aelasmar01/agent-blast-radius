@@ -11,34 +11,15 @@ import argparse
 import sys
 from pathlib import Path
 
-import yaml
-
 from . import __version__
 from .errors import AgentBlastRadiusError
-from .ir import Deployment, Gating, deployment_from_dict
+from .ir import Deployment, Gating
+from .loaders import load_deployment
 
 #: Loaded and validated the deployment, but analysis is not implemented.
 EXIT_INCOMPLETE = 2
 #: The input could not be loaded or is inconsistent.
 EXIT_ERROR = 3
-
-DEPLOYMENT_FILENAMES = ("agent.yaml", "agent.yml")
-
-
-def load_deployment(target: Path) -> Deployment:
-    path = target
-    if target.is_dir():
-        for name in DEPLOYMENT_FILENAMES:
-            candidate = target / name
-            if candidate.exists():
-                path = candidate
-                break
-        else:
-            raise AgentBlastRadiusError(f"no {' or '.join(DEPLOYMENT_FILENAMES)} found in {target}")
-    raw = yaml.safe_load(path.read_text())
-    if not isinstance(raw, dict):
-        raise AgentBlastRadiusError(f"{path}: expected a mapping at the top level")
-    return deployment_from_dict(raw)
 
 
 def render_inventory(deployment: Deployment, out) -> None:
@@ -107,10 +88,8 @@ def cmd_validate(args: argparse.Namespace) -> int:
     print(f"validating {len(entries)} policies against iam:SimulateCustomPolicy", file=sys.stderr)
     matrix = run(entries, simulator, per_policy=args.per_policy, seed=args.seed)
     md, js = write_results(matrix, Path(args.out), title="Resolver vs iam:SimulateCustomPolicy")
-    print(
-        f"\n{len(matrix.under_reports)} silent under-reports, {len(matrix.over_reports)} over-reports",
-        file=sys.stderr,
-    )
+    under, over = len(matrix.under_reports), len(matrix.over_reports)
+    print(f"\n{under} silent under-reports, {over} over-reports", file=sys.stderr)
     print(f"wrote {md} and {js} ({simulator.calls} API calls)", file=sys.stderr)
     return 0
 
