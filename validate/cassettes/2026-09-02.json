@@ -1,0 +1,5057 @@
+{
+ "version": 1,
+ "exchanges": {
+  "f6c43bbcf591cf3c35a68b9af81bde96": {
+   "actions": [
+    "s3:GetObject"
+   ],
+   "resource": "arn:aws:s3:::support-tickets/x",
+   "context": [],
+   "verdicts": {
+    "s3:GetObject": "allowed"
+   }
+  },
+  "2d69d616e88bbba12d12f9c5941c4241": {
+   "actions": [
+    "s3:GetObject"
+   ],
+   "resource": "arn:aws:s3:::support-ticketszx",
+   "context": [],
+   "verdicts": {
+    "s3:GetObject": "implicitDeny"
+   }
+  },
+  "a6df14e6cfeb3c3c52023ed51d3fc453": {
+   "actions": [
+    "s3:GetAccessPoint",
+    "redshift:DescribeCustomDomainAssociations",
+    "glue:ListSchemas",
+    "devicefarm:ListDeviceInstances",
+    "shield:DisableProactiveEngagement"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "s3:GetAccessPoint": "implicitDeny",
+    "redshift:DescribeCustomDomainAssociations": "implicitDeny",
+    "glue:ListSchemas": "implicitDeny",
+    "devicefarm:ListDeviceInstances": "implicitDeny",
+    "shield:DisableProactiveEngagement": "implicitDeny"
+   }
+  },
+  "31b10f81f53d8929564142a668195eb3": {
+   "actions": [
+    "dynamodb:GetItem",
+    "dynamodb:Query"
+   ],
+   "resource": "arn:aws:dynamodb:us-east-1:000000000000:table/customers",
+   "context": [],
+   "verdicts": {
+    "dynamodb:GetItem": "allowed",
+    "dynamodb:Query": "allowed"
+   }
+  },
+  "6ad307925a62649c14d4f89432a5555d": {
+   "actions": [
+    "dynamodb:Query",
+    "dynamodb:GetItem"
+   ],
+   "resource": "arn:aws:dynamodb:us-east-1:999999999999:table/customers",
+   "context": [],
+   "verdicts": {
+    "dynamodb:Query": "implicitDeny",
+    "dynamodb:GetItem": "implicitDeny"
+   }
+  },
+  "7a7f6f7ff8b1157dac6a67ded9c06e53": {
+   "actions": [
+    "dynamodb:ExportTableToPointInTime",
+    "resiliencehub:CreateApp",
+    "s3-object-lambda:PutObjectTagging",
+    "transfer:DeleteProfile",
+    "timestream:ListTables"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "dynamodb:ExportTableToPointInTime": "implicitDeny",
+    "resiliencehub:CreateApp": "implicitDeny",
+    "s3-object-lambda:PutObjectTagging": "implicitDeny",
+    "transfer:DeleteProfile": "implicitDeny",
+    "timestream:ListTables": "implicitDeny"
+   }
+  },
+  "759c05787313183e05a3be7233618bcd": {
+   "actions": [
+    "execute-api:Invoke"
+   ],
+   "resource": "arn:aws:execute-api:us-east-1:000000000000:abc123/prod/x",
+   "context": [],
+   "verdicts": {
+    "execute-api:Invoke": "allowed"
+   }
+  },
+  "a0404d4689a260657185d6451df92f46": {
+   "actions": [
+    "execute-api:Invoke"
+   ],
+   "resource": "arn:aws:execute-api:us-east-1:999999999999:abc123/prod/x",
+   "context": [],
+   "verdicts": {
+    "execute-api:Invoke": "implicitDeny"
+   }
+  },
+  "c05906c002ff9980327021e5f7297bfc": {
+   "actions": [
+    "execute-api:InvalidateCache",
+    "xray:DeleteResourcePolicy",
+    "braket:SearchDevices",
+    "ec2:ResetEbsDefaultKmsKeyId",
+    "elasticfilesystem:ClientMount"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "execute-api:InvalidateCache": "implicitDeny",
+    "xray:DeleteResourcePolicy": "implicitDeny",
+    "braket:SearchDevices": "implicitDeny",
+    "ec2:ResetEbsDefaultKmsKeyId": "implicitDeny",
+    "elasticfilesystem:ClientMount": "implicitDeny"
+   }
+  },
+  "fbffc9ff2e8c1a160fdbe0c79d70db4e": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": "arn:aws:iam::000000000000:role/agent-execution-role",
+   "context": [],
+   "verdicts": {
+    "iam:PassRole": "allowed"
+   }
+  },
+  "e9e8c2ba697ac872f5b7980fc65ff4dc": {
+   "actions": [
+    "lambda:CreateFunction",
+    "lambda:InvokeFunction",
+    "iam:ListServerCertificates",
+    "lambda:InvokeAsync",
+    "secretsmanager:GetSecretValue",
+    "q:GetArtifactActionResult",
+    "waf-regional:GetXssMatchSet",
+    "transfer:DescribeAccess",
+    "app-integrations:ListDataIntegrations"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "lambda:CreateFunction": "allowed",
+    "lambda:InvokeFunction": "allowed",
+    "iam:ListServerCertificates": "implicitDeny",
+    "lambda:InvokeAsync": "implicitDeny",
+    "secretsmanager:GetSecretValue": "explicitDeny",
+    "q:GetArtifactActionResult": "implicitDeny",
+    "waf-regional:GetXssMatchSet": "implicitDeny",
+    "transfer:DescribeAccess": "implicitDeny",
+    "app-integrations:ListDataIntegrations": "implicitDeny"
+   }
+  },
+  "52963957d7d2257d77f6bbc264ca424e": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": "arn:aws:iam::999999999999:role/x",
+   "context": [],
+   "verdicts": {
+    "iam:PassRole": "implicitDeny"
+   }
+  },
+  "c93f78bf1ca373fdabf0c4a5ebfcc95d": {
+   "actions": [
+    "iam:AttachGroupPolicy",
+    "iam:EnableOutboundWebIdentityFederation",
+    "iam:ListRoleTags",
+    "iam:ResetServiceSpecificCredential",
+    "iam:DeleteSAMLProvider",
+    "iam:ListGroupPolicies",
+    "iam:DeleteServerCertificate",
+    "iam:CreateUser",
+    "iam:CreatePolicyVersion",
+    "iam:CreateInstanceProfile",
+    "iam:EnableOrganizationsRootSessions",
+    "iam:UpdateServiceSpecificCredential",
+    "iam:ListRolePolicies",
+    "iam:TagRole",
+    "iam:UpdateSAMLProvider",
+    "iam:CreateSAMLProvider",
+    "iam:ListInstanceProfilesForRole",
+    "iam:DeleteUserPermissionsBoundary",
+    "iam:GetAccessKeyLastUsed",
+    "iam:UpdateUser"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "iam:AttachGroupPolicy": "allowed",
+    "iam:EnableOutboundWebIdentityFederation": "allowed",
+    "iam:ListRoleTags": "allowed",
+    "iam:ResetServiceSpecificCredential": "allowed",
+    "iam:DeleteSAMLProvider": "allowed",
+    "iam:ListGroupPolicies": "allowed",
+    "iam:DeleteServerCertificate": "allowed",
+    "iam:CreateUser": "allowed",
+    "iam:CreatePolicyVersion": "allowed",
+    "iam:CreateInstanceProfile": "allowed",
+    "iam:EnableOrganizationsRootSessions": "allowed",
+    "iam:UpdateServiceSpecificCredential": "allowed",
+    "iam:ListRolePolicies": "allowed",
+    "iam:TagRole": "allowed",
+    "iam:UpdateSAMLProvider": "allowed",
+    "iam:CreateSAMLProvider": "allowed",
+    "iam:ListInstanceProfilesForRole": "allowed",
+    "iam:DeleteUserPermissionsBoundary": "allowed",
+    "iam:GetAccessKeyLastUsed": "allowed",
+    "iam:UpdateUser": "allowed"
+   }
+  },
+  "af6614feccab873690bb691f6b9752c6": {
+   "actions": [
+    "secretsmanager:GetRandomPassword",
+    "kms:CancelKeyDeletion",
+    "network-firewall:ListFlowOperationResults",
+    "partnercentral:ListProspectingFromEngagementTasks",
+    "lex:StartBotAnalyzer",
+    "healthlake:GenerateDocumentWithGet"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "secretsmanager:GetRandomPassword": "implicitDeny",
+    "kms:CancelKeyDeletion": "implicitDeny",
+    "network-firewall:ListFlowOperationResults": "implicitDeny",
+    "partnercentral:ListProspectingFromEngagementTasks": "implicitDeny",
+    "lex:StartBotAnalyzer": "implicitDeny",
+    "healthlake:GenerateDocumentWithGet": "implicitDeny"
+   }
+  },
+  "7d7155207b232a5682e670f30d322d40": {
+   "actions": [
+    "simspaceweaver:StartSimulation",
+    "chime:UpdateBot",
+    "medialive:DeleteCloudWatchAlarmTemplate",
+    "ssm-contacts:ListEngagements",
+    "secretsmanager:DeleteResourcePolicy",
+    "ssm:AddTagsToResource",
+    "health-agent:DeleteAgent",
+    "rekognition:CreateProject",
+    "route53resolver:PutResolverRulePolicy",
+    "apptest:GetTestCase",
+    "mq:CreateTags",
+    "datazone:DeleteGlossaryTerm",
+    "deadline:GetQueueLimitAssociation",
+    "worklink:SignOutUser",
+    "redshift:GetReservedNodeExchangeOfferings",
+    "sagemaker:CreateInferenceComponent",
+    "iotsitewise:ListInterfaceRelationships",
+    "resiliencehub:CreateTest",
+    "greengrass:UpdateLoggerDefinition",
+    "appconfig:ListApplications"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "simspaceweaver:StartSimulation": "allowed",
+    "chime:UpdateBot": "allowed",
+    "medialive:DeleteCloudWatchAlarmTemplate": "allowed",
+    "ssm-contacts:ListEngagements": "allowed",
+    "secretsmanager:DeleteResourcePolicy": "allowed",
+    "ssm:AddTagsToResource": "allowed",
+    "health-agent:DeleteAgent": "allowed",
+    "rekognition:CreateProject": "allowed",
+    "route53resolver:PutResolverRulePolicy": "allowed",
+    "apptest:GetTestCase": "allowed",
+    "mq:CreateTags": "allowed",
+    "datazone:DeleteGlossaryTerm": "allowed",
+    "deadline:GetQueueLimitAssociation": "allowed",
+    "worklink:SignOutUser": "allowed",
+    "redshift:GetReservedNodeExchangeOfferings": "allowed",
+    "sagemaker:CreateInferenceComponent": "allowed",
+    "iotsitewise:ListInterfaceRelationships": "allowed",
+    "resiliencehub:CreateTest": "allowed",
+    "greengrass:UpdateLoggerDefinition": "allowed",
+    "appconfig:ListApplications": "allowed"
+   }
+  },
+  "98eca6d54eedf68fd16ca6b2f9c1268f": {
+   "actions": [
+    "iam:UploadServerCertificate",
+    "iam:DeleteAccessKey",
+    "iam:ListDelegationRequests",
+    "iam:GetAccountPasswordPolicy",
+    "iam:TagOpenIDConnectProvider",
+    "iam:DisableOutboundWebIdentityFederation",
+    "iam:GetRoleTemplateVersion",
+    "iam:CreatePolicyVersion",
+    "iam:UpdateAccountEmailAddress",
+    "iam:DeleteSSHPublicKey",
+    "iam:CreateRole",
+    "iam:GetAccountProperties",
+    "iam:GenerateOrganizationsAccessReport",
+    "iam:RemoveClientIDFromOpenIDConnectProvider",
+    "organizations:ListTargetsForPolicy",
+    "iam:ListRoleTags",
+    "iam:ListInstanceProfileTags",
+    "iam:ListGroupsForUser",
+    "iam:ListCloudFrontPublicKeys",
+    "iam:AssociateDelegationRequest"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "iam:UploadServerCertificate": "allowed",
+    "iam:DeleteAccessKey": "allowed",
+    "iam:ListDelegationRequests": "allowed",
+    "iam:GetAccountPasswordPolicy": "allowed",
+    "iam:TagOpenIDConnectProvider": "allowed",
+    "iam:DisableOutboundWebIdentityFederation": "allowed",
+    "iam:GetRoleTemplateVersion": "allowed",
+    "iam:CreatePolicyVersion": "allowed",
+    "iam:UpdateAccountEmailAddress": "allowed",
+    "iam:DeleteSSHPublicKey": "allowed",
+    "iam:CreateRole": "allowed",
+    "iam:GetAccountProperties": "allowed",
+    "iam:GenerateOrganizationsAccessReport": "allowed",
+    "iam:RemoveClientIDFromOpenIDConnectProvider": "allowed",
+    "organizations:ListTargetsForPolicy": "allowed",
+    "iam:ListRoleTags": "allowed",
+    "iam:ListInstanceProfileTags": "allowed",
+    "iam:ListGroupsForUser": "allowed",
+    "iam:ListCloudFrontPublicKeys": "allowed",
+    "iam:AssociateDelegationRequest": "allowed"
+   }
+  },
+  "3161055e3ce0aa9881302215d29bea7e": {
+   "actions": [
+    "organizations:ListEffectivePolicyValidationErrors",
+    "athena:GetCalculationExecutionCode",
+    "aws-external-anthropic:ListMemoryStores",
+    "scn:CreateBillOfMaterialsImportJob",
+    "transfer:SendWorkflowStepState"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "organizations:ListEffectivePolicyValidationErrors": "implicitDeny",
+    "athena:GetCalculationExecutionCode": "implicitDeny",
+    "aws-external-anthropic:ListMemoryStores": "implicitDeny",
+    "scn:CreateBillOfMaterialsImportJob": "implicitDeny",
+    "transfer:SendWorkflowStepState": "implicitDeny"
+   }
+  },
+  "7ea27271f74fb4931f6b18a2c28b0311": {
+   "actions": [
+    "cloudformation:DescribeAccountLimits",
+    "cloudformation:DescribeChangeSet",
+    "cloudformation:SignalResource",
+    "cloudformation:ListStackSetOperations",
+    "cloudformation:DescribeStackRefactor",
+    "cloudformation:DescribeStackSet",
+    "cloudformation:DescribeStackResources",
+    "cloudformation:ValidateTemplate",
+    "cloudformation:ImportStacksToStackSet",
+    "cloudformation:ListStackRefactorActions",
+    "cloudformation:DescribeStackEvents",
+    "cloudformation:ListStacks",
+    "cloudformation:ExecuteChangeSet",
+    "cloudformation:DescribePublisher",
+    "cloudformation:RegisterType",
+    "cloudformation:ListResourceScanResources",
+    "cloudformation:GetHookResult",
+    "cloudformation:ListExports",
+    "cloudformation:PublishType",
+    "cloudformation:DescribeStackResource"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "cloudformation:DescribeAccountLimits": "allowed",
+    "cloudformation:DescribeChangeSet": "allowed",
+    "cloudformation:SignalResource": "allowed",
+    "cloudformation:ListStackSetOperations": "allowed",
+    "cloudformation:DescribeStackRefactor": "allowed",
+    "cloudformation:DescribeStackSet": "allowed",
+    "cloudformation:DescribeStackResources": "allowed",
+    "cloudformation:ValidateTemplate": "allowed",
+    "cloudformation:ImportStacksToStackSet": "allowed",
+    "cloudformation:ListStackRefactorActions": "allowed",
+    "cloudformation:DescribeStackEvents": "allowed",
+    "cloudformation:ListStacks": "allowed",
+    "cloudformation:ExecuteChangeSet": "allowed",
+    "cloudformation:DescribePublisher": "allowed",
+    "cloudformation:RegisterType": "allowed",
+    "cloudformation:ListResourceScanResources": "allowed",
+    "cloudformation:GetHookResult": "allowed",
+    "cloudformation:ListExports": "allowed",
+    "cloudformation:PublishType": "allowed",
+    "cloudformation:DescribeStackResource": "allowed"
+   }
+  },
+  "36c4a4f6f6cc178578643c1c2a7eef6b": {
+   "actions": [
+    "cognito-sync:UnsubscribeFromDataset",
+    "ec2:ModifyVerifiedAccessEndpointPolicy",
+    "repostspace:RegisterAdmin",
+    "iq:GetRequest"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "cognito-sync:UnsubscribeFromDataset": "implicitDeny",
+    "ec2:ModifyVerifiedAccessEndpointPolicy": "implicitDeny",
+    "repostspace:RegisterAdmin": "implicitDeny",
+    "iq:GetRequest": "implicitDeny"
+   }
+  },
+  "35d685cdbedc03afddb5d646fed9afd0": {
+   "actions": [
+    "purchase-orders:GetPurchaseOrder",
+    "aws-portal:ModifyPaymentMethods",
+    "cur:GetClassicReportPreferences",
+    "cur:GetUsageReport",
+    "cur:ModifyReportDefinition",
+    "payments:MakePayment",
+    "payments:GetPaymentStatus",
+    "billing:UpdateBillingView",
+    "purchase-orders:UpdatePurchaseOrder",
+    "payments:ListTagsForResource",
+    "account:GetAccountInformation",
+    "payments:CreateFinancingApplication",
+    "invoicing:SendProcurementPortalValidation",
+    "invoicing:CreateInvoiceUnit",
+    "billing:ListBillingViews",
+    "budgets:DescribeBudgetAction",
+    "aws-portal:ModifyBilling",
+    "payments:ListPaymentInstruments",
+    "aws-portal:ViewUsage",
+    "invoicing:PutInvoiceEmailDeliveryPreferences"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "purchase-orders:GetPurchaseOrder": "allowed",
+    "aws-portal:ModifyPaymentMethods": "allowed",
+    "cur:GetClassicReportPreferences": "allowed",
+    "cur:GetUsageReport": "allowed",
+    "cur:ModifyReportDefinition": "allowed",
+    "payments:MakePayment": "allowed",
+    "payments:GetPaymentStatus": "allowed",
+    "billing:UpdateBillingView": "allowed",
+    "purchase-orders:UpdatePurchaseOrder": "allowed",
+    "payments:ListTagsForResource": "allowed",
+    "account:GetAccountInformation": "allowed",
+    "payments:CreateFinancingApplication": "allowed",
+    "invoicing:SendProcurementPortalValidation": "allowed",
+    "invoicing:CreateInvoiceUnit": "allowed",
+    "billing:ListBillingViews": "allowed",
+    "budgets:DescribeBudgetAction": "allowed",
+    "aws-portal:ModifyBilling": "allowed",
+    "payments:ListPaymentInstruments": "allowed",
+    "aws-portal:ViewUsage": "allowed",
+    "invoicing:PutInvoiceEmailDeliveryPreferences": "allowed"
+   }
+  },
+  "39c5afd88d7e779347649288cff4d289": {
+   "actions": [
+    "aws-portal:ModifyAccount",
+    "cur:TagResource",
+    "pricing:ListPriceLists",
+    "purchase-orders:GetConsoleActionSetEnforced",
+    "tax:PutSupplementalTaxRegistration",
+    "ec2:EnableAddressTransfer",
+    "iam:TagUser",
+    "neptune-db:CancelLoaderJob",
+    "one:UntagResource"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "aws-portal:ModifyAccount": "implicitDeny",
+    "cur:TagResource": "implicitDeny",
+    "pricing:ListPriceLists": "implicitDeny",
+    "purchase-orders:GetConsoleActionSetEnforced": "implicitDeny",
+    "tax:PutSupplementalTaxRegistration": "implicitDeny",
+    "ec2:EnableAddressTransfer": "implicitDeny",
+    "iam:TagUser": "implicitDeny",
+    "neptune-db:CancelLoaderJob": "implicitDeny",
+    "one:UntagResource": "implicitDeny"
+   }
+  },
+  "a5caa7e197ec0988497d2380753a4d76": {
+   "actions": [
+    "support-console:CreateCaseDraft",
+    "support:DescribeTrustedAdvisorCheckSummaries",
+    "support:DescribeIssueTypes",
+    "support:DownloadAttachment",
+    "support:InitiateCallForCase",
+    "support:UpdateInteraction",
+    "support:DescribeCommunications",
+    "support:ResolveInteraction",
+    "support-console:GetIssueTextSummary",
+    "support-console:GetIssueClassificationPredictions",
+    "support:InitiateChatForCase",
+    "support:AddRelatedItemToCase",
+    "support:DescribeTrustedAdvisorCheckRefreshStatuses",
+    "support-console:DeleteCaseDraft",
+    "support:DescribeTrustedAdvisorChecks",
+    "support:DescribeSupportedLanguages",
+    "support:DescribeAttachment",
+    "support:PutCaseAttributes",
+    "support:DescribeSupportLevel",
+    "support:ListInteractionEntries"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "support-console:CreateCaseDraft": "allowed",
+    "support:DescribeTrustedAdvisorCheckSummaries": "allowed",
+    "support:DescribeIssueTypes": "allowed",
+    "support:DownloadAttachment": "allowed",
+    "support:InitiateCallForCase": "allowed",
+    "support:UpdateInteraction": "allowed",
+    "support:DescribeCommunications": "allowed",
+    "support:ResolveInteraction": "allowed",
+    "support-console:GetIssueTextSummary": "allowed",
+    "support-console:GetIssueClassificationPredictions": "allowed",
+    "support:InitiateChatForCase": "allowed",
+    "support:AddRelatedItemToCase": "allowed",
+    "support:DescribeTrustedAdvisorCheckRefreshStatuses": "allowed",
+    "support-console:DeleteCaseDraft": "allowed",
+    "support:DescribeTrustedAdvisorChecks": "allowed",
+    "support:DescribeSupportedLanguages": "allowed",
+    "support:DescribeAttachment": "allowed",
+    "support:PutCaseAttributes": "allowed",
+    "support:DescribeSupportLevel": "allowed",
+    "support:ListInteractionEntries": "allowed"
+   }
+  },
+  "7784806318d04b09d9bb8b292417ceb0": {
+   "actions": [
+    "ec2:DeleteIpamPool",
+    "cloudsearch:UpdateAvailabilityOptions",
+    "acm:GetAccountConfiguration",
+    "sagemaker:DeleteTrial"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "ec2:DeleteIpamPool": "implicitDeny",
+    "cloudsearch:UpdateAvailabilityOptions": "implicitDeny",
+    "acm:GetAccountConfiguration": "implicitDeny",
+    "sagemaker:DeleteTrial": "implicitDeny"
+   }
+  },
+  "e32d514a0ca072460b70183c08611103": {
+   "actions": [
+    "kms:GetParametersForImport",
+    "kms:DescribeCustomKeyStores",
+    "kms:ListAliases",
+    "kms:GenerateRandom",
+    "kms:ListKeyRotations",
+    "iam:ListUsers",
+    "kms:GetPublicKey",
+    "kms:CreateAlias",
+    "kms:ListKeys",
+    "kms:ListRetirableGrants",
+    "iam:ListRoles",
+    "kms:GetKeyLastUsage",
+    "kms:GetKeyRotationStatus",
+    "kms:CreateKey",
+    "kms:DeleteAlias",
+    "iam:ListGroups",
+    "kms:ListGrants",
+    "kms:DescribeKey",
+    "kms:ListKeyPolicies",
+    "kms:GetKeyPolicy"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "kms:GetParametersForImport": "allowed",
+    "kms:DescribeCustomKeyStores": "allowed",
+    "kms:ListAliases": "allowed",
+    "kms:GenerateRandom": "allowed",
+    "kms:ListKeyRotations": "allowed",
+    "iam:ListUsers": "allowed",
+    "kms:GetPublicKey": "allowed",
+    "kms:CreateAlias": "allowed",
+    "kms:ListKeys": "allowed",
+    "kms:ListRetirableGrants": "allowed",
+    "iam:ListRoles": "allowed",
+    "kms:GetKeyLastUsage": "allowed",
+    "kms:GetKeyRotationStatus": "allowed",
+    "kms:CreateKey": "allowed",
+    "kms:DeleteAlias": "allowed",
+    "iam:ListGroups": "allowed",
+    "kms:ListGrants": "allowed",
+    "kms:DescribeKey": "allowed",
+    "kms:ListKeyPolicies": "allowed",
+    "kms:GetKeyPolicy": "allowed"
+   }
+  },
+  "14af65484d6bdbe8641b2ba2de5d56e3": {
+   "actions": [
+    "kms:EnableKeyRotation",
+    "iam:ListPoliciesGrantingServiceAccess",
+    "s3:DissociateAccessGrantsIdentityCenter",
+    "dms:CreateReplicationConfig",
+    "codebuild:InvalidateProjectCache",
+    "qldb:ShowCatalog"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "kms:EnableKeyRotation": "implicitDeny",
+    "iam:ListPoliciesGrantingServiceAccess": "implicitDeny",
+    "s3:DissociateAccessGrantsIdentityCenter": "implicitDeny",
+    "dms:CreateReplicationConfig": "implicitDeny",
+    "codebuild:InvalidateProjectCache": "implicitDeny",
+    "qldb:ShowCatalog": "implicitDeny"
+   }
+  },
+  "a52595a6a1a8ac073370e9abaa6006bb": {
+   "actions": [
+    "s3:GetBucketWebsite",
+    "s3:DissociateAccessGrantsIdentityCenter",
+    "s3:ListAccessPoints",
+    "s3:PutBucketObjectLockConfiguration",
+    "s3:DeleteStorageLensConfigurationTagging",
+    "s3:GetObjectTagging",
+    "s3-object-lambda:PutObjectTagging",
+    "s3:GetAccessGrantsLocation",
+    "s3:PutInventoryConfiguration",
+    "s3:DeleteStorageLensConfiguration",
+    "s3:ListObjectAnnotations",
+    "s3:GetBucketAcl",
+    "s3:PutAccessPointPolicy",
+    "s3:PutBucketRequestPayment",
+    "s3:InitiateReplication",
+    "s3-object-lambda:ListBucketVersions",
+    "s3:CreateAccessPoint",
+    "s3:DescribeMultiRegionAccessPointOperation",
+    "s3:DeleteAccessPointPolicy",
+    "s3:GetBucketCORS"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "s3:GetBucketWebsite": "allowed",
+    "s3:DissociateAccessGrantsIdentityCenter": "allowed",
+    "s3:ListAccessPoints": "allowed",
+    "s3:PutBucketObjectLockConfiguration": "allowed",
+    "s3:DeleteStorageLensConfigurationTagging": "allowed",
+    "s3:GetObjectTagging": "allowed",
+    "s3-object-lambda:PutObjectTagging": "allowed",
+    "s3:GetAccessGrantsLocation": "allowed",
+    "s3:PutInventoryConfiguration": "allowed",
+    "s3:DeleteStorageLensConfiguration": "allowed",
+    "s3:ListObjectAnnotations": "allowed",
+    "s3:GetBucketAcl": "allowed",
+    "s3:PutAccessPointPolicy": "allowed",
+    "s3:PutBucketRequestPayment": "allowed",
+    "s3:InitiateReplication": "allowed",
+    "s3-object-lambda:ListBucketVersions": "allowed",
+    "s3:CreateAccessPoint": "allowed",
+    "s3:DescribeMultiRegionAccessPointOperation": "allowed",
+    "s3:DeleteAccessPointPolicy": "allowed",
+    "s3:GetBucketCORS": "allowed"
+   }
+  },
+  "b842b12c08e03449802f975158bdfd4a": {
+   "actions": [
+    "transfer:DeleteHostKey",
+    "mobiletargeting:GetJourneyDateRangeKpi",
+    "one:GetDeviceInstanceConfiguration",
+    "artifact:GetAgreement"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "transfer:DeleteHostKey": "implicitDeny",
+    "mobiletargeting:GetJourneyDateRangeKpi": "implicitDeny",
+    "one:GetDeviceInstanceConfiguration": "implicitDeny",
+    "artifact:GetAgreement": "implicitDeny"
+   }
+  },
+  "a4f55e6872a0bd471f8c2f0f41a309df": {
+   "actions": [
+    "s3:GetAccessPointForObjectLambda",
+    "s3:DescribeMultiRegionAccessPointOperation",
+    "s3:GetObjectAttributes",
+    "s3:GetAnalyticsConfiguration",
+    "s3:ListAccessGrantsInstances",
+    "s3-object-lambda:GetObjectVersionTagging",
+    "s3:ListAllMyBuckets",
+    "s3:ListAccessPoints",
+    "s3-object-lambda:GetObject",
+    "s3:GetObjectVersion",
+    "s3:GetBucketOwnershipControls",
+    "s3:GetBucketLogging",
+    "s3:ListBucketVersions",
+    "s3:ListObjectAnnotations",
+    "s3:ListMultipartUploadParts",
+    "s3:GetBucketTagging",
+    "s3:GetBucketObjectLockConfiguration",
+    "s3-object-lambda:ListBucket",
+    "s3:DescribeJob",
+    "s3:GetObjectAnnotation"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "s3:GetAccessPointForObjectLambda": "allowed",
+    "s3:DescribeMultiRegionAccessPointOperation": "allowed",
+    "s3:GetObjectAttributes": "allowed",
+    "s3:GetAnalyticsConfiguration": "allowed",
+    "s3:ListAccessGrantsInstances": "allowed",
+    "s3-object-lambda:GetObjectVersionTagging": "allowed",
+    "s3:ListAllMyBuckets": "allowed",
+    "s3:ListAccessPoints": "allowed",
+    "s3-object-lambda:GetObject": "allowed",
+    "s3:GetObjectVersion": "allowed",
+    "s3:GetBucketOwnershipControls": "allowed",
+    "s3:GetBucketLogging": "allowed",
+    "s3:ListBucketVersions": "allowed",
+    "s3:ListObjectAnnotations": "allowed",
+    "s3:ListMultipartUploadParts": "allowed",
+    "s3:GetBucketTagging": "allowed",
+    "s3:GetBucketObjectLockConfiguration": "allowed",
+    "s3-object-lambda:ListBucket": "allowed",
+    "s3:DescribeJob": "allowed",
+    "s3:GetObjectAnnotation": "allowed"
+   }
+  },
+  "62164d2efd49730fb3c96b4678cc2a68": {
+   "actions": [
+    "s3-object-lambda:PutObjectVersionTagging",
+    "s3:PutObjectVersionTagging",
+    "health-agent:StartPatientInsightsJob",
+    "glue:BatchUpdatePartition",
+    "greengrass:ListGroupCertificateAuthorities",
+    "b2bi:DeletePartnership"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "s3-object-lambda:PutObjectVersionTagging": "implicitDeny",
+    "s3:PutObjectVersionTagging": "implicitDeny",
+    "health-agent:StartPatientInsightsJob": "implicitDeny",
+    "glue:BatchUpdatePartition": "implicitDeny",
+    "greengrass:ListGroupCertificateAuthorities": "implicitDeny",
+    "b2bi:DeletePartnership": "implicitDeny"
+   }
+  },
+  "6461bac16cf27af09a33fd241dcddc26": {
+   "actions": [
+    "iam:GenerateCredentialReport",
+    "iam:GetAccountProperties",
+    "iam:ListServiceSpecificCredentials",
+    "iam:GetSAMLProvider",
+    "iam:GetRolePolicy",
+    "iam:ListDelegationRequests",
+    "iam:ListRolePolicies",
+    "iam:SimulateCustomPolicy",
+    "iam:GetGroupPolicy",
+    "iam:ListPolicyVersions",
+    "iam:ListInstanceProfilesForRole",
+    "iam:ListOrganizationsFeatures",
+    "iam:GetUserPolicy",
+    "iam:GetServiceLastAccessedDetailsWithEntities",
+    "iam:ListOpenIDConnectProviders",
+    "iam:GetServiceLastAccessedDetails",
+    "iam:GetDelegationRequest",
+    "iam:GetAccountSummary",
+    "iam:GetAccountPasswordPolicy",
+    "iam:ListGroupsForUser"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "iam:GenerateCredentialReport": "allowed",
+    "iam:GetAccountProperties": "allowed",
+    "iam:ListServiceSpecificCredentials": "allowed",
+    "iam:GetSAMLProvider": "allowed",
+    "iam:GetRolePolicy": "allowed",
+    "iam:ListDelegationRequests": "allowed",
+    "iam:ListRolePolicies": "allowed",
+    "iam:SimulateCustomPolicy": "allowed",
+    "iam:GetGroupPolicy": "allowed",
+    "iam:ListPolicyVersions": "allowed",
+    "iam:ListInstanceProfilesForRole": "allowed",
+    "iam:ListOrganizationsFeatures": "allowed",
+    "iam:GetUserPolicy": "allowed",
+    "iam:GetServiceLastAccessedDetailsWithEntities": "allowed",
+    "iam:ListOpenIDConnectProviders": "allowed",
+    "iam:GetServiceLastAccessedDetails": "allowed",
+    "iam:GetDelegationRequest": "allowed",
+    "iam:GetAccountSummary": "allowed",
+    "iam:GetAccountPasswordPolicy": "allowed",
+    "iam:ListGroupsForUser": "allowed"
+   }
+  },
+  "37052be462c60b870c755f09ffd0f7ad": {
+   "actions": [
+    "iam:DisableOrganizationsRootSessions",
+    "ec2:CreateInstanceConnectEndpoint",
+    "iam:TagRole",
+    "iotmanagedintegrations:GetDeviceDiscovery",
+    "q:AssociateConnectorResource"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "iam:DisableOrganizationsRootSessions": "implicitDeny",
+    "ec2:CreateInstanceConnectEndpoint": "implicitDeny",
+    "iam:TagRole": "implicitDeny",
+    "iotmanagedintegrations:GetDeviceDiscovery": "implicitDeny",
+    "q:AssociateConnectorResource": "implicitDeny"
+   }
+  },
+  "84d5c1cf06d964d53f3483c472365e59": {
+   "actions": [
+    "ec2:DescribeBundleTasks",
+    "ec2:DescribeClientVpnConnections",
+    "ec2:DescribeTransitGatewayRouteTableAnnouncements",
+    "elasticloadbalancing:DescribeTargetHealth",
+    "ec2:DescribeIpams",
+    "ec2:DescribeTrunkInterfaceAssociations",
+    "ec2:DescribeFleets",
+    "ec2:DescribeMovingAddresses",
+    "ec2:DescribeRouteServerPeers",
+    "ec2:DescribeIdentityIdFormat",
+    "ec2:DescribeLocalGatewayRouteTableVirtualInterfaceGroupAssociations",
+    "ec2:DescribeIpamResourceDiscoveryAssociations",
+    "elasticloadbalancing:DescribeCapacityReservation",
+    "ec2:DescribeLockedSnapshots",
+    "ec2:DescribeTrafficMirrorTargets",
+    "ec2:DescribeNatGateways",
+    "ec2:DescribeTransitGatewayVpcAttachments",
+    "ec2:DescribeInstanceTypes",
+    "ec2:DescribeAccountAttributes",
+    "ec2:DescribeHostReservations"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "ec2:DescribeBundleTasks": "allowed",
+    "ec2:DescribeClientVpnConnections": "allowed",
+    "ec2:DescribeTransitGatewayRouteTableAnnouncements": "allowed",
+    "elasticloadbalancing:DescribeTargetHealth": "allowed",
+    "ec2:DescribeIpams": "allowed",
+    "ec2:DescribeTrunkInterfaceAssociations": "allowed",
+    "ec2:DescribeFleets": "allowed",
+    "ec2:DescribeMovingAddresses": "allowed",
+    "ec2:DescribeRouteServerPeers": "allowed",
+    "ec2:DescribeIdentityIdFormat": "allowed",
+    "ec2:DescribeLocalGatewayRouteTableVirtualInterfaceGroupAssociations": "allowed",
+    "ec2:DescribeIpamResourceDiscoveryAssociations": "allowed",
+    "elasticloadbalancing:DescribeCapacityReservation": "allowed",
+    "ec2:DescribeLockedSnapshots": "allowed",
+    "ec2:DescribeTrafficMirrorTargets": "allowed",
+    "ec2:DescribeNatGateways": "allowed",
+    "ec2:DescribeTransitGatewayVpcAttachments": "allowed",
+    "ec2:DescribeInstanceTypes": "allowed",
+    "ec2:DescribeAccountAttributes": "allowed",
+    "ec2:DescribeHostReservations": "allowed"
+   }
+  },
+  "88b7174e468bda83d06f4e3843550396": {
+   "actions": [
+    "ec2:UpdateInterruptibleCapacityReservationAllocation",
+    "elasticloadbalancing:ModifyListener",
+    "route53:ListVPCAssociationAuthorizations",
+    "bedrock:DeletePrompt",
+    "qbusiness:PutGroup",
+    "rds:DescribeDBSecurityGroups"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "ec2:UpdateInterruptibleCapacityReservationAllocation": "implicitDeny",
+    "elasticloadbalancing:ModifyListener": "implicitDeny",
+    "route53:ListVPCAssociationAuthorizations": "implicitDeny",
+    "bedrock:DeletePrompt": "implicitDeny",
+    "qbusiness:PutGroup": "implicitDeny",
+    "rds:DescribeDBSecurityGroups": "implicitDeny"
+   }
+  },
+  "4e9f4f58dcc464fef34300654ee2e4ed": {
+   "actions": [
+    "dms:ListExtensionPacks",
+    "cloudtrail:ListChannels",
+    "acm-pca:GetCertificateAuthorityCertificate",
+    "ssm-sap:ListSubCheckRuleResults",
+    "wafv2:GetRevenueStatisticsTimeSeries",
+    "user-subscriptions:ListUserSubscriptions",
+    "chatbot:DescribeSlackWorkspaces",
+    "athena:GetQueryResults",
+    "frauddetector:DescribeDetector",
+    "ivs:ListRecordingConfigurations",
+    "lightsail:GetRelationalDatabaseParameters",
+    "transcribe:GetCallAnalyticsJob",
+    "redshift-serverless:GetSnapshot",
+    "cleanrooms:GetAnalysisTemplate",
+    "iot:GetCommandExecution",
+    "lambda:GetMicrovmImage",
+    "resource-explorer-2:BatchGetView",
+    "datazone:GetMetadataGenerationRun",
+    "omics:ListShares",
+    "kinesisanalytics:DeleteApplicationCloudWatchLoggingOption"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "dms:ListExtensionPacks": "allowed",
+    "cloudtrail:ListChannels": "allowed",
+    "acm-pca:GetCertificateAuthorityCertificate": "allowed",
+    "ssm-sap:ListSubCheckRuleResults": "allowed",
+    "wafv2:GetRevenueStatisticsTimeSeries": "allowed",
+    "user-subscriptions:ListUserSubscriptions": "allowed",
+    "chatbot:DescribeSlackWorkspaces": "allowed",
+    "athena:GetQueryResults": "allowed",
+    "frauddetector:DescribeDetector": "allowed",
+    "ivs:ListRecordingConfigurations": "allowed",
+    "lightsail:GetRelationalDatabaseParameters": "allowed",
+    "transcribe:GetCallAnalyticsJob": "allowed",
+    "redshift-serverless:GetSnapshot": "allowed",
+    "cleanrooms:GetAnalysisTemplate": "allowed",
+    "iot:GetCommandExecution": "allowed",
+    "lambda:GetMicrovmImage": "allowed",
+    "resource-explorer-2:BatchGetView": "allowed",
+    "datazone:GetMetadataGenerationRun": "allowed",
+    "omics:ListShares": "allowed",
+    "kinesisanalytics:DeleteApplicationCloudWatchLoggingOption": "implicitDeny"
+   }
+  },
+  "34cb581244bbf51e38bb6147f5a79c66": {
+   "actions": [
+    "kms:CreateKey",
+    "resiliencehub:GetTestTemplate",
+    "sns:SetEndpointAttributes",
+    "sso:AttachManagedPolicyToPermissionSet",
+    "ssm:UpdateAssociation",
+    "bedrock:IngestKnowledgeBaseDocuments",
+    "workspaces:TerminateWorkspacesPool",
+    "chime:UpdateChannelMessage"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "kms:CreateKey": "implicitDeny",
+    "resiliencehub:GetTestTemplate": "implicitDeny",
+    "sns:SetEndpointAttributes": "implicitDeny",
+    "sso:AttachManagedPolicyToPermissionSet": "implicitDeny",
+    "ssm:UpdateAssociation": "implicitDeny",
+    "bedrock:IngestKnowledgeBaseDocuments": "implicitDeny",
+    "workspaces:TerminateWorkspacesPool": "implicitDeny",
+    "chime:UpdateChannelMessage": "implicitDeny"
+   }
+  },
+  "7a8e8f1e2e5820f317852fd9ca45123c": {
+   "actions": [
+    "s3express:CreateSession"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "s3express:SessionMode",
+     "ReadOnly"
+    ]
+   ],
+   "verdicts": {
+    "s3express:CreateSession": "allowed"
+   }
+  },
+  "1b2b6cdeb7e8b5b383bbfd3098a8076e": {
+   "actions": [
+    "s3express:CreateSession"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "s3express:SessionMode",
+     "ReadOnly-not-it"
+    ]
+   ],
+   "verdicts": {
+    "s3express:CreateSession": "implicitDeny"
+   }
+  },
+  "9cd9985dd0d7ff30c3b40c29dd0cb1bb": {
+   "actions": [
+    "autoscaling:DescribeAutoScalingGroups",
+    "ec2:DescribeReservedInstances",
+    "sagemaker:ListClusterSchedulerConfigs",
+    "directconnect:DescribeDirectConnectGatewayAttachments",
+    "sagemaker:ListUserProfiles",
+    "ec2:DescribeNetworkInsightsPaths",
+    "iot:ListJobTemplates",
+    "codedeploy:ListTagsForResource",
+    "elasticache:DescribeReservedCacheNodes",
+    "rds:DescribeDBClusters",
+    "ec2:DescribeVolumesModifications",
+    "kinesisanalytics:ListTagsForResource",
+    "sagemaker:DescribeExperiment",
+    "sagemaker:DescribeLineageGroup",
+    "iot:ListMetricValues",
+    "waf:ListByteMatchSets",
+    "athena:ListNotebookSessions",
+    "servicecatalog:ListRecordHistory",
+    "inspector:DeleteAssessmentRun",
+    "dax:Scan"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "autoscaling:DescribeAutoScalingGroups": "allowed",
+    "ec2:DescribeReservedInstances": "allowed",
+    "sagemaker:ListClusterSchedulerConfigs": "allowed",
+    "directconnect:DescribeDirectConnectGatewayAttachments": "allowed",
+    "sagemaker:ListUserProfiles": "allowed",
+    "ec2:DescribeNetworkInsightsPaths": "allowed",
+    "iot:ListJobTemplates": "allowed",
+    "codedeploy:ListTagsForResource": "allowed",
+    "elasticache:DescribeReservedCacheNodes": "allowed",
+    "rds:DescribeDBClusters": "allowed",
+    "ec2:DescribeVolumesModifications": "allowed",
+    "kinesisanalytics:ListTagsForResource": "allowed",
+    "sagemaker:DescribeExperiment": "allowed",
+    "sagemaker:DescribeLineageGroup": "allowed",
+    "iot:ListMetricValues": "allowed",
+    "waf:ListByteMatchSets": "allowed",
+    "athena:ListNotebookSessions": "allowed",
+    "servicecatalog:ListRecordHistory": "allowed",
+    "inspector:DeleteAssessmentRun": "implicitDeny",
+    "dax:Scan": "implicitDeny"
+   }
+  },
+  "579bd4d6c0bfd378d8b2c8f4013e22da": {
+   "actions": [
+    "codebuild:ListBuildBatchesForProject",
+    "apigateway:GetProductPage",
+    "iot:UpdateProvisioningTemplate",
+    "account-access:TagResource",
+    "iotfleetwise:ListVehiclesInFleet",
+    "bedrock:ListModelImportJobs",
+    "connect:UpdateUserPhoneConfig"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "codebuild:ListBuildBatchesForProject": "implicitDeny",
+    "apigateway:GetProductPage": "implicitDeny",
+    "iot:UpdateProvisioningTemplate": "implicitDeny",
+    "account-access:TagResource": "implicitDeny",
+    "iotfleetwise:ListVehiclesInFleet": "implicitDeny",
+    "bedrock:ListModelImportJobs": "implicitDeny",
+    "connect:UpdateUserPhoneConfig": "implicitDeny"
+   }
+  },
+  "3493d50378cf1246e3072b2670255cfb": {
+   "actions": [
+    "apigateway:GET"
+   ],
+   "resource": "arn:aws:apigateway:x::/restapis/x/gatewayresponses/x",
+   "context": [],
+   "verdicts": {
+    "apigateway:GET": "allowed"
+   }
+  },
+  "f6cf185aee3142a757bd4f653ae0fbcc": {
+   "actions": [
+    "apigateway:GET"
+   ],
+   "resource": "arn:aws:apigateway:x::/apis/x/authorizers",
+   "context": [],
+   "verdicts": {
+    "apigateway:GET": "allowed"
+   }
+  },
+  "b34c54e6beb8a71162564f924046f154": {
+   "actions": [
+    "apigateway:GET"
+   ],
+   "resource": "arn:aws:apigateway:x::/clientcertificatez",
+   "context": [],
+   "verdicts": {
+    "apigateway:GET": "implicitDeny"
+   }
+  },
+  "f5555495b625c5f4b6616889120ff7be": {
+   "actions": [
+    "apigateway:GET"
+   ],
+   "resource": "arn:aws:apigateway:x::/restapiszx/gatewayresponses",
+   "context": [],
+   "verdicts": {
+    "apigateway:GET": "implicitDeny"
+   }
+  },
+  "cc9c267910c5acab2868fe394ecace02": {
+   "actions": [
+    "apigateway:GET"
+   ],
+   "resource": "arn:aws:apigateway:x::/apiszx/cors",
+   "context": [],
+   "verdicts": {
+    "apigateway:GET": "implicitDeny"
+   }
+  },
+  "13d5df5a97d7ed0b5de11f417d631d48": {
+   "actions": [
+    "apigateway:GET"
+   ],
+   "resource": "arn:aws:apigateway:x::/restapiszx/deployments",
+   "context": [],
+   "verdicts": {
+    "apigateway:GET": "implicitDeny"
+   }
+  },
+  "f46f86e8aa0d8daece6363dc652c09ad": {
+   "actions": [
+    "apigateway:GET"
+   ],
+   "resource": "arn:aws:apigateway:x::/restapiszx/gatewayresponses/x",
+   "context": [],
+   "verdicts": {
+    "apigateway:GET": "implicitDeny"
+   }
+  },
+  "385b1b0cae0e167538953d1220f5674f": {
+   "actions": [
+    "athena:ListCapacityReservations",
+    "cloudfront:GetVpcOrigin",
+    "quicksight:DescribeDashboardsQAConfiguration",
+    "rds:DescribeDBClusterEndpoints",
+    "route53:GetQueryLoggingConfig",
+    "ec2:DescribeLaunchTemplateVersions",
+    "ecr-public:DescribeImages",
+    "dms:DescribeOrderableReplicationInstances",
+    "cloudsearch:DescribeDomainEndpointOptions",
+    "bedrock:GetModelImportJob",
+    "ec2:DescribeVerifiedAccessInstances",
+    "sso:DescribeRegion",
+    "route53resolver:GetResolverConfig",
+    "quicksight:ListThemeVersions",
+    "codecommit:ListRepositories",
+    "mediaconnect:DescribeFlow",
+    "robomaker:DescribeSimulationJobBatch",
+    "route53domains:GetOperationDetail",
+    "s3tables:GetTableBucketMaintenanceConfiguration",
+    "frauddetector:GetEvent"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "athena:ListCapacityReservations": "allowed",
+    "cloudfront:GetVpcOrigin": "allowed",
+    "quicksight:DescribeDashboardsQAConfiguration": "allowed",
+    "rds:DescribeDBClusterEndpoints": "allowed",
+    "route53:GetQueryLoggingConfig": "allowed",
+    "ec2:DescribeLaunchTemplateVersions": "allowed",
+    "ecr-public:DescribeImages": "allowed",
+    "dms:DescribeOrderableReplicationInstances": "allowed",
+    "cloudsearch:DescribeDomainEndpointOptions": "allowed",
+    "bedrock:GetModelImportJob": "allowed",
+    "ec2:DescribeVerifiedAccessInstances": "allowed",
+    "sso:DescribeRegion": "allowed",
+    "route53resolver:GetResolverConfig": "allowed",
+    "quicksight:ListThemeVersions": "allowed",
+    "codecommit:ListRepositories": "allowed",
+    "mediaconnect:DescribeFlow": "allowed",
+    "robomaker:DescribeSimulationJobBatch": "allowed",
+    "route53domains:GetOperationDetail": "allowed",
+    "s3tables:GetTableBucketMaintenanceConfiguration": "allowed",
+    "frauddetector:GetEvent": "implicitDeny"
+   }
+  },
+  "26fc0ad2ee54a4c662bc6eb7a1106288": {
+   "actions": [
+    "directconnect:ConfirmTransitVirtualInterface",
+    "guardduty:DeleteTrustedEntitySet",
+    "opsworks-cm:DescribeNodeAssociationStatus",
+    "finspace:ListUsers",
+    "rtbfabric:CreateRequesterGateway",
+    "omics:DeleteS3AccessPolicy",
+    "iam:UpdateLoginProfile",
+    "securitylake:CreateDataLake"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "directconnect:ConfirmTransitVirtualInterface": "implicitDeny",
+    "guardduty:DeleteTrustedEntitySet": "implicitDeny",
+    "opsworks-cm:DescribeNodeAssociationStatus": "implicitDeny",
+    "finspace:ListUsers": "implicitDeny",
+    "rtbfabric:CreateRequesterGateway": "implicitDeny",
+    "omics:DeleteS3AccessPolicy": "implicitDeny",
+    "iam:UpdateLoginProfile": "implicitDeny",
+    "securitylake:CreateDataLake": "implicitDeny"
+   }
+  },
+  "037c8e3e9f979f9172155de5cd6e9798": {
+   "actions": [
+    "apigateway:GET"
+   ],
+   "resource": "arn:aws:apigateway:x::/restapis/x/gatewayresponses/x",
+   "context": [],
+   "verdicts": {
+    "apigateway:GET": "allowed"
+   }
+  },
+  "53c2ad2e4df26e111cc0b58ff97d7a6f": {
+   "actions": [
+    "apigateway:GET"
+   ],
+   "resource": "arn:aws:apigateway:x::/domainnameszx/apimappings",
+   "context": [],
+   "verdicts": {
+    "apigateway:GET": "implicitDeny"
+   }
+  },
+  "58c0a4b130fac4d046ba7c321962aac6": {
+   "actions": [
+    "apigateway:GET"
+   ],
+   "resource": "arn:aws:apigateway:x::/apiszx/stages/x",
+   "context": [],
+   "verdicts": {
+    "apigateway:GET": "implicitDeny"
+   }
+  },
+  "7af6fccecc43d2ca3cef3a9c2112baff": {
+   "actions": [
+    "apigateway:GET"
+   ],
+   "resource": "arn:aws:apigateway:x::/vpclinkz",
+   "context": [],
+   "verdicts": {
+    "apigateway:GET": "implicitDeny"
+   }
+  },
+  "50b9f3c75cd5254b229716523070e6ca": {
+   "actions": [
+    "apigateway:GET"
+   ],
+   "resource": "arn:aws:apigateway:x::/restapiszx/documentation/parts/x",
+   "context": [],
+   "verdicts": {
+    "apigateway:GET": "implicitDeny"
+   }
+  },
+  "821f886bf2f515f9a1bb6748cf7f1870": {
+   "actions": [
+    "apigateway:GET"
+   ],
+   "resource": "arn:aws:apigateway:x::/apiszx/stages",
+   "context": [],
+   "verdicts": {
+    "apigateway:GET": "implicitDeny"
+   }
+  },
+  "9a5a05a321c2825ca9efda5e39ac1afe": {
+   "actions": [
+    "cloudwatch:StopOTelEnrichment",
+    "codepipeline:GetThirdPartyJobDetails",
+    "cloudwatch:DisableInsightRules",
+    "ec2:ResetNetworkInterfaceAttribute",
+    "autoscaling:PutLifecycleHook",
+    "acm:RequestCertificate",
+    "elasticloadbalancing:DeleteSharedTrustStoreAssociation",
+    "ec2:AssociateApplicationStatusCheck",
+    "ec2:ReleaseHosts",
+    "elasticloadbalancing:CreateLBCookieStickinessPolicy",
+    "ses:DeleteEmailIdentityPolicy",
+    "config:PutThirdPartyServiceLinkedConfigurationRecorder",
+    "config:GetOrganizationConformancePackDetailedStatus",
+    "ses:ListAddonSubscriptions",
+    "autoscaling:SetInstanceProtection",
+    "route53domains:GetDomainSuggestions",
+    "rds:DescribeDBClusterAutomatedBackups",
+    "ec2:DescribeEgressOnlyInternetGateways",
+    "ec2:ModifyVpcEndpointPayerResponsibility",
+    "ds:UpdateRadius"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "cloudwatch:StopOTelEnrichment": "allowed",
+    "codepipeline:GetThirdPartyJobDetails": "allowed",
+    "cloudwatch:DisableInsightRules": "allowed",
+    "ec2:ResetNetworkInterfaceAttribute": "allowed",
+    "autoscaling:PutLifecycleHook": "allowed",
+    "acm:RequestCertificate": "allowed",
+    "elasticloadbalancing:DeleteSharedTrustStoreAssociation": "allowed",
+    "ec2:AssociateApplicationStatusCheck": "allowed",
+    "ec2:ReleaseHosts": "allowed",
+    "elasticloadbalancing:CreateLBCookieStickinessPolicy": "allowed",
+    "ses:DeleteEmailIdentityPolicy": "allowed",
+    "config:PutThirdPartyServiceLinkedConfigurationRecorder": "allowed",
+    "config:GetOrganizationConformancePackDetailedStatus": "allowed",
+    "ses:ListAddonSubscriptions": "allowed",
+    "autoscaling:SetInstanceProtection": "allowed",
+    "route53domains:GetDomainSuggestions": "allowed",
+    "rds:DescribeDBClusterAutomatedBackups": "allowed",
+    "ec2:DescribeEgressOnlyInternetGateways": "allowed",
+    "ec2:ModifyVpcEndpointPayerResponsibility": "allowed",
+    "ds:UpdateRadius": "allowed"
+   }
+  },
+  "bb23323bcfd26a3920825ab285399b03": {
+   "actions": [
+    "kinesis:PutResourcePolicy",
+    "iam:UpdateSAMLProvider",
+    "rds:RestoreDBInstanceFromDBSnapshot",
+    "acm:CreateAcmeExternalAccountBinding",
+    "kms:ScheduleKeyDeletion",
+    "chatbot:UntagResource",
+    "guardduty:DeleteDetector",
+    "swf:DeleteWorkflowType",
+    "glue:ListStatements"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "kinesis:PutResourcePolicy": "implicitDeny",
+    "iam:UpdateSAMLProvider": "implicitDeny",
+    "rds:RestoreDBInstanceFromDBSnapshot": "implicitDeny",
+    "acm:CreateAcmeExternalAccountBinding": "implicitDeny",
+    "kms:ScheduleKeyDeletion": "implicitDeny",
+    "chatbot:UntagResource": "implicitDeny",
+    "guardduty:DeleteDetector": "implicitDeny",
+    "swf:DeleteWorkflowType": "implicitDeny",
+    "glue:ListStatements": "implicitDeny"
+   }
+  },
+  "957e4c2f52a9fd81cfd0e59a3a7dedf0": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": "arn:aws:iam::x:role/ec2-sysadminzx",
+   "context": [],
+   "verdicts": {
+    "iam:PassRole": "implicitDeny"
+   }
+  },
+  "1c23e1758e9112108ac85c08a01e14f2": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": "arn:aws:iam::x:role/rds-monitoring-rolz",
+   "context": [],
+   "verdicts": {
+    "iam:PassRole": "implicitDeny"
+   }
+  },
+  "3999eb81393a310f03c03a7a5f70e57b": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": "arn:aws:iam::x:role/ecr-sysadminzx",
+   "context": [],
+   "verdicts": {
+    "iam:PassRole": "implicitDeny"
+   }
+  },
+  "2f5561c5516bd0af5b694efe716d7120": {
+   "actions": [
+    "sns:ListSMSSandboxPhoneNumbers",
+    "logs:DescribeLogStreams",
+    "redshift:DisableLogging",
+    "rds:DescribeDBRecommendations",
+    "redshift:DescribeEventSubscriptions",
+    "redshift:ModifyUsageLimit",
+    "logs:CreateLogStream",
+    "cloudwatch:DescribeInsightRules",
+    "elasticache:ModifyCacheCluster",
+    "elasticache:DescribeCacheClusters",
+    "rds:RebootDBInstance",
+    "dynamodb:GetRecords",
+    "redshift:GetReservedNodeExchangeConfigurationOptions",
+    "redshift:DescribePartners",
+    "rds:DisableHttpEndpoint",
+    "s3:ReplicateObject",
+    "s3:GetMultiRegionAccessPoint",
+    "elasticache:ListAllowedNodeTypeModifications",
+    "redshift:DescribeClusterVersions",
+    "logs:PutTransformer"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "sns:ListSMSSandboxPhoneNumbers": "allowed",
+    "logs:DescribeLogStreams": "allowed",
+    "redshift:DisableLogging": "allowed",
+    "rds:DescribeDBRecommendations": "allowed",
+    "redshift:DescribeEventSubscriptions": "allowed",
+    "redshift:ModifyUsageLimit": "allowed",
+    "logs:CreateLogStream": "allowed",
+    "cloudwatch:DescribeInsightRules": "allowed",
+    "elasticache:ModifyCacheCluster": "allowed",
+    "elasticache:DescribeCacheClusters": "allowed",
+    "rds:RebootDBInstance": "allowed",
+    "dynamodb:GetRecords": "allowed",
+    "redshift:GetReservedNodeExchangeConfigurationOptions": "allowed",
+    "redshift:DescribePartners": "allowed",
+    "rds:DisableHttpEndpoint": "allowed",
+    "s3:ReplicateObject": "allowed",
+    "s3:GetMultiRegionAccessPoint": "allowed",
+    "elasticache:ListAllowedNodeTypeModifications": "allowed",
+    "redshift:DescribeClusterVersions": "allowed",
+    "logs:PutTransformer": "implicitDeny"
+   }
+  },
+  "464690415947ce880b8a165d3c25517f": {
+   "actions": [
+    "sns:Publish",
+    "lambda:GetFunctionScalingConfig",
+    "datapipeline:RemoveTags",
+    "s3:DissociateAccessGrantsIdentityCenter",
+    "quicksight:ListLimitsProfiles",
+    "workspaces:RevokeIpRules",
+    "mechanicalturk:NotifyWorkers",
+    "ssm:DeleteDocument"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "sns:Publish": "implicitDeny",
+    "lambda:GetFunctionScalingConfig": "implicitDeny",
+    "datapipeline:RemoveTags": "implicitDeny",
+    "s3:DissociateAccessGrantsIdentityCenter": "implicitDeny",
+    "quicksight:ListLimitsProfiles": "implicitDeny",
+    "workspaces:RevokeIpRules": "implicitDeny",
+    "mechanicalturk:NotifyWorkers": "implicitDeny",
+    "ssm:DeleteDocument": "implicitDeny"
+   }
+  },
+  "29d8ebd60dd3b89d536b0e93b96360a2": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": "arn:aws:iam::x:role/rdbms-lambda-access",
+   "context": [],
+   "verdicts": {
+    "iam:PassRole": "allowed"
+   }
+  },
+  "b05a1897ccc2f8873987d6c034d71c44": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": "arn:aws:iam::x:role/DataPipelineDefaultRolz",
+   "context": [],
+   "verdicts": {
+    "iam:PassRole": "implicitDeny"
+   }
+  },
+  "4f71c565678bfb3acd1e576eb71c8d62": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": "arn:aws:iam::x:role/lambda-dynamodbzx",
+   "context": [],
+   "verdicts": {
+    "iam:PassRole": "implicitDeny"
+   }
+  },
+  "1f02652984116f1b85cefd0d2836813d": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": "arn:aws:iam::x:role/lambda_exec_rolz",
+   "context": [],
+   "verdicts": {
+    "iam:PassRole": "implicitDeny"
+   }
+  },
+  "124ca2e8ba8b68c51277dd9ba444c81d": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": "arn:aws:iam::x:role/lambda-vpc-execution-rolz",
+   "context": [],
+   "verdicts": {
+    "iam:PassRole": "implicitDeny"
+   }
+  },
+  "0463a4ccaef571c703610abaf9ed8b3d": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": "arn:aws:iam::x:role/rdbms-lambda-accesz",
+   "context": [],
+   "verdicts": {
+    "iam:PassRole": "implicitDeny"
+   }
+  },
+  "34a57bf5d7e5ae29cd4baa1a0fbe7df1": {
+   "actions": [
+    "networkmanager:GetLinks",
+    "ec2:CreateInternetGateway",
+    "route53:GetHealthCheckLastFailureReason",
+    "networkmanager:CreateCoreNetworkPrefixListAssociation",
+    "ec2:ReplaceRoute",
+    "ec2:ReplaceTransitGatewayRoute",
+    "ec2:DeleteVpcEndpoints",
+    "networkmanager:DeleteConnection",
+    "route53domains:UpdateTagsForDomain",
+    "elasticloadbalancing:DeregisterTargets",
+    "route53domains:CheckDomainAvailability",
+    "elasticloadbalancing:CreateTrustStore",
+    "networkmanager:ExecuteCoreNetworkChangeSet",
+    "networkmanager:DescribeGlobalNetworks",
+    "cloudwatch:GetMetricStatistics",
+    "ec2:AllocateAddress",
+    "ec2:DescribeTransitGateways",
+    "directconnect:DescribeLoa",
+    "networkmanager:CreateSite",
+    "iam:GetServiceLastAccessedDetails"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "networkmanager:GetLinks": "allowed",
+    "ec2:CreateInternetGateway": "allowed",
+    "route53:GetHealthCheckLastFailureReason": "allowed",
+    "networkmanager:CreateCoreNetworkPrefixListAssociation": "allowed",
+    "ec2:ReplaceRoute": "allowed",
+    "ec2:ReplaceTransitGatewayRoute": "allowed",
+    "ec2:DeleteVpcEndpoints": "allowed",
+    "networkmanager:DeleteConnection": "allowed",
+    "route53domains:UpdateTagsForDomain": "allowed",
+    "elasticloadbalancing:DeregisterTargets": "allowed",
+    "route53domains:CheckDomainAvailability": "allowed",
+    "elasticloadbalancing:CreateTrustStore": "allowed",
+    "networkmanager:ExecuteCoreNetworkChangeSet": "allowed",
+    "networkmanager:DescribeGlobalNetworks": "allowed",
+    "cloudwatch:GetMetricStatistics": "allowed",
+    "ec2:AllocateAddress": "allowed",
+    "ec2:DescribeTransitGateways": "allowed",
+    "directconnect:DescribeLoa": "allowed",
+    "networkmanager:CreateSite": "allowed",
+    "iam:GetServiceLastAccessedDetails": "implicitDeny"
+   }
+  },
+  "7d128bcd0764f63445b29ad124deccdd": {
+   "actions": [
+    "sns:ListPlatformApplications",
+    "autoscaling:DeleteScheduledAction",
+    "ec2:GetIpamAddressHistory",
+    "logs:GetLogAnomalyDetector",
+    "b2bi:GetPartnership",
+    "organizations:ListHandshakesForAccount",
+    "lambda:InvokeFunctionUrl",
+    "iotevents:BatchAcknowledgeAlarm"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "sns:ListPlatformApplications": "implicitDeny",
+    "autoscaling:DeleteScheduledAction": "implicitDeny",
+    "ec2:GetIpamAddressHistory": "implicitDeny",
+    "logs:GetLogAnomalyDetector": "implicitDeny",
+    "b2bi:GetPartnership": "implicitDeny",
+    "organizations:ListHandshakesForAccount": "implicitDeny",
+    "lambda:InvokeFunctionUrl": "implicitDeny",
+    "iotevents:BatchAcknowledgeAlarm": "implicitDeny"
+   }
+  },
+  "8bc5bc516f9fad8f71fd7f370b7cfeef": {
+   "actions": [
+    "iam:CreateServiceLinkedRole"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "iam:AWSServiceName",
+     "transitgateway.amazonaws.com"
+    ]
+   ],
+   "verdicts": {
+    "iam:CreateServiceLinkedRole": "allowed"
+   }
+  },
+  "ca1b714694df5838655d33f0aff33553": {
+   "actions": [
+    "iam:PassRole",
+    "iam:ListRoles",
+    "iam:GetRole"
+   ],
+   "resource": "arn:aws:iam::x:role/flow-logszx",
+   "context": [],
+   "verdicts": {
+    "iam:PassRole": "implicitDeny",
+    "iam:ListRoles": "implicitDeny",
+    "iam:GetRole": "implicitDeny"
+   }
+  },
+  "2d5899429cd7f77e4d9eb26a7ea2964f": {
+   "actions": [
+    "iam:CreateServiceLinkedRole"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "iam:AWSServiceName",
+     "transitgateway.amazonaws.com-not-it"
+    ]
+   ],
+   "verdicts": {
+    "iam:CreateServiceLinkedRole": "implicitDeny"
+   }
+  },
+  "1c3f0cd8d0b5e4c28de638bc30a4a40f": {
+   "actions": [
+    "logs:CreateLogGroup",
+    "logs:PutLogEvents",
+    "logs:CreateLogStream",
+    "logs:PutResourcePolicy",
+    "mgh:DisassociateSourceResource",
+    "es:DescribeInstanceTypeLimits",
+    "quicksight:CreateExtensionAccess",
+    "omics:GetReferenceStore"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "logs:CreateLogGroup": "allowed",
+    "logs:PutLogEvents": "allowed",
+    "logs:CreateLogStream": "allowed",
+    "logs:PutResourcePolicy": "implicitDeny",
+    "mgh:DisassociateSourceResource": "implicitDeny",
+    "es:DescribeInstanceTypeLimits": "implicitDeny",
+    "quicksight:CreateExtensionAccess": "implicitDeny",
+    "omics:GetReferenceStore": "implicitDeny"
+   }
+  },
+  "020fee9ff839ccc38bd82171d27f05bc": {
+   "actions": [
+    "lambda:InvokeFunction",
+    "lambda:InvokeAsync",
+    "iotsitewise:ListAssociatedAssets",
+    "bedrock-agentcore:PassCapacityProvider",
+    "controltower:UpdateEnabledBaseline",
+    "sagemaker:DescribeHumanTaskUi"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "lambda:InvokeFunction": "allowed",
+    "lambda:InvokeAsync": "implicitDeny",
+    "iotsitewise:ListAssociatedAssets": "implicitDeny",
+    "bedrock-agentcore:PassCapacityProvider": "implicitDeny",
+    "controltower:UpdateEnabledBaseline": "implicitDeny",
+    "sagemaker:DescribeHumanTaskUi": "implicitDeny"
+   }
+  },
+  "49ec82384ac9af28843c20faa2c68c27": {
+   "actions": [
+    "ecr:BatchGetImage",
+    "ecr:BatchCheckLayerAvailability",
+    "ecr:GetAuthorizationToken",
+    "logs:PutLogEvents",
+    "logs:CreateLogStream",
+    "ecr:GetDownloadUrlForLayer",
+    "logs:CreateLookupTable",
+    "ecr:GetRepositoryPolicy",
+    "account:EnableRegion",
+    "freertos:CreateSubscription",
+    "aws-external-anthropic:UpdateVault",
+    "rds:RemoveRoleFromDBInstance"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "ecr:BatchGetImage": "allowed",
+    "ecr:BatchCheckLayerAvailability": "allowed",
+    "ecr:GetAuthorizationToken": "allowed",
+    "logs:PutLogEvents": "allowed",
+    "logs:CreateLogStream": "allowed",
+    "ecr:GetDownloadUrlForLayer": "allowed",
+    "logs:CreateLookupTable": "implicitDeny",
+    "ecr:GetRepositoryPolicy": "implicitDeny",
+    "account:EnableRegion": "implicitDeny",
+    "freertos:CreateSubscription": "implicitDeny",
+    "aws-external-anthropic:UpdateVault": "implicitDeny",
+    "rds:RemoveRoleFromDBInstance": "implicitDeny"
+   }
+  },
+  "6fcea0d14861b57783896c16f2a3b282": {
+   "actions": [
+    "dynamodb:ListExports",
+    "resource-groups:ListGroups",
+    "dynamodb:DescribeContinuousBackups",
+    "kinesis:DescribeStreamSummary",
+    "ec2:DescribeSubnets",
+    "dynamodb:DescribeTableReplicaAutoScaling",
+    "dynamodb:DescribeGlobalTableSettings",
+    "kinesis:ListStreams",
+    "cloudwatch:DescribeAlarmsForMetric",
+    "dax:GetItem",
+    "ec2:DescribeVpcs",
+    "application-autoscaling:DescribeScalingActivities",
+    "dynamodb:GetItem",
+    "dynamodb:DescribeLimits",
+    "cloudwatch:GetMetricStatistics",
+    "dynamodb:DescribeImport",
+    "dax:DescribeDefaultParameters",
+    "lambda:GetFunctionConfiguration",
+    "dynamodb:DescribeStream",
+    "datapipeline:QueryObjects"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "dynamodb:ListExports": "allowed",
+    "resource-groups:ListGroups": "allowed",
+    "dynamodb:DescribeContinuousBackups": "allowed",
+    "kinesis:DescribeStreamSummary": "allowed",
+    "ec2:DescribeSubnets": "allowed",
+    "dynamodb:DescribeTableReplicaAutoScaling": "allowed",
+    "dynamodb:DescribeGlobalTableSettings": "allowed",
+    "kinesis:ListStreams": "allowed",
+    "cloudwatch:DescribeAlarmsForMetric": "allowed",
+    "dax:GetItem": "allowed",
+    "ec2:DescribeVpcs": "allowed",
+    "application-autoscaling:DescribeScalingActivities": "allowed",
+    "dynamodb:GetItem": "allowed",
+    "dynamodb:DescribeLimits": "allowed",
+    "cloudwatch:GetMetricStatistics": "allowed",
+    "dynamodb:DescribeImport": "allowed",
+    "dax:DescribeDefaultParameters": "allowed",
+    "lambda:GetFunctionConfiguration": "allowed",
+    "dynamodb:DescribeStream": "allowed",
+    "datapipeline:QueryObjects": "allowed"
+   }
+  },
+  "f89a453479ddce87102c649f2bc4e9cc": {
+   "actions": [
+    "lambda:ListMicrovmImageBuilds",
+    "datapipeline:CreatePipeline",
+    "resource-groups:GetTagSyncTask",
+    "kms:DescribeCustomKeyStores",
+    "sns:ListPlatformApplications",
+    "kendra-ranking:UntagResource",
+    "mediaconvert:GetJob",
+    "partnercentral:CreateResourceSnapshot",
+    "vpc-lattice:DeleteService"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "lambda:ListMicrovmImageBuilds": "implicitDeny",
+    "datapipeline:CreatePipeline": "implicitDeny",
+    "resource-groups:GetTagSyncTask": "implicitDeny",
+    "kms:DescribeCustomKeyStores": "implicitDeny",
+    "sns:ListPlatformApplications": "implicitDeny",
+    "kendra-ranking:UntagResource": "implicitDeny",
+    "mediaconvert:GetJob": "implicitDeny",
+    "partnercentral:CreateResourceSnapshot": "implicitDeny",
+    "vpc-lattice:DeleteService": "implicitDeny"
+   }
+  },
+  "c42b9c5c32fd91a580c9187422f90f0e": {
+   "actions": [
+    "cloudwatch:GetInsightRuleReport"
+   ],
+   "resource": "arn:aws:cloudwatch:x:x:insight-rule/DynamoDBContributorInsightzx",
+   "context": [],
+   "verdicts": {
+    "cloudwatch:GetInsightRuleReport": "implicitDeny"
+   }
+  },
+  "2cbcaa33ee8af87187169c83294d5862": {
+   "actions": [
+    "execute-api:ManageConnections",
+    "execute-api:Invoke"
+   ],
+   "resource": "arn:aws:execute-api:x:x:x",
+   "context": [],
+   "verdicts": {
+    "execute-api:ManageConnections": "allowed",
+    "execute-api:Invoke": "allowed"
+   }
+  },
+  "d79aa1ba74d6a6b05d317eb27ffaae6f": {
+   "actions": [
+    "execute-api:InvalidateCache",
+    "lambda:ListCodeSigningConfigs",
+    "iot:CreateJob",
+    "workspaces-web:GetNetworkSettings",
+    "ivs:ListStageSessions"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "execute-api:InvalidateCache": "implicitDeny",
+    "lambda:ListCodeSigningConfigs": "implicitDeny",
+    "iot:CreateJob": "implicitDeny",
+    "workspaces-web:GetNetworkSettings": "implicitDeny",
+    "ivs:ListStageSessions": "implicitDeny"
+   }
+  },
+  "7ec4e04ccdfdb3011729c513e7f1a96a": {
+   "actions": [
+    "lambda:DeleteCodeSigningConfig",
+    "lambda:ListAliases",
+    "lambda:ListCapacityProviders",
+    "lambda:GetNetworkConnector",
+    "iam:ListRoles",
+    "lambda:CreateNetworkConnector",
+    "lambda:GetFunction",
+    "cloudformation:DescribeStacks",
+    "lambda:ListEventSourceMappings",
+    "lambda:GetFunctionRecursionConfig",
+    "lambda:SendDurableExecutionCallbackSuccess",
+    "iam:GetPolicyVersion",
+    "lambda:UpdateFunctionCodeSigningConfig",
+    "lambda:DeleteCapacityProvider",
+    "lambda:UpdateNetworkConnector",
+    "lambda:AddPermission",
+    "lambda:PutResourcePolicy",
+    "lambda:GetFunctionCodeSigningConfig",
+    "ec2:DescribeIpamPools",
+    "states:DescribeStateMachineForExecution"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "lambda:DeleteCodeSigningConfig": "allowed",
+    "lambda:ListAliases": "allowed",
+    "lambda:ListCapacityProviders": "allowed",
+    "lambda:GetNetworkConnector": "allowed",
+    "iam:ListRoles": "allowed",
+    "lambda:CreateNetworkConnector": "allowed",
+    "lambda:GetFunction": "allowed",
+    "cloudformation:DescribeStacks": "allowed",
+    "lambda:ListEventSourceMappings": "allowed",
+    "lambda:GetFunctionRecursionConfig": "allowed",
+    "lambda:SendDurableExecutionCallbackSuccess": "allowed",
+    "iam:GetPolicyVersion": "allowed",
+    "lambda:UpdateFunctionCodeSigningConfig": "allowed",
+    "lambda:DeleteCapacityProvider": "allowed",
+    "lambda:UpdateNetworkConnector": "allowed",
+    "lambda:AddPermission": "allowed",
+    "lambda:PutResourcePolicy": "allowed",
+    "lambda:GetFunctionCodeSigningConfig": "allowed",
+    "ec2:DescribeIpamPools": "implicitDeny",
+    "states:DescribeStateMachineForExecution": "implicitDeny"
+   }
+  },
+  "26f4def0b5a81f16077c0c0dfc6a27c8": {
+   "actions": [
+    "logs:StopQuery",
+    "cloudformation:DescribeTypeRegistration",
+    "tag:GetTagKeys",
+    "comprehend:StartFlywheelIteration",
+    "aiops:GetInvestigationGroup",
+    "observabilityadmin:GetTelemetryEvaluationStatus",
+    "networkmanager:DeleteAttachment"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "logs:StopQuery": "implicitDeny",
+    "cloudformation:DescribeTypeRegistration": "implicitDeny",
+    "tag:GetTagKeys": "implicitDeny",
+    "comprehend:StartFlywheelIteration": "implicitDeny",
+    "aiops:GetInvestigationGroup": "implicitDeny",
+    "observabilityadmin:GetTelemetryEvaluationStatus": "implicitDeny",
+    "networkmanager:DeleteAttachment": "implicitDeny"
+   }
+  },
+  "96e9ff3b87f18b466aada6cb9c499cb0": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "iam:PassedToService",
+     "lambda.amazonaws.com"
+    ]
+   ],
+   "verdicts": {
+    "iam:PassRole": "allowed"
+   }
+  },
+  "2faa6b61bf9420345a72d9fcc67159ce": {
+   "actions": [
+    "iam:CreateServiceLinkedRole"
+   ],
+   "resource": "arn:aws:iam::x:role/aws-service-role/lambda.amazonaws.com/AWSServiceRoleForLambda",
+   "context": [
+    [
+     "iam:AWSServiceName",
+     "lambda.amazonaws.com"
+    ]
+   ],
+   "verdicts": {
+    "iam:CreateServiceLinkedRole": "allowed"
+   }
+  },
+  "c9c4eb997c0b2739f8218458aa9a68d0": {
+   "actions": [
+    "logs:FilterLogEvents",
+    "logs:DescribeLogStreams",
+    "logs:StartLiveTail",
+    "logs:StopLiveTail"
+   ],
+   "resource": "arn:aws:logs:x:x:log-group:/aws/lambdazx",
+   "context": [],
+   "verdicts": {
+    "logs:FilterLogEvents": "implicitDeny",
+    "logs:DescribeLogStreams": "implicitDeny",
+    "logs:StartLiveTail": "implicitDeny",
+    "logs:StopLiveTail": "implicitDeny"
+   }
+  },
+  "87b8cbb4431b3adcaf2c5e96302fa6b9": {
+   "actions": [
+    "iam:CreateServiceLinkedRole"
+   ],
+   "resource": "arn:aws:iam::x:role/aws-service-role/lambda.amazonaws.com/AWSServiceRoleForLambdz",
+   "context": [
+    [
+     "iam:AWSServiceName",
+     "lambda.amazonaws.com"
+    ]
+   ],
+   "verdicts": {
+    "iam:CreateServiceLinkedRole": "implicitDeny"
+   }
+  },
+  "ac18665ee8fe7d0c909555bfef562369": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "iam:PassedToService",
+     "lambda.amazonaws.com-not-it"
+    ]
+   ],
+   "verdicts": {
+    "iam:PassRole": "implicitDeny"
+   }
+  },
+  "f05e8759a9dd328959c1eb0e80d0fb2f": {
+   "actions": [
+    "iam:CreateServiceLinkedRole"
+   ],
+   "resource": "arn:aws:iam::x:role/aws-service-role/lambda.amazonaws.com/AWSServiceRoleForLambda",
+   "context": [
+    [
+     "iam:AWSServiceName",
+     "lambda.amazonaws.com-not-it"
+    ]
+   ],
+   "verdicts": {
+    "iam:CreateServiceLinkedRole": "implicitDeny"
+   }
+  },
+  "196d9378e305320bc3c68dd4b295b423": {
+   "actions": [
+    "redshift-serverless:GetNamespace",
+    "ec2:DescribeSecurityGroups",
+    "kms:ListAliases",
+    "secretsmanager:BatchGetSecretValue",
+    "secretsmanager:GetSecretValue",
+    "cloudformation:DescribeChangeSet",
+    "secretsmanager:PutSecretValue",
+    "secretsmanager:GetRandomPassword",
+    "secretsmanager:ListSecretVersionIds",
+    "secretsmanager:CancelRotateSecret",
+    "ec2:DescribeSubnets",
+    "secretsmanager:DeleteResourcePolicy",
+    "cloudformation:CreateResource",
+    "tag:GetTagKeys",
+    "s3:GetObjectTagging",
+    "rds:DescribeDBClusterSnapshots",
+    "serverlessrepo:CreateApplication",
+    "storagegateway:SetSMBGuestPassword",
+    "codeguru-security:BatchGetFindings",
+    "codepipeline:PutWebhook"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "redshift-serverless:GetNamespace": "allowed",
+    "ec2:DescribeSecurityGroups": "allowed",
+    "kms:ListAliases": "allowed",
+    "secretsmanager:BatchGetSecretValue": "allowed",
+    "secretsmanager:GetSecretValue": "allowed",
+    "cloudformation:DescribeChangeSet": "allowed",
+    "secretsmanager:PutSecretValue": "allowed",
+    "secretsmanager:GetRandomPassword": "allowed",
+    "secretsmanager:ListSecretVersionIds": "allowed",
+    "secretsmanager:CancelRotateSecret": "allowed",
+    "ec2:DescribeSubnets": "allowed",
+    "secretsmanager:DeleteResourcePolicy": "allowed",
+    "cloudformation:CreateResource": "implicitDeny",
+    "tag:GetTagKeys": "implicitDeny",
+    "s3:GetObjectTagging": "implicitDeny",
+    "rds:DescribeDBClusterSnapshots": "implicitDeny",
+    "serverlessrepo:CreateApplication": "implicitDeny",
+    "storagegateway:SetSMBGuestPassword": "implicitDeny",
+    "codeguru-security:BatchGetFindings": "implicitDeny",
+    "codepipeline:PutWebhook": "implicitDeny"
+   }
+  },
+  "7e8416f958e125904f9d2ad7af4a397d": {
+   "actions": [
+    "ec2:DescribePrincipalIdFormat"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "ec2:DescribePrincipalIdFormat": "implicitDeny"
+   }
+  },
+  "92f5cdb63a5c2c51203fdfb11adc2fd1": {
+   "actions": [
+    "lambda:GetFunction",
+    "lambda:CreateFunction",
+    "lambda:AddPermission",
+    "lambda:UpdateFunctionConfiguration"
+   ],
+   "resource": "arn:aws:lambda:x:x:function:SecretsManagerx",
+   "context": [],
+   "verdicts": {
+    "lambda:GetFunction": "allowed",
+    "lambda:CreateFunction": "allowed",
+    "lambda:AddPermission": "allowed",
+    "lambda:UpdateFunctionConfiguration": "allowed"
+   }
+  },
+  "fa601052c0b6de5bea3969d6e6112120": {
+   "actions": [
+    "s3:GetObject"
+   ],
+   "resource": "arn:aws:s3:::secrets-manager-rotation-apps-x/x",
+   "context": [],
+   "verdicts": {
+    "s3:GetObject": "allowed"
+   }
+  },
+  "559d1dcceb2220d4657a526b9bb8a5e7": {
+   "actions": [
+    "s3:GetObject"
+   ],
+   "resource": "arn:aws:s3:::awsserverlessrepo-changesetsx",
+   "context": [],
+   "verdicts": {
+    "s3:GetObject": "allowed"
+   }
+  },
+  "2ee3b6a7d823b17330a79f81789ee090": {
+   "actions": [
+    "cloudformation:UntagResource",
+    "cloudformation:TagResource"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "cloudformation:CreateAction",
+     "CreateChangeSet"
+    ]
+   ],
+   "verdicts": {
+    "cloudformation:UntagResource": "allowed",
+    "cloudformation:TagResource": "allowed"
+   }
+  },
+  "a1d0181f0770b2d639c3ea9ba67a67e0": {
+   "actions": [
+    "lambda:AddPermission",
+    "lambda:GetFunction",
+    "lambda:InvokeFunction",
+    "lambda:CreateFunction"
+   ],
+   "resource": "arn:aws:lambda:x:x:function:SecretsManagezx",
+   "context": [],
+   "verdicts": {
+    "lambda:AddPermission": "implicitDeny",
+    "lambda:GetFunction": "implicitDeny",
+    "lambda:InvokeFunction": "implicitDeny",
+    "lambda:CreateFunction": "implicitDeny"
+   }
+  },
+  "41713e83660b37eb27a634c375cc5b5c": {
+   "actions": [
+    "serverlessrepo:GetApplication"
+   ],
+   "resource": "arn:aws:serverlessrepo:x:x:applications/SecretsManagezx",
+   "context": [],
+   "verdicts": {
+    "serverlessrepo:GetApplication": "implicitDeny"
+   }
+  },
+  "e5acbe996753d9ab6a38928edcc85fd5": {
+   "actions": [
+    "cloudformation:TagResource",
+    "cloudformation:UntagResource"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "cloudformation:CreateAction",
+     "CreateChangeSet-not-it"
+    ]
+   ],
+   "verdicts": {
+    "cloudformation:TagResource": "implicitDeny",
+    "cloudformation:UntagResource": "implicitDeny"
+   }
+  },
+  "8ec0c0a78e500ee290081cb2040ba357": {
+   "actions": [
+    "ec2messages:SendReply",
+    "ssm:DescribeAssociation",
+    "ssm:ListAssociations",
+    "ssm:UpdateInstanceInformation",
+    "ssm:PutComplianceItems",
+    "ssmmessages:CreateControlChannel",
+    "ssm:PutInventory",
+    "ssm:DescribeDocument",
+    "ec2messages:GetEndpoint",
+    "ssmmessages:CreateDataChannel",
+    "ssm:GetManifest",
+    "ec2messages:AcknowledgeMessage",
+    "ssm:UpdateAssociationStatus",
+    "ssm:GetParameter",
+    "ssm:PutConfigurePackageResult",
+    "ssm:ListInstanceAssociations",
+    "ssmmessages:OpenControlChannel",
+    "ec2messages:FailMessage",
+    "ec2messages:DeleteMessage",
+    "ssm:UpdateInstanceAssociationStatus"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "ec2messages:SendReply": "allowed",
+    "ssm:DescribeAssociation": "allowed",
+    "ssm:ListAssociations": "allowed",
+    "ssm:UpdateInstanceInformation": "allowed",
+    "ssm:PutComplianceItems": "allowed",
+    "ssmmessages:CreateControlChannel": "allowed",
+    "ssm:PutInventory": "allowed",
+    "ssm:DescribeDocument": "allowed",
+    "ec2messages:GetEndpoint": "allowed",
+    "ssmmessages:CreateDataChannel": "allowed",
+    "ssm:GetManifest": "allowed",
+    "ec2messages:AcknowledgeMessage": "allowed",
+    "ssm:UpdateAssociationStatus": "allowed",
+    "ssm:GetParameter": "allowed",
+    "ssm:PutConfigurePackageResult": "allowed",
+    "ssm:ListInstanceAssociations": "allowed",
+    "ssmmessages:OpenControlChannel": "allowed",
+    "ec2messages:FailMessage": "allowed",
+    "ec2messages:DeleteMessage": "allowed",
+    "ssm:UpdateInstanceAssociationStatus": "allowed"
+   }
+  },
+  "e340af715d7e76099293517b9e55a744": {
+   "actions": [
+    "ssm:UpdateManagedInstanceRole",
+    "vpc-lattice:GetAccessLogSubscription",
+    "ds:StartADAssessment",
+    "iam:EnableOutboundWebIdentityFederation",
+    "bedrock:GetGuardrail"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "ssm:UpdateManagedInstanceRole": "implicitDeny",
+    "vpc-lattice:GetAccessLogSubscription": "implicitDeny",
+    "ds:StartADAssessment": "implicitDeny",
+    "iam:EnableOutboundWebIdentityFederation": "implicitDeny",
+    "bedrock:GetGuardrail": "implicitDeny"
+   }
+  },
+  "5de2897b6b8af77ba2c61b1514b3bed8": {
+   "actions": [
+    "kms:DescribeKey",
+    "ec2:DescribeInstances",
+    "ec2:DescribeAvailabilityZones",
+    "ec2:DetachVolume",
+    "ec2:DescribeNetworkInterfaces",
+    "ec2:AuthorizeSecurityGroupIngress",
+    "elasticloadbalancing:SetLoadBalancerPoliciesOfListener",
+    "elasticloadbalancing:DeleteTargetGroup",
+    "elasticloadbalancing:ConfigureHealthCheck",
+    "elasticloadbalancing:DeregisterTargets",
+    "ec2:DescribeVpcs",
+    "autoscaling:UpdateAutoScalingGroup",
+    "ec2:ModifyInstanceAttribute",
+    "elasticloadbalancing:SetLoadBalancerPoliciesForBackendServer",
+    "elasticloadbalancing:DeleteListener",
+    "ec2:CreateTags",
+    "elasticloadbalancing:CreateTargetGroup",
+    "elasticloadbalancing:ModifyListener",
+    "kms:DescribeCustomKeyStores",
+    "autoscaling:DescribeAccountLimits"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "kms:DescribeKey": "allowed",
+    "ec2:DescribeInstances": "allowed",
+    "ec2:DescribeAvailabilityZones": "allowed",
+    "ec2:DetachVolume": "allowed",
+    "ec2:DescribeNetworkInterfaces": "allowed",
+    "ec2:AuthorizeSecurityGroupIngress": "allowed",
+    "elasticloadbalancing:SetLoadBalancerPoliciesOfListener": "allowed",
+    "elasticloadbalancing:DeleteTargetGroup": "allowed",
+    "elasticloadbalancing:ConfigureHealthCheck": "allowed",
+    "elasticloadbalancing:DeregisterTargets": "allowed",
+    "ec2:DescribeVpcs": "allowed",
+    "autoscaling:UpdateAutoScalingGroup": "allowed",
+    "ec2:ModifyInstanceAttribute": "allowed",
+    "elasticloadbalancing:SetLoadBalancerPoliciesForBackendServer": "allowed",
+    "elasticloadbalancing:DeleteListener": "allowed",
+    "ec2:CreateTags": "allowed",
+    "elasticloadbalancing:CreateTargetGroup": "allowed",
+    "elasticloadbalancing:ModifyListener": "allowed",
+    "kms:DescribeCustomKeyStores": "implicitDeny",
+    "autoscaling:DescribeAccountLimits": "implicitDeny"
+   }
+  },
+  "901ad9028dd76b9bdeee21d87bc59457": {
+   "actions": [
+    "elasticloadbalancing:ModifyCapacityReservation",
+    "ec2:DescribeVpcPeeringConnections",
+    "iam:CreateVirtualMFADevice",
+    "frauddetector:CancelBatchImportJob",
+    "wafv2:GetSampledRequests",
+    "appfabric:StopIngestion",
+    "chime:DeleteChannelMembership"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "elasticloadbalancing:ModifyCapacityReservation": "implicitDeny",
+    "ec2:DescribeVpcPeeringConnections": "implicitDeny",
+    "iam:CreateVirtualMFADevice": "implicitDeny",
+    "frauddetector:CancelBatchImportJob": "implicitDeny",
+    "wafv2:GetSampledRequests": "implicitDeny",
+    "appfabric:StopIngestion": "implicitDeny",
+    "chime:DeleteChannelMembership": "implicitDeny"
+   }
+  },
+  "2170f3b9e05b6b520740eeb2a4f3271d": {
+   "actions": [
+    "iam:CreateServiceLinkedRole"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "iam:AWSServiceName",
+     "elasticloadbalancing.amazonaws.com"
+    ]
+   ],
+   "verdicts": {
+    "iam:CreateServiceLinkedRole": "allowed"
+   }
+  },
+  "d3f14eb4b8a18d690225cd9083a2ba77": {
+   "actions": [
+    "ec2:DeleteNetworkInterface"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "ec2:ResourceTag/eks:eni:owner",
+     "amazon-vpc-cni"
+    ]
+   ],
+   "verdicts": {
+    "ec2:DeleteNetworkInterface": "allowed"
+   }
+  },
+  "37ac25e4f11a2cc1d06053b638ff3e8a": {
+   "actions": [
+    "ec2:DeleteNetworkInterface"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "ec2:ResourceTag/eks:eni:owner",
+     "amazon-vpc-cni-not-it"
+    ]
+   ],
+   "verdicts": {
+    "ec2:DeleteNetworkInterface": "implicitDeny"
+   }
+  },
+  "d5382d91995dc4524fc9afd937dda8ff": {
+   "actions": [
+    "iam:CreateServiceLinkedRole"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "iam:AWSServiceName",
+     "elasticloadbalancing.amazonaws.com-not-it"
+    ]
+   ],
+   "verdicts": {
+    "iam:CreateServiceLinkedRole": "implicitDeny"
+   }
+  },
+  "abd7b09cb9bf1f97a6d3cfe656f200f4": {
+   "actions": [
+    "kms:DescribeKey"
+   ],
+   "resource": "arn:x:kms:x:::x",
+   "context": [],
+   "verdicts": {
+    "kms:DescribeKey": "implicitDeny"
+   }
+  },
+  "c09fd59dd16a5c94dcb68551df9800aa": {
+   "actions": [
+    "bedrock:ListDataAutomationLibraryEntities",
+    "bedrock:CancelInvoke",
+    "bedrock:GetFoundationModel",
+    "bedrock:CreateFlowVersion",
+    "bedrock:DeleteFoundationModelAgreement",
+    "bedrock:CreatePromptRouter",
+    "bedrock:AssociateAgentCollaborator",
+    "bedrock-mantle:ListModels",
+    "bedrock:GetBlueprintRecommendation",
+    "bedrock:CreateEvaluationJob",
+    "bedrock-mantle:UpdateReservation",
+    "bedrock:DeleteCustomModelDeployment",
+    "aws-marketplace:AcceptAgreementRequest",
+    "bedrock-websearch:ExternalWebAccess",
+    "iam:ListAttachedRolePolicies",
+    "kms:DescribeCustomKeyStores",
+    "ec2:DescribeHosts",
+    "network-firewall:AssociateFirewallPolicy",
+    "greengrass:CreateDeployment",
+    "cloudtrail:UpdateTrail"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "bedrock:ListDataAutomationLibraryEntities": "allowed",
+    "bedrock:CancelInvoke": "allowed",
+    "bedrock:GetFoundationModel": "allowed",
+    "bedrock:CreateFlowVersion": "allowed",
+    "bedrock:DeleteFoundationModelAgreement": "allowed",
+    "bedrock:CreatePromptRouter": "allowed",
+    "bedrock:AssociateAgentCollaborator": "allowed",
+    "bedrock-mantle:ListModels": "allowed",
+    "bedrock:GetBlueprintRecommendation": "allowed",
+    "bedrock:CreateEvaluationJob": "allowed",
+    "bedrock-mantle:UpdateReservation": "allowed",
+    "bedrock:DeleteCustomModelDeployment": "allowed",
+    "aws-marketplace:AcceptAgreementRequest": "implicitDeny",
+    "bedrock-websearch:ExternalWebAccess": "implicitDeny",
+    "iam:ListAttachedRolePolicies": "implicitDeny",
+    "kms:DescribeCustomKeyStores": "implicitDeny",
+    "ec2:DescribeHosts": "implicitDeny",
+    "network-firewall:AssociateFirewallPolicy": "implicitDeny",
+    "greengrass:CreateDeployment": "implicitDeny",
+    "cloudtrail:UpdateTrail": "implicitDeny"
+   }
+  },
+  "4038a5f50018aae0812b9516cafd6569": {
+   "actions": [
+    "cloud9:DescribeSSHRemote"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "cloud9:DescribeSSHRemote": "implicitDeny"
+   }
+  },
+  "89214010b15fb77a8e83808cb1128127": {
+   "actions": [
+    "sagemaker:DescribeModel",
+    "sagemaker:DescribeInferenceComponent"
+   ],
+   "resource": "arn:aws:sagemaker:x:x:endpoint/x",
+   "context": [
+    [
+     "aws:CalledViaLast",
+     "bedrock.amazonaws.com"
+    ]
+   ],
+   "verdicts": {
+    "sagemaker:DescribeModel": "implicitDeny",
+    "sagemaker:DescribeInferenceComponent": "implicitDeny"
+   }
+  },
+  "7eafdcbabba03f71b176760b06a3d3e2": {
+   "actions": [
+    "sagemaker:UpdateEndpoint",
+    "sagemaker:CreateModel"
+   ],
+   "resource": "arn:aws:sagemaker:x:x:endpoint-config/x",
+   "context": [
+    [
+     "aws:CalledViaLast",
+     "bedrock.amazonaws.com"
+    ],
+    [
+     "aws:ResourceTag/sagemaker-sdk:bedrock",
+     "compatible"
+    ]
+   ],
+   "verdicts": {
+    "sagemaker:UpdateEndpoint": "allowed",
+    "sagemaker:CreateModel": "implicitDeny"
+   }
+  },
+  "59bd32adeb74e65ad312e937353abf46": {
+   "actions": [
+    "sagemaker:UpdateEndpoint"
+   ],
+   "resource": "arn:aws:sagemaker:x:x:model/x",
+   "context": [
+    [
+     "aws:CalledViaLast",
+     "bedrock.amazonaws.com"
+    ],
+    [
+     "aws:ResourceTag/sagemaker-sdk:bedrock",
+     "compatible"
+    ]
+   ],
+   "verdicts": {
+    "sagemaker:UpdateEndpoint": "implicitDeny"
+   }
+  },
+  "8635e863d9760bd956338ac8645a24ad": {
+   "actions": [
+    "sagemaker:DeleteTags"
+   ],
+   "resource": "arn:aws:sagemaker:x:x:endpoint/x",
+   "context": [
+    [
+     "aws:ResourceTag/bedrock:marketplace-registration-status",
+     "registered"
+    ],
+    [
+     "aws:ResourceTag/sagemaker-sdk:bedrock",
+     "compatible"
+    ],
+    [
+     "aws:ResourceTag/sagemaker-studio:hub-content-arn",
+     "arn:aws:sagemaker:x:aws:hub-content/SageMakerPublicHub/Model/x"
+    ]
+   ],
+   "verdicts": {
+    "sagemaker:DeleteTags": "allowed"
+   }
+  },
+  "81c29088263df576386350d7c064fa45": {
+   "actions": [
+    "sagemaker:DeleteTags"
+   ],
+   "resource": "arn:aws:sagemaker:x:x:model/x",
+   "context": [
+    [
+     "aws:ResourceTag/bedrock:marketplace-registration-status",
+     "registered"
+    ],
+    [
+     "aws:ResourceTag/sagemaker-sdk:bedrock",
+     "compatible"
+    ],
+    [
+     "aws:ResourceTag/sagemaker-studio:hub-content-arn",
+     "arn:aws:sagemaker:x:aws:hub-content/SageMakerPublicHub/Model/x"
+    ]
+   ],
+   "verdicts": {
+    "sagemaker:DeleteTags": "allowed"
+   }
+  },
+  "5b7a352115833fad0e9f45cd7e21aa74": {
+   "actions": [
+    "sagemaker:DescribeModel",
+    "sagemaker:DescribeInferenceComponent"
+   ],
+   "resource": "arn:aws:sagemaker:x:x:endpoint-configzx",
+   "context": [
+    [
+     "aws:CalledViaLast",
+     "bedrock.amazonaws.com"
+    ]
+   ],
+   "verdicts": {
+    "sagemaker:DescribeModel": "implicitDeny",
+    "sagemaker:DescribeInferenceComponent": "implicitDeny"
+   }
+  },
+  "3ba284deb30161e46255c43c8e4031a0": {
+   "actions": [
+    "sagemaker:DescribeHubContent"
+   ],
+   "resource": "arn:aws:sagemaker:x:999999999999:hub/SageMakerPublicHub",
+   "context": [],
+   "verdicts": {
+    "sagemaker:DescribeHubContent": "implicitDeny"
+   }
+  },
+  "1e0cfc030b40044953e7dddf3d2148e4": {
+   "actions": [
+    "sagemaker:InvokeEndpoint"
+   ],
+   "resource": "arn:aws:sagemaker:x:x:endpointzx",
+   "context": [
+    [
+     "aws:CalledViaLast",
+     "bedrock.amazonaws.com"
+    ],
+    [
+     "aws:ResourceTag/sagemaker-sdk:bedrock",
+     "compatible"
+    ]
+   ],
+   "verdicts": {
+    "sagemaker:InvokeEndpoint": "implicitDeny"
+   }
+  },
+  "d95c478506c5dc817586355fef0d4fc7": {
+   "actions": [
+    "sagemaker:UpdateEndpoint"
+   ],
+   "resource": "arn:aws:sagemaker:x:x:endpoint-configzx",
+   "context": [
+    [
+     "aws:CalledViaLast",
+     "bedrock.amazonaws.com"
+    ],
+    [
+     "aws:ResourceTag/sagemaker-sdk:bedrock",
+     "compatible"
+    ]
+   ],
+   "verdicts": {
+    "sagemaker:UpdateEndpoint": "implicitDeny"
+   }
+  },
+  "02b2c830d3900bfb0ca8ed47e29a119d": {
+   "actions": [
+    "sagemaker:CreateModel",
+    "sagemaker:CreateEndpointConfig"
+   ],
+   "resource": "arn:aws:sagemaker:x:x:endpoint/x",
+   "context": [
+    [
+     "aws:CalledViaLast",
+     "bedrock.amazonaws.com-not-it"
+    ],
+    [
+     "aws:ResourceTag/sagemaker-sdk:bedrock",
+     "compatible"
+    ]
+   ],
+   "verdicts": {
+    "sagemaker:CreateModel": "implicitDeny",
+    "sagemaker:CreateEndpointConfig": "implicitDeny"
+   }
+  },
+  "96daa6e86feb60e284f7262aede36c88": {
+   "actions": [
+    "sagemaker:CreateModel"
+   ],
+   "resource": "arn:aws:sagemaker:x:x:endpoint-config/x",
+   "context": [
+    [
+     "aws:CalledViaLast",
+     "bedrock.amazonaws.com-not-it"
+    ],
+    [
+     "aws:ResourceTag/sagemaker-sdk:bedrock",
+     "compatible"
+    ]
+   ],
+   "verdicts": {
+    "sagemaker:CreateModel": "implicitDeny"
+   }
+  },
+  "2312911e3545ee372d976ec4c721e0cb": {
+   "actions": [
+    "sagemaker:DescribeEndpointConfig"
+   ],
+   "resource": "arn:aws:sagemaker:x:x:endpoint/x",
+   "context": [
+    [
+     "aws:CalledViaLast",
+     "bedrock.amazonaws.com-not-it"
+    ]
+   ],
+   "verdicts": {
+    "sagemaker:DescribeEndpointConfig": "implicitDeny"
+   }
+  },
+  "b5c746ab7111b3ed2942894931224b6f": {
+   "actions": [
+    "codestar-connections:PassConnection",
+    "codestar-connections:GetIndividualAccessToken",
+    "codestar-connections:UpdateConnectionInstallation",
+    "codestar-connections:UseConnection",
+    "codestar-connections:TagResource",
+    "codestar-connections:StartOAuthHandshake"
+   ],
+   "resource": "arn:aws:codestar-connections:x:x:connection/x",
+   "context": [],
+   "verdicts": {
+    "codestar-connections:PassConnection": "allowed",
+    "codestar-connections:GetIndividualAccessToken": "implicitDeny",
+    "codestar-connections:UpdateConnectionInstallation": "allowed",
+    "codestar-connections:UseConnection": "allowed",
+    "codestar-connections:TagResource": "allowed",
+    "codestar-connections:StartOAuthHandshake": "implicitDeny"
+   }
+  },
+  "a5b50a265d2d76ba024d347cedd30e70": {
+   "actions": [
+    "codebuild:BatchGetBuildBatches",
+    "codebuild:DeleteReportGroup",
+    "codebuild:RetryBuild",
+    "events:PutTargets",
+    "codebuild:UpdateReport",
+    "events:ListConnections",
+    "cloudwatch:GetMetricData",
+    "logs:DeleteResourcePolicy",
+    "elasticfilesystem:DescribeFileSystemPolicy",
+    "codestar-notifications:DeleteTarget",
+    "networkmanager:GetSiteToSiteVpnAttachment",
+    "ec2:DescribeLocalGateways",
+    "backup:GetTieringConfiguration",
+    "forecast:DescribeWhatIfForecast"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "codebuild:BatchGetBuildBatches": "allowed",
+    "codebuild:DeleteReportGroup": "allowed",
+    "codebuild:RetryBuild": "allowed",
+    "events:PutTargets": "allowed",
+    "codebuild:UpdateReport": "allowed",
+    "events:ListConnections": "implicitDeny",
+    "cloudwatch:GetMetricData": "implicitDeny",
+    "logs:DeleteResourcePolicy": "implicitDeny",
+    "elasticfilesystem:DescribeFileSystemPolicy": "implicitDeny",
+    "codestar-notifications:DeleteTarget": "implicitDeny",
+    "networkmanager:GetSiteToSiteVpnAttachment": "implicitDeny",
+    "ec2:DescribeLocalGateways": "implicitDeny",
+    "backup:GetTieringConfiguration": "implicitDeny",
+    "forecast:DescribeWhatIfForecast": "implicitDeny"
+   }
+  },
+  "edc9257db8f1474af31a56c4d1775d0a": {
+   "actions": [
+    "codestar-connections:StartOAuthHandshake",
+    "codestar-connections:ListTagsForResource",
+    "codestar-connections:UseConnection",
+    "codestar-connections:GetIndividualAccessToken"
+   ],
+   "resource": "arn:aws:codeconnections:x:x:connection/x",
+   "context": [],
+   "verdicts": {
+    "codestar-connections:StartOAuthHandshake": "implicitDeny",
+    "codestar-connections:ListTagsForResource": "implicitDeny",
+    "codestar-connections:UseConnection": "implicitDeny",
+    "codestar-connections:GetIndividualAccessToken": "implicitDeny"
+   }
+  },
+  "4242a33707c4eb20f39921e2f119d53a": {
+   "actions": [
+    "codestar-notifications:DeleteNotificationRule",
+    "codestar-notifications:Subscribe",
+    "codestar-notifications:CreateNotificationRule",
+    "codestar-notifications:Unsubscribe",
+    "codestar-notifications:UpdateNotificationRule"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "codestar-notifications:NotificationsForResource",
+     "arn:aws:codebuild:x:x:project/x"
+    ]
+   ],
+   "verdicts": {
+    "codestar-notifications:DeleteNotificationRule": "allowed",
+    "codestar-notifications:Subscribe": "allowed",
+    "codestar-notifications:CreateNotificationRule": "allowed",
+    "codestar-notifications:Unsubscribe": "allowed",
+    "codestar-notifications:UpdateNotificationRule": "allowed"
+   }
+  },
+  "87aa06872bfcbd0bbe939cee2b0366d2": {
+   "actions": [
+    "sns:CreateTopic",
+    "sns:SetTopicAttributes"
+   ],
+   "resource": "arn:aws:sns:x:x:codestar-notificationzx",
+   "context": [],
+   "verdicts": {
+    "sns:CreateTopic": "implicitDeny",
+    "sns:SetTopicAttributes": "implicitDeny"
+   }
+  },
+  "3c57faa6e4f72f4e847cdcb3e1f64368": {
+   "actions": [
+    "codestar-connections:ListConnections"
+   ],
+   "resource": "arn:aws:codeconnections:x:x:connectionzx",
+   "context": [],
+   "verdicts": {
+    "codestar-connections:ListConnections": "implicitDeny"
+   }
+  },
+  "21f6e6d0919aab75c77d87108f57d2ea": {
+   "actions": [
+    "codestar-connections:ListConnections"
+   ],
+   "resource": "arn:aws:codestar-connections:x:x:connectionzx",
+   "context": [],
+   "verdicts": {
+    "codestar-connections:ListConnections": "implicitDeny"
+   }
+  },
+  "ae48d4d307f9e8834a359634f216b1fe": {
+   "actions": [
+    "logs:DeleteLogGroup"
+   ],
+   "resource": "arn:aws:logs:x:x:log-group:/aws/codebuildzx:log-stream:x",
+   "context": [],
+   "verdicts": {
+    "logs:DeleteLogGroup": "implicitDeny"
+   }
+  },
+  "bc5c52b8d7cdee08165d0238c44d6517": {
+   "actions": [
+    "codestar-notifications:CreateNotificationRule",
+    "codestar-notifications:DeleteNotificationRule",
+    "codestar-notifications:Unsubscribe",
+    "codestar-notifications:DescribeNotificationRule"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "codestar-notifications:NotificationsForResource",
+     "arn:aws:iam::999999999999:role/definitely-not-it"
+    ]
+   ],
+   "verdicts": {
+    "codestar-notifications:CreateNotificationRule": "implicitDeny",
+    "codestar-notifications:DeleteNotificationRule": "implicitDeny",
+    "codestar-notifications:Unsubscribe": "implicitDeny",
+    "codestar-notifications:DescribeNotificationRule": "implicitDeny"
+   }
+  },
+  "39a1d1cf3f9116b050b98af236a8f5c5": {
+   "actions": [
+    "ssm:StartAutomationExecution"
+   ],
+   "resource": "arn:aws:ssm:x:x:automation-execution/x",
+   "context": [],
+   "verdicts": {
+    "ssm:StartAutomationExecution": "allowed"
+   }
+  },
+  "34d027316a598b5a4b979ea20ceb6ed1": {
+   "actions": [
+    "ssm:StartAutomationExecution"
+   ],
+   "resource": "arn:aws:ssm:x:x:automation-definition/AWS-DiagnoseHybridActivationIssues:x",
+   "context": [],
+   "verdicts": {
+    "ssm:StartAutomationExecution": "allowed"
+   }
+  },
+  "06c2478961d0dac0cd5b342acd29cb6c": {
+   "actions": [
+    "ssm:StartAutomationExecution"
+   ],
+   "resource": "arn:aws:ssm:x:x:document/AWS-DiagnoseHybridActivationIssues",
+   "context": [],
+   "verdicts": {
+    "ssm:StartAutomationExecution": "allowed"
+   }
+  },
+  "272c3fa1ad6a9198ccfe1d3200de9c53": {
+   "actions": [
+    "ssm:StartAutomationExecution"
+   ],
+   "resource": "arn:aws:ssm:x:x:document/AWS-xUnmanagedEC2x",
+   "context": [],
+   "verdicts": {
+    "ssm:StartAutomationExecution": "allowed"
+   }
+  },
+  "5bd5d5ed83ce9163e94440231eec6d46": {
+   "actions": [
+    "ssm:DescribeAutomationExecutions",
+    "ssm:GetAutomationExecution",
+    "ssm:DescribeAutomationStepExecutions",
+    "s3:DeleteStorageLensGroup",
+    "sts:AssumeRoleWithWebIdentity",
+    "iam:GetAccountProperties",
+    "kms:DeleteCustomKeyStore",
+    "ssm:StartSession",
+    "ecs:DescribeExpressGatewayService",
+    "ce:UpdateReport",
+    "q:BatchGetUsers",
+    "ds:UnauthorizeApplication"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "ssm:DescribeAutomationExecutions": "allowed",
+    "ssm:GetAutomationExecution": "allowed",
+    "ssm:DescribeAutomationStepExecutions": "allowed",
+    "s3:DeleteStorageLensGroup": "implicitDeny",
+    "sts:AssumeRoleWithWebIdentity": "implicitDeny",
+    "iam:GetAccountProperties": "implicitDeny",
+    "kms:DeleteCustomKeyStore": "implicitDeny",
+    "ssm:StartSession": "implicitDeny",
+    "ecs:DescribeExpressGatewayService": "implicitDeny",
+    "ce:UpdateReport": "implicitDeny",
+    "q:BatchGetUsers": "implicitDeny",
+    "ds:UnauthorizeApplication": "implicitDeny"
+   }
+  },
+  "92f9771af57d0fb88f3fcb0b7a9859e4": {
+   "actions": [
+    "ssm:StartAutomationExecution"
+   ],
+   "resource": "arn:aws:ssm:x:x:automation-definition/AWS-xUnmanagedEC2x:x",
+   "context": [],
+   "verdicts": {
+    "ssm:StartAutomationExecution": "allowed"
+   }
+  },
+  "6d5acfed86607918fec4c79f0a1397b3": {
+   "actions": [
+    "s3:PutObject",
+    "s3:DeleteObject",
+    "s3:GetObject"
+   ],
+   "resource": "arn:aws:s3:::do-not-delete-ssm-diagnosis-x/actions/x",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "s3:PutObject": "implicitDeny",
+    "s3:DeleteObject": "implicitDeny",
+    "s3:GetObject": "implicitDeny"
+   }
+  },
+  "ae2c67b5f20b74df32dd12943a11241b": {
+   "actions": [
+    "sts:AssumeRole"
+   ],
+   "resource": "arn:aws:iam::x:role/AWS-SSM-DiagnosisExecutionRolex",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "sts:AssumeRole": "implicitDeny"
+   }
+  },
+  "ad3d259d0470d05a64c60a2446dd5b4c": {
+   "actions": [
+    "kms:Decrypt"
+   ],
+   "resource": "arn:aws:kms:x:x:key/x",
+   "context": [
+    [
+     "kms:EncryptionContext:aws:s3:arn",
+     "arn:aws:s3:::do-not-delete-ssm-diagnosis-x"
+    ],
+    [
+     "aws:ViaAWSService",
+     "true"
+    ],
+    [
+     "aws:ResourceTag/SystemsManagerManaged",
+     "true"
+    ],
+    [
+     "kms:ViaService",
+     "s3.x.amazonaws.com"
+    ]
+   ],
+   "verdicts": {
+    "kms:Decrypt": "allowed"
+   }
+  },
+  "26beab59d68265839d98bdeeefe246c0": {
+   "actions": [
+    "ssm:StartAutomationExecution"
+   ],
+   "resource": "arn:aws:ssm:x:x:automation-definition/AWS-DiagnoseHybridActivationIssueszx",
+   "context": [],
+   "verdicts": {
+    "ssm:StartAutomationExecution": "implicitDeny"
+   }
+  },
+  "7492aad660812fee3947d45e4504ef56": {
+   "actions": [
+    "ssm:StartAutomationExecution"
+   ],
+   "resource": "arn:aws:ssm:x:x:automation-executionzx",
+   "context": [],
+   "verdicts": {
+    "ssm:StartAutomationExecution": "implicitDeny"
+   }
+  },
+  "2006a0a550f375291fdfd0da360277a0": {
+   "actions": [
+    "ssm:StartAutomationExecution"
+   ],
+   "resource": "arn:aws:ssm:x:x:document/AWSzxUnmanagedEC2x",
+   "context": [],
+   "verdicts": {
+    "ssm:StartAutomationExecution": "implicitDeny"
+   }
+  },
+  "e3fd8fa68195af4a5962a28ee3158237": {
+   "actions": [
+    "kms:Decrypt"
+   ],
+   "resource": "arn:aws:kms:x:x:keyzx",
+   "context": [
+    [
+     "kms:EncryptionContext:aws:s3:arn",
+     "arn:aws:s3:::do-not-delete-ssm-diagnosis-x"
+    ],
+    [
+     "aws:ViaAWSService",
+     "true"
+    ],
+    [
+     "aws:ResourceTag/SystemsManagerManaged",
+     "true"
+    ],
+    [
+     "kms:ViaService",
+     "s3.x.amazonaws.com"
+    ]
+   ],
+   "verdicts": {
+    "kms:Decrypt": "implicitDeny"
+   }
+  },
+  "21e39e9ad3c1e3736f4cffa7f21c3cf1": {
+   "actions": [
+    "s3:GetObject"
+   ],
+   "resource": "arn:aws:s3:::do-not-delete-ssm-diagnosiszx/actions/x",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "s3:GetObject": "implicitDeny"
+   }
+  },
+  "39d0e797938f4a3e932b1b9bb1422268": {
+   "actions": [
+    "s3:GetObject",
+    "s3:PutObject"
+   ],
+   "resource": "arn:aws:s3:::do-not-delete-ssm-diagnosis-x/actions/x",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}-not-it"
+    ]
+   ],
+   "verdicts": {
+    "s3:GetObject": "implicitDeny",
+    "s3:PutObject": "implicitDeny"
+   }
+  },
+  "b374c44ce7a0f9a7e628c615be4eaeb9": {
+   "actions": [
+    "sts:AssumeRole"
+   ],
+   "resource": "arn:aws:iam::x:role/AWS-SSM-DiagnosisExecutionRolex",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}-not-it"
+    ]
+   ],
+   "verdicts": {
+    "sts:AssumeRole": "implicitDeny"
+   }
+  },
+  "2723581b99d923d0c8cba2d83352d45c": {
+   "actions": [
+    "s3:ListBucket"
+   ],
+   "resource": "arn:aws:s3:::do-not-delete-ssm-diagnosis-x",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}-not-it"
+    ]
+   ],
+   "verdicts": {
+    "s3:ListBucket": "implicitDeny"
+   }
+  },
+  "68da0dfb906031075df945ead63044aa": {
+   "actions": [
+    "mgn:BatchDeleteSnapshotRequestForMgn",
+    "mgn:SendClientMetricsForMgn",
+    "mgn:MarkAsArchived",
+    "ec2:DescribeInstanceTypes",
+    "mgn:ArchiveApplication",
+    "mgn:DescribeReplicationServerAssociationsForMgn",
+    "mgn:SendClientLogsForMgn",
+    "mgn:UpdateApplication",
+    "mgn:DeleteVcenterClient",
+    "mgn:UpdateLaunchConfiguration",
+    "mgn:ChangeServerLifeCycleState",
+    "mgn:GetAccountSettings",
+    "mgn:UpdateReplicationConfigurationTemplate",
+    "fsx:DescribeSnapshots",
+    "license-manager:ListLicenseConfigurationsForOrganization",
+    "ec2:DescribeFleets",
+    "elasticloadbalancing:DescribeListenerCertificates",
+    "iam:ListOrganizationsFeatures",
+    "ssm:GetPatchBaselineForPatchGroup",
+    "auditmanager:UpdateAssessment"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "mgn:BatchDeleteSnapshotRequestForMgn": "allowed",
+    "mgn:SendClientMetricsForMgn": "allowed",
+    "mgn:MarkAsArchived": "allowed",
+    "ec2:DescribeInstanceTypes": "allowed",
+    "mgn:ArchiveApplication": "allowed",
+    "mgn:DescribeReplicationServerAssociationsForMgn": "allowed",
+    "mgn:SendClientLogsForMgn": "allowed",
+    "mgn:UpdateApplication": "allowed",
+    "mgn:DeleteVcenterClient": "allowed",
+    "mgn:UpdateLaunchConfiguration": "allowed",
+    "mgn:ChangeServerLifeCycleState": "allowed",
+    "mgn:GetAccountSettings": "allowed",
+    "mgn:UpdateReplicationConfigurationTemplate": "allowed",
+    "fsx:DescribeSnapshots": "implicitDeny",
+    "license-manager:ListLicenseConfigurationsForOrganization": "implicitDeny",
+    "ec2:DescribeFleets": "implicitDeny",
+    "elasticloadbalancing:DescribeListenerCertificates": "implicitDeny",
+    "iam:ListOrganizationsFeatures": "implicitDeny",
+    "ssm:GetPatchBaselineForPatchGroup": "implicitDeny",
+    "auditmanager:UpdateAssessment": "implicitDeny"
+   }
+  },
+  "12b55df11c028952366a1e70c6e5893c": {
+   "actions": [
+    "vpc-lattice:DeleteResourcePolicy",
+    "wisdom:GetAIAgent",
+    "timestream-influxdb:GetDbInstance"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "vpc-lattice:DeleteResourcePolicy": "implicitDeny",
+    "wisdom:GetAIAgent": "implicitDeny",
+    "timestream-influxdb:GetDbInstance": "implicitDeny"
+   }
+  },
+  "ca5e8fc14202e70f06caeff9bda572bd": {
+   "actions": [
+    "ssm:DescribeDocument"
+   ],
+   "resource": "arn:aws:ssm:x:x:document/AWSDisasterRecovery-InstallDRAgentOnInstance",
+   "context": [
+    [
+     "aws:ViaAWSService",
+     "true"
+    ]
+   ],
+   "verdicts": {
+    "ssm:DescribeDocument": "allowed"
+   }
+  },
+  "cbd8e0688fc8c2c551fdb8b53281f467": {
+   "actions": [
+    "ssm:DescribeDocument"
+   ],
+   "resource": "arn:aws:ssm:x:x:document/AWSMigration-x",
+   "context": [
+    [
+     "aws:ViaAWSService",
+     "true"
+    ]
+   ],
+   "verdicts": {
+    "ssm:DescribeDocument": "allowed"
+   }
+  },
+  "fddc7c7dd2e63df0d892ea37dcb8d404": {
+   "actions": [
+    "ssm:DescribeInstanceInformation"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "aws:ViaAWSService",
+     "true"
+    ]
+   ],
+   "verdicts": {
+    "ssm:DescribeInstanceInformation": "allowed"
+   }
+  },
+  "1bf3988ebe087e43340d99035438c41b": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": "arn:aws:iam::x:role/service-role/AWSApplicationMigrationLaunchInstanceWithDrsRole",
+   "context": [
+    [
+     "aws:ViaAWSService",
+     "true"
+    ],
+    [
+     "iam:PassedToService",
+     "ec2.amazonaws.com"
+    ]
+   ],
+   "verdicts": {
+    "iam:PassRole": "allowed"
+   }
+  },
+  "05147ecbcc05abd18a92dc3500ada1a6": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": "arn:aws:iam::x:role/service-role/AWSApplicationMigrationLaunchInstanceWithSsmRole",
+   "context": [
+    [
+     "aws:ViaAWSService",
+     "true"
+    ],
+    [
+     "iam:PassedToService",
+     "ec2.amazonaws.com"
+    ]
+   ],
+   "verdicts": {
+    "iam:PassRole": "allowed"
+   }
+  },
+  "b9580409fba9859c76658d9600f8b528": {
+   "actions": [
+    "ssm:StartAutomationExecution"
+   ],
+   "resource": "arn:aws:ssm:x:x:automation-definition/AWSMigration-x:$DEFAULT",
+   "context": [],
+   "verdicts": {
+    "ssm:StartAutomationExecution": "implicitDeny"
+   }
+  },
+  "4dcb7a059e2099d8d2d362880cfd2bbd": {
+   "actions": [
+    "fsx:CreateVolume"
+   ],
+   "resource": "arn:aws:fsx:x:x:storage-virtual-machinezx/x",
+   "context": [],
+   "verdicts": {
+    "fsx:CreateVolume": "implicitDeny"
+   }
+  },
+  "a1f8d8aec91120671834714553a58bf4": {
+   "actions": [
+    "ssm:SendCommand"
+   ],
+   "resource": "arn:aws:ssm:x:x:document/AWSMigrationzx",
+   "context": [
+    [
+     "aws:ViaAWSService",
+     "true"
+    ]
+   ],
+   "verdicts": {
+    "ssm:SendCommand": "implicitDeny"
+   }
+  },
+  "5f6cf993f21e4ab573c6cd4d72a34277": {
+   "actions": [
+    "fsx:DeleteVolume"
+   ],
+   "resource": "arn:aws:fsx:x:x:volumezx/x",
+   "context": [],
+   "verdicts": {
+    "fsx:DeleteVolume": "implicitDeny"
+   }
+  },
+  "72142618a96e700d5c1a149174be2406": {
+   "actions": [
+    "ssm:StartAutomationExecution"
+   ],
+   "resource": "arn:aws:ssm:x:x:automation-executionzx",
+   "context": [],
+   "verdicts": {
+    "ssm:StartAutomationExecution": "implicitDeny"
+   }
+  },
+  "a7122563cd9e52d78021928da8e0b790": {
+   "actions": [
+    "ssm:DescribeDocument"
+   ],
+   "resource": "arn:aws:ssm:x:x:document/AWSDisasterRecovery-InstallDRAgentOnInstancz",
+   "context": [
+    [
+     "aws:ViaAWSService",
+     "true"
+    ]
+   ],
+   "verdicts": {
+    "ssm:DescribeDocument": "implicitDeny"
+   }
+  },
+  "6501777d044658d3ccb6288fae365969": {
+   "actions": [
+    "ssm:SendCommand",
+    "ssm:DescribeDocument"
+   ],
+   "resource": "arn:aws:ssm:x:x:document/AWSDisasterRecovery-InstallDRAgentOnInstance",
+   "context": [
+    [
+     "aws:ViaAWSService",
+     "false"
+    ]
+   ],
+   "verdicts": {
+    "ssm:SendCommand": "implicitDeny",
+    "ssm:DescribeDocument": "implicitDeny"
+   }
+  },
+  "3fd0985b1073d9c3e5f8447dcbaa6b0a": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": "arn:aws:iam::x:role/service-role/AWSApplicationMigrationLaunchInstanceWithSsmRole",
+   "context": [
+    [
+     "aws:ViaAWSService",
+     "false"
+    ],
+    [
+     "iam:PassedToService",
+     "ec2.amazonaws.com"
+    ]
+   ],
+   "verdicts": {
+    "iam:PassRole": "implicitDeny"
+   }
+  },
+  "3a8922a3eee285b600fab9ee37a6162b": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": "arn:aws:iam::x:role/service-role/AWSApplicationMigrationLaunchInstanceWithDrsRole",
+   "context": [
+    [
+     "aws:ViaAWSService",
+     "false"
+    ],
+    [
+     "iam:PassedToService",
+     "ec2.amazonaws.com"
+    ]
+   ],
+   "verdicts": {
+    "iam:PassRole": "implicitDeny"
+   }
+  },
+  "1236e47f79a377ede1eae46f6c5cf3f0": {
+   "actions": [
+    "logs:PutLogEvents",
+    "logs:DescribeLogStreams",
+    "logs:DescribeLogGroups"
+   ],
+   "resource": "arn:aws:logs:x:x:log-group:/aws/elasticbeanstalk/x",
+   "context": [],
+   "verdicts": {
+    "logs:PutLogEvents": "allowed",
+    "logs:DescribeLogStreams": "allowed",
+    "logs:DescribeLogGroups": "implicitDeny"
+   }
+  },
+  "4b549ee41a54a6d9994a0206ce96795f": {
+   "actions": [
+    "cloudformation:DescribeStackResource",
+    "cloudformation:DescribeStacks"
+   ],
+   "resource": "arn:aws:cloudformation:x:x:stack/awseb-x",
+   "context": [],
+   "verdicts": {
+    "cloudformation:DescribeStackResource": "allowed",
+    "cloudformation:DescribeStacks": "allowed"
+   }
+  },
+  "a524e8c4fe834ce3ba4300f279cb5667": {
+   "actions": [
+    "ec2:DescribeInstanceStatus",
+    "elasticloadbalancing:DescribeTargetHealth",
+    "sqs:GetQueueAttributes",
+    "autoscaling:DescribeAutoScalingInstances",
+    "autoscaling:DescribeNotificationConfigurations",
+    "sqs:GetQueueUrl",
+    "elasticloadbalancing:DescribeInstanceHealth",
+    "lambda:GetFunction",
+    "elasticloadbalancing:DescribeTrustStores",
+    "cloudformation:DescribeGeneratedTemplate",
+    "iam:CreateUser",
+    "lambda:GetMicrovm",
+    "elasticbeanstalk:DescribeAccountAttributes",
+    "qapps:ListCategories",
+    "waf-regional:DeleteWebACL",
+    "lightsail:CreateCertificate",
+    "ec2:DescribeCapacityReservationBillingRequests"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "ec2:DescribeInstanceStatus": "allowed",
+    "elasticloadbalancing:DescribeTargetHealth": "allowed",
+    "sqs:GetQueueAttributes": "allowed",
+    "autoscaling:DescribeAutoScalingInstances": "allowed",
+    "autoscaling:DescribeNotificationConfigurations": "allowed",
+    "sqs:GetQueueUrl": "allowed",
+    "elasticloadbalancing:DescribeInstanceHealth": "allowed",
+    "lambda:GetFunction": "allowed",
+    "elasticloadbalancing:DescribeTrustStores": "implicitDeny",
+    "cloudformation:DescribeGeneratedTemplate": "implicitDeny",
+    "iam:CreateUser": "implicitDeny",
+    "lambda:GetMicrovm": "implicitDeny",
+    "elasticbeanstalk:DescribeAccountAttributes": "implicitDeny",
+    "qapps:ListCategories": "implicitDeny",
+    "waf-regional:DeleteWebACL": "implicitDeny",
+    "lightsail:CreateCertificate": "implicitDeny",
+    "ec2:DescribeCapacityReservationBillingRequests": "implicitDeny"
+   }
+  },
+  "a6867f9356575c6878eb32bc94c3a2b5": {
+   "actions": [
+    "cloudformation:DescribeStackEvents"
+   ],
+   "resource": "arn:aws:cloudformation:x:x:stack/elasticbeanstalk-x-image-build",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "cloudformation:DescribeStackEvents": "implicitDeny"
+   }
+  },
+  "6842d93136aca9fbf5a896a9dbd2b54c": {
+   "actions": [
+    "eks:DeletePodIdentityAssociation"
+   ],
+   "resource": "arn:aws:eks:x:x:podidentityassociation/beanstalk-clusterx/x",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "eks:DeletePodIdentityAssociation": "implicitDeny"
+   }
+  },
+  "68ff4c7ba64b73caf1ee7d1e2477b375": {
+   "actions": [
+    "s3:CreateBucket"
+   ],
+   "resource": "arn:aws:s3:::elasticbeanstalk-x/x",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "s3:CreateBucket": "implicitDeny"
+   }
+  },
+  "1fbc0971a46b989d03d9fac9af40225b": {
+   "actions": [
+    "eks:CreateAddon"
+   ],
+   "resource": "arn:aws:eks:x:x:cluster/beanstalk-clusterx",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "eks:CreateAddon": "implicitDeny"
+   }
+  },
+  "4dca3e176166d6af516a803d100cef2e": {
+   "actions": [
+    "elasticloadbalancing:DescribeListeners"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "elasticloadbalancing:DescribeListeners": "implicitDeny"
+   }
+  },
+  "499666fee05e14f803c6782319b3d337": {
+   "actions": [
+    "elasticloadbalancing:CreateTargetGroup"
+   ],
+   "resource": "arn:aws:elasticloadbalancing:x:x:targetgroup/x/x",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "elasticloadbalancing:CreateTargetGroup": "implicitDeny"
+   }
+  },
+  "c5ede404b86e0b1acaed70da760be2de": {
+   "actions": [
+    "elasticloadbalancing:AddTags"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "elasticloadbalancing:AddTags": "implicitDeny"
+   }
+  },
+  "5abe9646660cfa13c668af1ec1067e18": {
+   "actions": [
+    "cloudformation:CreateStack"
+   ],
+   "resource": "arn:aws:cloudformation:x:x:stack/elasticbeanstalkzx-image-build/x",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "cloudformation:CreateStack": "implicitDeny"
+   }
+  },
+  "0db351a32ef4de62c68de06b2b28da7c": {
+   "actions": [
+    "eks:DescribeAccessEntry"
+   ],
+   "resource": "arn:aws:eks:x:x:access-entry/beanstalk-clustezx/x",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "eks:DescribeAccessEntry": "implicitDeny"
+   }
+  },
+  "f06e3d9a7243b924616464fe57e7d582": {
+   "actions": [
+    "eks:CreateAddon",
+    "eks:DescribeUpdate"
+   ],
+   "resource": "arn:aws:eks:x:x:cluster/beanstalk-clustezx",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "eks:CreateAddon": "implicitDeny",
+    "eks:DescribeUpdate": "implicitDeny"
+   }
+  },
+  "df99134da95b1a4423bd803036ce3faf": {
+   "actions": [
+    "ecr:BatchGetImage"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}-not-it"
+    ]
+   ],
+   "verdicts": {
+    "ecr:BatchGetImage": "implicitDeny"
+   }
+  },
+  "57a787c5a4bc69a492c20f32dc012d19": {
+   "actions": [
+    "s3:PutObject"
+   ],
+   "resource": "arn:aws:s3:::elasticbeanstalk-x/x",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}-not-it"
+    ]
+   ],
+   "verdicts": {
+    "s3:PutObject": "implicitDeny"
+   }
+  },
+  "80ef94ae35b0f71a0ae545cc25724e8e": {
+   "actions": [
+    "eks:DescribeUpdate"
+   ],
+   "resource": "arn:aws:eks:x:x:cluster/beanstalk-clusterx",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}-not-it"
+    ]
+   ],
+   "verdicts": {
+    "eks:DescribeUpdate": "implicitDeny"
+   }
+  },
+  "ceaa121eaa782572c4d08a3e4ed4b60a": {
+   "actions": [
+    "eks:UpdatePodIdentityAssociation"
+   ],
+   "resource": "arn:aws:eks:x:x:podidentityassociation/beanstalk-clusterx/x",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}-not-it"
+    ]
+   ],
+   "verdicts": {
+    "eks:UpdatePodIdentityAssociation": "implicitDeny"
+   }
+  },
+  "d8b25852d12177ba0744f933f64e5b91": {
+   "actions": [
+    "logs:CreateLogDelivery",
+    "config:PutConnector",
+    "elasticloadbalancing:RemoveTrustStoreRevocations",
+    "ec2:CreateTransitGatewayRouteTableAnnouncement",
+    "s3:InitiateReplication",
+    "wafv2:PutManagedRuleSetVersions",
+    "personalize:DescribeSolutionVersion",
+    "quicksight:UpdateBrand",
+    "rekognition:ListMediaAnalysisJobs",
+    "ec2:RejectTransitGatewayPeeringAttachment"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "logs:CreateLogDelivery": "allowed",
+    "config:PutConnector": "implicitDeny",
+    "elasticloadbalancing:RemoveTrustStoreRevocations": "implicitDeny",
+    "ec2:CreateTransitGatewayRouteTableAnnouncement": "implicitDeny",
+    "s3:InitiateReplication": "implicitDeny",
+    "wafv2:PutManagedRuleSetVersions": "implicitDeny",
+    "personalize:DescribeSolutionVersion": "implicitDeny",
+    "quicksight:UpdateBrand": "implicitDeny",
+    "rekognition:ListMediaAnalysisJobs": "implicitDeny",
+    "ec2:RejectTransitGatewayPeeringAttachment": "implicitDeny"
+   }
+  },
+  "26feff43cf329cad87f8012c67157bc0": {
+   "actions": [
+    "cloudtrail:UpdateServiceLinkedChannel"
+   ],
+   "resource": "arn:aws:cloudtrail:x:x:channel/aws-service-channel/cloudwatch/x",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "cloudtrail:UpdateServiceLinkedChannel": "implicitDeny"
+   }
+  },
+  "9b7f4bc1ad06edc71c2b50c76b261bef": {
+   "actions": [
+    "route53resolver:TagResource"
+   ],
+   "resource": "arn:aws:route53resolver:x:x:resolver-query-log-config/x",
+   "context": [
+    [
+     "aws:RequestTag/CloudWatchTelemetryRuleManaged",
+     "true"
+    ],
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "route53resolver:TagResource": "implicitDeny"
+   }
+  },
+  "b7353f0fe1016e7763759e6e23fac24d": {
+   "actions": [
+    "config:PutServiceLinkedConfigurationRecorder"
+   ],
+   "resource": "arn:aws:config:x:x:configuration-recorder/AWSConfigurationRecorderForObservabilityAdmin_TelemetryEnablement/x",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "config:PutServiceLinkedConfigurationRecorder": "implicitDeny"
+   }
+  },
+  "e923d9b8abbe382e62806f207f6b91da": {
+   "actions": [
+    "logs:CreateLogGroup"
+   ],
+   "resource": "arn:aws:logs:x:x:log-group:aws/cloudtrail",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "logs:CreateLogGroup": "implicitDeny"
+   }
+  },
+  "792fd00b03eb0e4e6b731ccd5b139ec9": {
+   "actions": [
+    "cloudwatch:GetOTelEnrichment"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "cloudwatch:GetOTelEnrichment": "implicitDeny"
+   }
+  },
+  "a72b76dc2c1275f2378339785a826ebb": {
+   "actions": [
+    "iam:CreateServiceLinkedRole"
+   ],
+   "resource": "arn:aws:iam::x:role/aws-service-role/config.amazonaws.com/AWSServiceRoleForConfig",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ],
+    [
+     "iam:AWSServiceName",
+     "config.amazonaws.com"
+    ]
+   ],
+   "verdicts": {
+    "iam:CreateServiceLinkedRole": "implicitDeny"
+   }
+  },
+  "c80a3f9adb631816fd79581d8edfe74f": {
+   "actions": [
+    "iam:CreateServiceLinkedRole"
+   ],
+   "resource": "arn:x:iam::x:role/aws-service-role/route53resolver.amazonaws.com/AWSServiceRoleForRoute53Resolver",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ],
+    [
+     "iam:AWSServiceName",
+     "route53resolver.amazonaws.com"
+    ]
+   ],
+   "verdicts": {
+    "iam:CreateServiceLinkedRole": "implicitDeny"
+   }
+  },
+  "e841236b7e37f105b2fb55610207abcb": {
+   "actions": [
+    "eks:UpdateClusterConfig"
+   ],
+   "resource": "arn:aws:eks:x:x:clusterzx",
+   "context": [
+    [
+     "eks:loggingType/scheduler",
+     "true"
+    ],
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "eks:UpdateClusterConfig": "implicitDeny"
+   }
+  },
+  "c2110b8ef985bbdc619eeef40199cd15": {
+   "actions": [
+    "cloudtrail:DeleteServiceLinkedChannel"
+   ],
+   "resource": "arn:aws:cloudtrail:x:x:channel/aws-service-channel/cloudwatchzx",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "cloudtrail:DeleteServiceLinkedChannel": "implicitDeny"
+   }
+  },
+  "5f0f3f6ff8c4a8c36cd884f640d7efb1": {
+   "actions": [
+    "cloudtrail:UpdateServiceLinkedChannel",
+    "cloudtrail:DeleteServiceLinkedChannel"
+   ],
+   "resource": "arn:aws:cloudtrail:x:x:channel/aws-service-channel/cloudwatch/x",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}-not-it"
+    ]
+   ],
+   "verdicts": {
+    "cloudtrail:UpdateServiceLinkedChannel": "implicitDeny",
+    "cloudtrail:DeleteServiceLinkedChannel": "implicitDeny"
+   }
+  },
+  "a04caef0b2d0d7bfaa5f82675555fc1b": {
+   "actions": [
+    "ec2:CreateFlowLogs"
+   ],
+   "resource": "arn:aws:ec2:x:x:vpc/x",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}-not-it"
+    ]
+   ],
+   "verdicts": {
+    "ec2:CreateFlowLogs": "implicitDeny"
+   }
+  },
+  "cf7a37a2e822e3d9b68443d741f1ad9f": {
+   "actions": [
+    "logs:CreateLogStream"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}-not-it"
+    ],
+    [
+     "aws:ResourceTag/CloudWatchTelemetryRuleManaged",
+     "true"
+    ]
+   ],
+   "verdicts": {
+    "logs:CreateLogStream": "implicitDeny"
+   }
+  },
+  "1b1eddd5dc20f874eebae5b1aa60d11a": {
+   "actions": [
+    "sns:CreateTopic"
+   ],
+   "resource": "arn:aws:sns:x:x:xsagemakerx",
+   "context": [],
+   "verdicts": {
+    "sns:CreateTopic": "allowed"
+   }
+  },
+  "b6105a2e515b2bb05eef3a1cba40dae5": {
+   "actions": [
+    "servicecatalog:ListStackInstancesForProvisionedProduct",
+    "glue:GetJobBookmark",
+    "s3:GetBucketCORS",
+    "cognito-idp:AdminAddUserToGroup",
+    "logs:DescribeLogGroups",
+    "ecr:StartImageScan",
+    "cloudwatch:DeleteAlarms",
+    "secretsmanager:GetResourcePolicy",
+    "cloudwatch:ListServiceLevelObjectives",
+    "redshift:GetResourcePolicy",
+    "codecommit:EvaluatePullRequestApprovalRules",
+    "cognito-idp:CreateManagedLoginBranding",
+    "transcribe:StartMedicalStreamTranscription",
+    "shield:DisableProactiveEngagement",
+    "securityhub:ListAggregatorsV2",
+    "guardduty:UpdateMalwareProtectionPlan"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "servicecatalog:ListStackInstancesForProvisionedProduct": "allowed",
+    "glue:GetJobBookmark": "allowed",
+    "s3:GetBucketCORS": "allowed",
+    "cognito-idp:AdminAddUserToGroup": "allowed",
+    "logs:DescribeLogGroups": "allowed",
+    "ecr:StartImageScan": "allowed",
+    "cloudwatch:DeleteAlarms": "allowed",
+    "secretsmanager:GetResourcePolicy": "implicitDeny",
+    "cloudwatch:ListServiceLevelObjectives": "implicitDeny",
+    "redshift:GetResourcePolicy": "implicitDeny",
+    "codecommit:EvaluatePullRequestApprovalRules": "implicitDeny",
+    "cognito-idp:CreateManagedLoginBranding": "implicitDeny",
+    "transcribe:StartMedicalStreamTranscription": "implicitDeny",
+    "shield:DisableProactiveEngagement": "implicitDeny",
+    "securityhub:ListAggregatorsV2": "implicitDeny",
+    "guardduty:UpdateMalwareProtectionPlan": "implicitDeny"
+   }
+  },
+  "ad42291d221a72cd15a0d74f8f46cb54": {
+   "actions": [
+    "glue:GetTable"
+   ],
+   "resource": "arn:aws:glue:x:x:table/x",
+   "context": [],
+   "verdicts": {
+    "glue:GetTable": "allowed"
+   }
+  },
+  "133b20357d0b4b10b9931feffe858d98": {
+   "actions": [
+    "glue:GetTables"
+   ],
+   "resource": "arn:aws:glue:x:x:database/x",
+   "context": [],
+   "verdicts": {
+    "glue:GetTables": "allowed"
+   }
+  },
+  "3d0951a9926c0a90f162f3fd1f128d8d": {
+   "actions": [
+    "secretsmanager:DescribeSecret"
+   ],
+   "resource": "arn:aws:secretsmanager:x:x:secret:AmazonSageMaker-x",
+   "context": [],
+   "verdicts": {
+    "secretsmanager:DescribeSecret": "allowed"
+   }
+  },
+  "87d6467ee05f52766a14b5d257db13bf": {
+   "actions": [
+    "ecr:DeleteRepository"
+   ],
+   "resource": "arn:aws:ecr:x:x:repository/xsagemakerx",
+   "context": [],
+   "verdicts": {
+    "ecr:DeleteRepository": "allowed"
+   }
+  },
+  "e04d135d9d7689c31bb981dc3648dd87": {
+   "actions": [
+    "sns:CreateTopic"
+   ],
+   "resource": "arn:aws:sns:x:x:xSageMakerx",
+   "context": [],
+   "verdicts": {
+    "sns:CreateTopic": "allowed"
+   }
+  },
+  "a08c85754d7d6a1cd98c9a08db855fe2": {
+   "actions": [
+    "s3express:CreateBucket",
+    "s3express:CreateSession"
+   ],
+   "resource": "arn:aws:s3express:x:x:bucket/xSagemakerx",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "s3express:CreateBucket": "implicitDeny",
+    "s3express:CreateSession": "implicitDeny"
+   }
+  },
+  "3c0d4b1862112166f579b752421fd766": {
+   "actions": [
+    "sagemaker:UpdateSpace"
+   ],
+   "resource": "arn:aws:sagemaker:x:x:space/${sagemaker:DomainId}/x",
+   "context": [
+    [
+     "sagemaker:OwnerUserProfileArn",
+     "arn:aws:sagemaker:x:x:user-profile/${sagemaker:DomainId}/${sagemaker:UserProfileName}"
+    ],
+    [
+     "sagemaker:SpaceSharingType",
+     "Private"
+    ]
+   ],
+   "verdicts": {
+    "sagemaker:UpdateSpace": "implicitDeny"
+   }
+  },
+  "2a3e20150abe97aa60424502463c302b": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": "arn:aws:iam::x:role/x",
+   "context": [
+    [
+     "iam:PassedToService",
+     "sagemaker.amazonaws.com"
+    ]
+   ],
+   "verdicts": {
+    "iam:PassRole": "allowed"
+   }
+  },
+  "3d1ac31b59954a14862246cc25417b90": {
+   "actions": [
+    "sagemaker:AddTags"
+   ],
+   "resource": "arn:aws:sagemaker:x:x:space/x",
+   "context": [
+    [
+     "sagemaker:TaggingAction",
+     "CreateSpace"
+    ]
+   ],
+   "verdicts": {
+    "sagemaker:AddTags": "allowed"
+   }
+  },
+  "73e1b5e1ca1caa16de11a90680a9f890": {
+   "actions": [
+    "sagemaker:DescribeApp",
+    "sagemaker:DescribeJob"
+   ],
+   "resource": "arn:aws:sagemaker:x:x:flow-definition/x",
+   "context": [],
+   "verdicts": {
+    "sagemaker:DescribeApp": "implicitDeny",
+    "sagemaker:DescribeJob": "implicitDeny"
+   }
+  },
+  "b66366fe0bae6479ff97c3b58ba52197": {
+   "actions": [
+    "sagemaker:DescribeAppImageConfig",
+    "sagemaker:CallWithBearerToken",
+    "sagemaker:ListInferenceRecommendationsJobSteps",
+    "sagemaker:DescribePartnerApp"
+   ],
+   "resource": "arn:aws:sagemaker:x:x:flow-definitionzx",
+   "context": [],
+   "verdicts": {
+    "sagemaker:DescribeAppImageConfig": "allowed",
+    "sagemaker:CallWithBearerToken": "implicitDeny",
+    "sagemaker:ListInferenceRecommendationsJobSteps": "implicitDeny",
+    "sagemaker:DescribePartnerApp": "allowed"
+   }
+  },
+  "821d2c2a9ca142275990130c638a29e0": {
+   "actions": [
+    "states:GetExecutionHistory"
+   ],
+   "resource": "arn:aws:states:x:x:executionzxsagemakerx:x",
+   "context": [],
+   "verdicts": {
+    "states:GetExecutionHistory": "implicitDeny"
+   }
+  },
+  "de33bde411a58281b23dab7323f5b31a": {
+   "actions": [
+    "s3express:CreateBucket"
+   ],
+   "resource": "arn:aws:s3express:x:x:bucket/xSageMakerx",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}-not-it"
+    ]
+   ],
+   "verdicts": {
+    "s3express:CreateBucket": "implicitDeny"
+   }
+  },
+  "c2fdd80748fe69d10250886ca5cc0e78": {
+   "actions": [
+    "iam:CreateServiceLinkedRole"
+   ],
+   "resource": "arn:aws:iam::x:role/aws-service-role/sagemaker.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_SageMakerEndpoint",
+   "context": [
+    [
+     "iam:AWSServiceName",
+     "sagemaker.application-autoscaling.amazonaws.com-not-it"
+    ]
+   ],
+   "verdicts": {
+    "iam:CreateServiceLinkedRole": "implicitDeny"
+   }
+  },
+  "bcef17fbb5f04019dca1c6037efed1fd": {
+   "actions": [
+    "organizations:ListAccounts",
+    "elasticloadbalancing:DescribeLoadBalancerPolicyTypes",
+    "lambda:GetCodeSigningConfig",
+    "mgn:StartSnapshotGroupForMgn",
+    "s3:CreateAccessPointForObjectLambda",
+    "ram:ReplacePermissionAssociations",
+    "quicksight:DescribeFolder",
+    "omics:UpdateVariantStore",
+    "drs:DescribeRecoveryInstances",
+    "iotwireless:UpdateEventConfigurationByResourceTypes"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "organizations:ListAccounts": "allowed",
+    "elasticloadbalancing:DescribeLoadBalancerPolicyTypes": "implicitDeny",
+    "lambda:GetCodeSigningConfig": "implicitDeny",
+    "mgn:StartSnapshotGroupForMgn": "implicitDeny",
+    "s3:CreateAccessPointForObjectLambda": "implicitDeny",
+    "ram:ReplacePermissionAssociations": "implicitDeny",
+    "quicksight:DescribeFolder": "implicitDeny",
+    "omics:UpdateVariantStore": "implicitDeny",
+    "drs:DescribeRecoveryInstances": "implicitDeny",
+    "iotwireless:UpdateEventConfigurationByResourceTypes": "implicitDeny"
+   }
+  },
+  "18186162f70cc755f9fe66a9451ce876": {
+   "actions": [
+    "s3:PutObject",
+    "s3:ListMultipartUploadParts"
+   ],
+   "resource": "arn:aws:s3:::transform-vmware-target-x/x",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "s3:PutObject": "implicitDeny",
+    "s3:ListMultipartUploadParts": "implicitDeny"
+   }
+  },
+  "a090f63df5c471da9d58b63c2eea846d": {
+   "actions": [
+    "cloudformation:GetTemplateSummary"
+   ],
+   "resource": "arn:aws:cloudformation:x:x:stack/Nmdx",
+   "context": [
+    [
+     "aws:RequestedRegion",
+     "${aws:PrincipalTag/TargetRegion}"
+    ],
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ],
+    [
+     "aws:ResourceTag/CreatedBy",
+     "AWSApplicationMigrationService"
+    ]
+   ],
+   "verdicts": {
+    "cloudformation:GetTemplateSummary": "implicitDeny"
+   }
+  },
+  "06d266283ce9291fc68217340297a0e1": {
+   "actions": [
+    "ec2:CreateTags"
+   ],
+   "resource": "arn:aws:ec2:x:x:transit-gateway-route-table/x",
+   "context": [
+    [
+     "aws:RequestTag/CreatedBy",
+     "AWSApplicationMigrationService"
+    ],
+    [
+     "aws:RequestedRegion",
+     "${aws:PrincipalTag/TargetRegion}"
+    ],
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ],
+    [
+     "ec2:CreateAction",
+     "AllocateAddress"
+    ]
+   ],
+   "verdicts": {
+    "ec2:CreateTags": "implicitDeny"
+   }
+  },
+  "ebf83f50df300aa67b9a2ccb0d70e995": {
+   "actions": [
+    "ec2:DescribeSecurityGroups"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "aws:RequestedRegion",
+     "${aws:PrincipalTag/TargetRegion}"
+    ]
+   ],
+   "verdicts": {
+    "ec2:DescribeSecurityGroups": "implicitDeny"
+   }
+  },
+  "6545acb5ed20ee17552239c7aee24a71": {
+   "actions": [
+    "lambda:GetFunctionConfiguration"
+   ],
+   "resource": "arn:aws:lambda:x:x:function:network-migrationx",
+   "context": [
+    [
+     "aws:RequestedRegion",
+     "${aws:PrincipalTag/TargetRegion}"
+    ],
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ],
+    [
+     "aws:ResourceTag/CreatedBy",
+     "AWSApplicationMigrationService"
+    ]
+   ],
+   "verdicts": {
+    "lambda:GetFunctionConfiguration": "implicitDeny"
+   }
+  },
+  "a1ff8d50faa0ea80e5684dec184d40a0": {
+   "actions": [
+    "ec2:AssociateVpcCidrBlock"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "aws:RequestedRegion",
+     "${aws:PrincipalTag/TargetRegion}"
+    ],
+    [
+     "aws:ResourceTag/CreatedBy",
+     "AWSApplicationMigrationService"
+    ]
+   ],
+   "verdicts": {
+    "ec2:AssociateVpcCidrBlock": "implicitDeny"
+   }
+  },
+  "182ba0e1ae51d1a5171ad2b7516a8fda": {
+   "actions": [
+    "iam:ListRolePolicies"
+   ],
+   "resource": "arn:aws:iam::x:role/NmzxmodifyTransitGatewayx",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ],
+    [
+     "aws:ResourceTag/CreatedBy",
+     "AWSApplicationMigrationService"
+    ]
+   ],
+   "verdicts": {
+    "iam:ListRolePolicies": "implicitDeny"
+   }
+  },
+  "f1966b2f4328fe90d2fbcb97c3e643c5": {
+   "actions": [
+    "ssm:PutParameter"
+   ],
+   "resource": "arn:aws:ssm:x:x:parameter/network-migrationzx",
+   "context": [
+    [
+     "aws:RequestTag/CreatedBy",
+     "AWSApplicationMigrationService"
+    ],
+    [
+     "aws:RequestedRegion",
+     "${aws:PrincipalTag/TargetRegion}"
+    ],
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ],
+    [
+     "aws:ResourceTag/CreatedBy",
+     "AWSApplicationMigrationService"
+    ]
+   ],
+   "verdicts": {
+    "ssm:PutParameter": "implicitDeny"
+   }
+  },
+  "bcb21ad40d3489c60d5444d01c878fbf": {
+   "actions": [
+    "ec2:CreateTags"
+   ],
+   "resource": "arn:aws:ec2:x:x:network-insights-access-scopezx",
+   "context": [
+    [
+     "aws:RequestTag/CreatedBy",
+     "AWSApplicationMigrationService"
+    ],
+    [
+     "aws:RequestedRegion",
+     "${aws:PrincipalTag/TargetRegion}"
+    ],
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ],
+    [
+     "ec2:CreateAction",
+     "AllocateAddress"
+    ]
+   ],
+   "verdicts": {
+    "ec2:CreateTags": "implicitDeny"
+   }
+  },
+  "aa975d2c3596f709a5903d063f06b5a0": {
+   "actions": [
+    "s3:PutBucketTagging"
+   ],
+   "resource": "arn:aws:s3:::transform-vmware-targetzx",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "verdicts": {
+    "s3:PutBucketTagging": "implicitDeny"
+   }
+  },
+  "5a4e727a1aea3444cc353060ba6fd469": {
+   "actions": [
+    "ec2:CreateTags"
+   ],
+   "resource": "arn:aws:ec2:x:x:security-group-rulezx",
+   "context": [
+    [
+     "aws:RequestTag/CreatedBy",
+     "AWSApplicationMigrationService"
+    ],
+    [
+     "aws:RequestedRegion",
+     "${aws:PrincipalTag/TargetRegion}"
+    ],
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ],
+    [
+     "ec2:CreateAction",
+     "AllocateAddress"
+    ]
+   ],
+   "verdicts": {
+    "ec2:CreateTags": "implicitDeny"
+   }
+  },
+  "9bbf85c2a8ff1923aa9a6a6897efde0c": {
+   "actions": [
+    "ec2:DescribeTransitGatewayRouteTables"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "aws:RequestedRegion",
+     "${aws:PrincipalTag/TargetRegion}-not-it"
+    ]
+   ],
+   "verdicts": {
+    "ec2:DescribeTransitGatewayRouteTables": "implicitDeny"
+   }
+  },
+  "236682874f7d2dcf264a41dac90adcd4": {
+   "actions": [
+    "s3:GetObjectAttributes"
+   ],
+   "resource": "arn:aws:s3:::transform-vmware-target-x/x",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}-not-it"
+    ]
+   ],
+   "verdicts": {
+    "s3:GetObjectAttributes": "implicitDeny"
+   }
+  },
+  "359e290f6e88b8423d13b2a3fb9b542d": {
+   "actions": [
+    "mgn:TagResource"
+   ],
+   "resource": "arn:aws:mgn:x:x:network-migration-definition/x",
+   "context": [
+    [
+     "aws:RequestTag/ATWorkspace",
+     "${aws:PrincipalTag/WorkspaceId}-not-it"
+    ],
+    [
+     "aws:RequestTag/CreatedBy",
+     "AWSTransform"
+    ],
+    [
+     "aws:RequestedRegion",
+     "${aws:PrincipalTag/TargetRegion}"
+    ],
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ],
+    [
+     "aws:ResourceTag/CreatedBy",
+     "AWSTransform"
+    ],
+    [
+     "mgn:CreateAction",
+     "CreateNetworkMigrationDefinition"
+    ]
+   ],
+   "verdicts": {
+    "mgn:TagResource": "implicitDeny"
+   }
+  },
+  "74cc5996b698011bd1dfb79ff2e4c913": {
+   "actions": [
+    "elasticmapreduce:PutManagedScalingPolicy",
+    "autoscaling:DeleteScheduledAction",
+    "dynamodb:GetRecords",
+    "ec2:DescribeNetworkInsightsPaths",
+    "redshift:EnableLogging",
+    "rds:DescribeOptionGroupOptions",
+    "es:ListVpcEndpoints",
+    "redshift:ListSchemas",
+    "es:ListVpcEndpointsForDomain",
+    "machinelearning:UpdateMLModel",
+    "elasticmapreduce:StartEditor",
+    "rds:CreateDBClusterEndpoint",
+    "ec2:ModifySpotFleetRequest",
+    "redshift:AcceptReservedNodeExchange",
+    "s3:GetAccountPublicAccessBlock",
+    "rds:ModifyCurrentDBClusterCapacity",
+    "dynamodb:PutItem",
+    "sagemaker:DescribeFlowDefinition",
+    "sagemaker:CreateFlowDefinition",
+    "logs:DescribeQueries"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "elasticmapreduce:PutManagedScalingPolicy": "allowed",
+    "autoscaling:DeleteScheduledAction": "allowed",
+    "dynamodb:GetRecords": "allowed",
+    "ec2:DescribeNetworkInsightsPaths": "allowed",
+    "redshift:EnableLogging": "allowed",
+    "rds:DescribeOptionGroupOptions": "allowed",
+    "es:ListVpcEndpoints": "allowed",
+    "redshift:ListSchemas": "allowed",
+    "es:ListVpcEndpointsForDomain": "allowed",
+    "machinelearning:UpdateMLModel": "allowed",
+    "elasticmapreduce:StartEditor": "allowed",
+    "rds:CreateDBClusterEndpoint": "allowed",
+    "ec2:ModifySpotFleetRequest": "allowed",
+    "redshift:AcceptReservedNodeExchange": "allowed",
+    "s3:GetAccountPublicAccessBlock": "allowed",
+    "rds:ModifyCurrentDBClusterCapacity": "allowed",
+    "dynamodb:PutItem": "allowed",
+    "sagemaker:DescribeFlowDefinition": "allowed",
+    "sagemaker:CreateFlowDefinition": "allowed",
+    "logs:DescribeQueries": "implicitDeny"
+   }
+  },
+  "f4c333e39c5c8819bd0c027f95b856cc": {
+   "actions": [
+    "s3:PutReplicationConfiguration",
+    "kms:SynchronizeMultiRegionKey",
+    "cloudformation:DescribeEvents",
+    "sagemaker:ListModels",
+    "payment-cryptography:EnableDefaultKeyReplicationRegions",
+    "aoss:DeleteSecurityPolicy",
+    "wisdom:UpdateContent",
+    "networkmanager:CreateDevice"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "s3:PutReplicationConfiguration": "implicitDeny",
+    "kms:SynchronizeMultiRegionKey": "implicitDeny",
+    "cloudformation:DescribeEvents": "implicitDeny",
+    "sagemaker:ListModels": "allowed",
+    "payment-cryptography:EnableDefaultKeyReplicationRegions": "implicitDeny",
+    "aoss:DeleteSecurityPolicy": "implicitDeny",
+    "wisdom:UpdateContent": "implicitDeny",
+    "networkmanager:CreateDevice": "implicitDeny"
+   }
+  },
+  "1c8f67f8c9245533d419813b53916bc7": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "iam:PassedToService",
+     "sagemaker.amazonaws.com"
+    ]
+   ],
+   "verdicts": {
+    "iam:PassRole": "allowed"
+   }
+  },
+  "b3ad094fcbef246653dd975e1bc6bea9": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": null,
+   "context": [
+    [
+     "iam:PassedToService",
+     "sagemaker.amazonaws.com-not-it"
+    ]
+   ],
+   "verdicts": {
+    "iam:PassRole": "implicitDeny"
+   }
+  },
+  "550084841b54e5e1e627c0a5a47c79a1": {
+   "actions": [
+    "personalize:GetDataInsights",
+    "athena:GetNotebookMetadata",
+    "ses:DescribeConfigurationSet",
+    "mq:DescribeBroker",
+    "amplifybackend:CreateBackendConfig",
+    "securityagent:ListThreatModelJobTasks",
+    "wisdom:DeleteKnowledgeBase",
+    "lightsail:GetStaticIp"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "personalize:GetDataInsights": "explicitDeny",
+    "athena:GetNotebookMetadata": "explicitDeny",
+    "ses:DescribeConfigurationSet": "explicitDeny",
+    "mq:DescribeBroker": "explicitDeny",
+    "amplifybackend:CreateBackendConfig": "explicitDeny",
+    "securityagent:ListThreatModelJobTasks": "explicitDeny",
+    "wisdom:DeleteKnowledgeBase": "explicitDeny",
+    "lightsail:GetStaticIp": "explicitDeny"
+   }
+  },
+  "c5fa272adc347d2cb636bc6b876ac86e": {
+   "actions": [
+    "sts:GetFederationToken",
+    "organizations:CreateOrganization",
+    "lightsail:DeleteContactMethod",
+    "lightsail:UpdateLoadBalancerAttribute",
+    "elasticache:DescribeServiceUpdates",
+    "trustedadvisor:ListOrganizationRecommendationResources",
+    "simspaceweaver:ListApps",
+    "ec2:DeleteVpnConnectionRoute"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "sts:GetFederationToken": "explicitDeny",
+    "organizations:CreateOrganization": "explicitDeny",
+    "lightsail:DeleteContactMethod": "explicitDeny",
+    "lightsail:UpdateLoadBalancerAttribute": "explicitDeny",
+    "elasticache:DescribeServiceUpdates": "implicitDeny",
+    "trustedadvisor:ListOrganizationRecommendationResources": "implicitDeny",
+    "simspaceweaver:ListApps": "implicitDeny",
+    "ec2:DeleteVpnConnectionRoute": "implicitDeny"
+   }
+  },
+  "ac76d70c9586a87727b106c3d1692c4d": {
+   "actions": [
+    "deepracer:ListTracks",
+    "deepracer:GetAccountConfig",
+    "deepracer:GetTrack",
+    "deepracer:TestRewardFunction",
+    "license-manager:ListReceivedGrants",
+    "elasticmapreduce:GetOnClusterAppUIPresignedURL",
+    "es:RemoveTags",
+    "auditmanager:ListAssessments"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "deepracer:ListTracks": "allowed",
+    "deepracer:GetAccountConfig": "allowed",
+    "deepracer:GetTrack": "allowed",
+    "deepracer:TestRewardFunction": "allowed",
+    "license-manager:ListReceivedGrants": "implicitDeny",
+    "elasticmapreduce:GetOnClusterAppUIPresignedURL": "implicitDeny",
+    "es:RemoveTags": "implicitDeny",
+    "auditmanager:ListAssessments": "implicitDeny"
+   }
+  },
+  "3669d30ad5d300c005c8907e1378ea15": {
+   "actions": [
+    "acm-pca:GetCertificate",
+    "acm-pca:ListPermissions",
+    "acm-pca:RevokeCertificate"
+   ],
+   "resource": "arn:aws:acm-pca:x:x:certificate-authority/x",
+   "context": [],
+   "verdicts": {
+    "acm-pca:GetCertificate": "allowed",
+    "acm-pca:ListPermissions": "allowed",
+    "acm-pca:RevokeCertificate": "allowed"
+   }
+  },
+  "6ad7b2fee4fe9e17d755b89125eb952f": {
+   "actions": [
+    "acm-pca:ListCertificateAuthorities",
+    "acm-pca:ListTags",
+    "dms:ListMetadataModelConversions",
+    "ec2:AttachClassicLinkVpc",
+    "iotmanagedintegrations:RegisterAccountAssociation",
+    "iotsitewise:BatchDisassociateProjectAssets"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "acm-pca:ListCertificateAuthorities": "allowed",
+    "acm-pca:ListTags": "implicitDeny",
+    "dms:ListMetadataModelConversions": "implicitDeny",
+    "ec2:AttachClassicLinkVpc": "implicitDeny",
+    "iotmanagedintegrations:RegisterAccountAssociation": "implicitDeny",
+    "iotsitewise:BatchDisassociateProjectAssets": "implicitDeny"
+   }
+  },
+  "e9444a29a1802100c1ff4809734c61db": {
+   "actions": [
+    "acm-pca:IssueCertificate"
+   ],
+   "resource": "arn:aws:acm-pca:x:x:certificate-authority/x",
+   "context": [
+    [
+     "acm-pca:TemplateArn",
+     "arn:aws:acm-pca:x:x:template/EndEntityCertificate/Vx"
+    ]
+   ],
+   "verdicts": {
+    "acm-pca:IssueCertificate": "allowed"
+   }
+  },
+  "18ba6bb42c8f984e2f4c6c3ec810b712": {
+   "actions": [
+    "acm-pca:GetCertificate",
+    "acm-pca:ListPermissions",
+    "acm-pca:RevokeCertificate"
+   ],
+   "resource": "arn:aws:acm-pca:x:x:certificate-authorityzx",
+   "context": [],
+   "verdicts": {
+    "acm-pca:GetCertificate": "implicitDeny",
+    "acm-pca:ListPermissions": "implicitDeny",
+    "acm-pca:RevokeCertificate": "implicitDeny"
+   }
+  },
+  "9f14bd3507426a35545c2c7547d21674": {
+   "actions": [
+    "acm-pca:IssueCertificate"
+   ],
+   "resource": "arn:aws:acm-pca:x:x:certificate-authorityzx",
+   "context": [
+    [
+     "acm-pca:TemplateArn",
+     "arn:aws:acm-pca:x:x:template/EndEntityCertificate/Vx"
+    ]
+   ],
+   "verdicts": {
+    "acm-pca:IssueCertificate": "implicitDeny"
+   }
+  },
+  "51f6ea755244f1867d6c733fc1d98bec": {
+   "actions": [
+    "cleanrooms:CreateConfiguredTableAnalysisRule",
+    "iam:ListPolicies",
+    "cleanrooms:CreateCollaboration",
+    "cleanrooms:ListCollaborationAnalysisTemplates",
+    "cleanrooms:TagResource",
+    "cleanrooms:CreateConfiguredTableAssociation",
+    "cleanrooms:GetAnalysisTemplate",
+    "cleanrooms:ListMemberships",
+    "cleanrooms:ListConfiguredTableAssociations",
+    "cleanrooms:ListConfiguredTables",
+    "glue:GetTable",
+    "glue:GetDatabases",
+    "cleanrooms:DeleteConfiguredTableAssociation",
+    "logs:ListLogDeliveries",
+    "glue:GetMLTaskRun",
+    "logs:CreateLogStream",
+    "iam:GetContextKeysForCustomPolicy",
+    "cleanrooms:GetIntermediateTable",
+    "cleanrooms:UpdateProtectedQuery",
+    "cleanrooms:StartProtectedQuery"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "cleanrooms:CreateConfiguredTableAnalysisRule": "allowed",
+    "iam:ListPolicies": "allowed",
+    "cleanrooms:CreateCollaboration": "allowed",
+    "cleanrooms:ListCollaborationAnalysisTemplates": "allowed",
+    "cleanrooms:TagResource": "allowed",
+    "cleanrooms:CreateConfiguredTableAssociation": "allowed",
+    "cleanrooms:GetAnalysisTemplate": "allowed",
+    "cleanrooms:ListMemberships": "allowed",
+    "cleanrooms:ListConfiguredTableAssociations": "allowed",
+    "cleanrooms:ListConfiguredTables": "allowed",
+    "glue:GetTable": "allowed",
+    "glue:GetDatabases": "allowed",
+    "cleanrooms:DeleteConfiguredTableAssociation": "allowed",
+    "logs:ListLogDeliveries": "implicitDeny",
+    "glue:GetMLTaskRun": "implicitDeny",
+    "logs:CreateLogStream": "implicitDeny",
+    "iam:GetContextKeysForCustomPolicy": "implicitDeny",
+    "cleanrooms:GetIntermediateTable": "implicitDeny",
+    "cleanrooms:UpdateProtectedQuery": "explicitDeny",
+    "cleanrooms:StartProtectedQuery": "explicitDeny"
+   }
+  },
+  "0c3791f5f94a8994b24fa94657d18698": {
+   "actions": [
+    "network-firewall:AssociateAvailabilityZones",
+    "account-access:ListEntitlements",
+    "elastictranscoder:ListJobsByPipeline",
+    "connect:DisassociateRoutingProfileQueues"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "network-firewall:AssociateAvailabilityZones": "implicitDeny",
+    "account-access:ListEntitlements": "implicitDeny",
+    "elastictranscoder:ListJobsByPipeline": "implicitDeny",
+    "connect:DisassociateRoutingProfileQueues": "implicitDeny"
+   }
+  },
+  "9e3e7054bc6baa3a6672bac75130d430": {
+   "actions": [
+    "iam:ListAttachedRolePolicies",
+    "iam:ListRolePolicies"
+   ],
+   "resource": "arn:aws:iam::x:role/service-role/xcleanroomsx",
+   "context": [],
+   "verdicts": {
+    "iam:ListAttachedRolePolicies": "allowed",
+    "iam:ListRolePolicies": "allowed"
+   }
+  },
+  "8e254aa9be7c3d195a77adf977070b97": {
+   "actions": [
+    "iam:GetPolicy"
+   ],
+   "resource": "arn:aws:iam::x:policy/xcleanroomsx",
+   "context": [],
+   "verdicts": {
+    "iam:GetPolicy": "allowed"
+   }
+  },
+  "2a89810a537a236993fc8e7c8409b641": {
+   "actions": [
+    "logs:StartQuery",
+    "logs:CreateLogGroup"
+   ],
+   "resource": "arn:aws:logs:x:x:log-group:/aws/cleanroomsx",
+   "context": [],
+   "verdicts": {
+    "logs:StartQuery": "allowed",
+    "logs:CreateLogGroup": "implicitDeny"
+   }
+  },
+  "b725dd252e53081030c0c885c9783815": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": "arn:aws:iam::x:role/service-role/xcleanroomsx",
+   "context": [
+    [
+     "iam:PassedToService",
+     "cleanrooms.amazonaws.com"
+    ]
+   ],
+   "verdicts": {
+    "iam:PassRole": "allowed"
+   }
+  },
+  "6e756629aaf400ec11817746eb658083": {
+   "actions": [
+    "iam:GetPolicyVersion",
+    "iam:GetPolicy"
+   ],
+   "resource": "arn:aws:iam::x:policyzxcleanroomsx",
+   "context": [],
+   "verdicts": {
+    "iam:GetPolicyVersion": "implicitDeny",
+    "iam:GetPolicy": "implicitDeny"
+   }
+  },
+  "f7e79236d0f507509e426e4ee88d90fe": {
+   "actions": [
+    "iam:ListAttachedRolePolicies",
+    "iam:ListRolePolicies"
+   ],
+   "resource": "arn:aws:iam::x:role/service-rolezxcleanroomsx",
+   "context": [],
+   "verdicts": {
+    "iam:ListAttachedRolePolicies": "implicitDeny",
+    "iam:ListRolePolicies": "implicitDeny"
+   }
+  },
+  "f82cc2908057d86dab9707b27897de7b": {
+   "actions": [
+    "logs:StartQuery"
+   ],
+   "resource": "arn:aws:logs:x:x:log-group:/aws/cleanroomzx",
+   "context": [],
+   "verdicts": {
+    "logs:StartQuery": "implicitDeny"
+   }
+  },
+  "a36481b4137c1eedca48b75d1be927d7": {
+   "actions": [
+    "iam:PassRole"
+   ],
+   "resource": "arn:aws:iam::x:role/service-role/xcleanroomsx",
+   "context": [
+    [
+     "iam:PassedToService",
+     "cleanrooms.amazonaws.com-not-it"
+    ]
+   ],
+   "verdicts": {
+    "iam:PassRole": "implicitDeny"
+   }
+  },
+  "d119abdb85ebafb04c13e5eb14940002": {
+   "actions": [
+    "resource-groups:GetGroupPolicy",
+    "mobiletargeting:GetCampaignDateRangeKpi",
+    "eks:DeregisterCluster",
+    "ram:GetResourcePolicies",
+    "guardduty:ListMalwareProtectionPlans",
+    "lightsail:DeleteDiskSnapshot",
+    "bedrock:GetPromptRouter",
+    "servicequotas:StopAutoManagement",
+    "elasticache:DescribeCacheSecurityGroups",
+    "neptune-graph:GetExportTask",
+    "license-manager:UpdateLicenseSpecificationsForResource",
+    "glue:GetCatalog",
+    "drs:DisconnectSourceServer",
+    "connect:AssociateLambdaFunction",
+    "ivs:ListPlaybackRestrictionPolicies",
+    "robomaker:ListSupportedAvailabilityZones",
+    "chime:DeleteSipMediaApplication",
+    "kms:ListRetirableGrants",
+    "resiliencehub:ListSuggestedResiliencyPolicies",
+    "ses:ListContactLists"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "resource-groups:GetGroupPolicy": "allowed",
+    "mobiletargeting:GetCampaignDateRangeKpi": "allowed",
+    "eks:DeregisterCluster": "allowed",
+    "ram:GetResourcePolicies": "allowed",
+    "guardduty:ListMalwareProtectionPlans": "allowed",
+    "lightsail:DeleteDiskSnapshot": "allowed",
+    "bedrock:GetPromptRouter": "allowed",
+    "servicequotas:StopAutoManagement": "allowed",
+    "elasticache:DescribeCacheSecurityGroups": "allowed",
+    "neptune-graph:GetExportTask": "allowed",
+    "license-manager:UpdateLicenseSpecificationsForResource": "allowed",
+    "glue:GetCatalog": "allowed",
+    "drs:DisconnectSourceServer": "allowed",
+    "connect:AssociateLambdaFunction": "allowed",
+    "ivs:ListPlaybackRestrictionPolicies": "allowed",
+    "robomaker:ListSupportedAvailabilityZones": "allowed",
+    "chime:DeleteSipMediaApplication": "allowed",
+    "kms:ListRetirableGrants": "allowed",
+    "resiliencehub:ListSuggestedResiliencyPolicies": "allowed",
+    "ses:ListContactLists": "allowed"
+   }
+  },
+  "3e96996966e64305e513e680d62b491e": {
+   "actions": [
+    "organizations:DescribeResponsibilityTransfer",
+    "account:GetRegionOptStatus",
+    "iam:CreateInstanceProfile",
+    "account:AcceptPrimaryEmailUpdate",
+    "account:CloseAccount",
+    "account:DeleteAlternateContact",
+    "account:DisableRegion",
+    "iam:GetDelegationRequest",
+    "iam:GenerateServiceLastAccessedDetails",
+    "iam:ListDelegationRequests",
+    "organizations:ListInboundResponsibilityTransfers"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "organizations:DescribeResponsibilityTransfer": "implicitDeny",
+    "account:GetRegionOptStatus": "implicitDeny",
+    "iam:CreateInstanceProfile": "implicitDeny",
+    "account:AcceptPrimaryEmailUpdate": "implicitDeny",
+    "account:CloseAccount": "implicitDeny",
+    "account:DeleteAlternateContact": "implicitDeny",
+    "account:DisableRegion": "implicitDeny",
+    "iam:GetDelegationRequest": "implicitDeny",
+    "iam:GenerateServiceLastAccessedDetails": "implicitDeny",
+    "iam:ListDelegationRequests": "implicitDeny",
+    "organizations:ListInboundResponsibilityTransfers": "implicitDeny"
+   }
+  },
+  "5b73dcdcb6677ebc3086511d2ed741b2": {
+   "actions": [
+    "chatbot:GetSlackOauthParameters",
+    "s3files:DeleteAccessPoint",
+    "quicksight:DeleteDashboard",
+    "payment-cryptography:DeleteResourcePolicy",
+    "route53profiles:AssociateProfile",
+    "ivs:ListRecordingConfigurations",
+    "mediaconnect:GrantFlowEntitlements",
+    "bedrock-agentcore:UpdateConfigurationBundle",
+    "ec2:DescribeVerifiedAccessGroups",
+    "kinesisvideo:GetDataEndpoint",
+    "greengrass:CreateGroupCertificateAuthority",
+    "thinclient:CreateEnvironment",
+    "lightsail:CloseInstancePublicPorts",
+    "resource-groups:DeleteGroupPolicy",
+    "rds:DescribeOptionGroups",
+    "iotfleetwise:ListDecoderManifestNetworkInterfaces",
+    "backup:ListScanJobSummaries",
+    "securityagent:ListPrivateConnections",
+    "chime:DeleteEventsConfiguration",
+    "codeconnections:UpdateSyncConfiguration"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "chatbot:GetSlackOauthParameters": "allowed",
+    "s3files:DeleteAccessPoint": "allowed",
+    "quicksight:DeleteDashboard": "allowed",
+    "payment-cryptography:DeleteResourcePolicy": "allowed",
+    "route53profiles:AssociateProfile": "allowed",
+    "ivs:ListRecordingConfigurations": "allowed",
+    "mediaconnect:GrantFlowEntitlements": "allowed",
+    "bedrock-agentcore:UpdateConfigurationBundle": "allowed",
+    "ec2:DescribeVerifiedAccessGroups": "allowed",
+    "kinesisvideo:GetDataEndpoint": "allowed",
+    "greengrass:CreateGroupCertificateAuthority": "allowed",
+    "thinclient:CreateEnvironment": "allowed",
+    "lightsail:CloseInstancePublicPorts": "allowed",
+    "resource-groups:DeleteGroupPolicy": "allowed",
+    "rds:DescribeOptionGroups": "allowed",
+    "iotfleetwise:ListDecoderManifestNetworkInterfaces": "allowed",
+    "backup:ListScanJobSummaries": "allowed",
+    "securityagent:ListPrivateConnections": "allowed",
+    "chime:DeleteEventsConfiguration": "allowed",
+    "codeconnections:UpdateSyncConfiguration": "allowed"
+   }
+  },
+  "2b97cc49b26a06c8a38ebe0b9c524a73": {
+   "actions": [
+    "account:GetAlternateContact",
+    "organizations:DescribeResourcePolicy",
+    "sts:GetSessionToken",
+    "iam:ListMFADeviceTags",
+    "account:AcceptPrimaryEmailUpdate",
+    "account:CloseAccount",
+    "account:DeleteAlternateContact",
+    "account:DisableRegion",
+    "iam:GetSSHPublicKey",
+    "rolesanywhere:ListTagsForResource",
+    "iam:UpdateOpenIDConnectProviderThumbprint",
+    "ram:ListPermissionAssociations"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "account:GetAlternateContact": "implicitDeny",
+    "organizations:DescribeResourcePolicy": "implicitDeny",
+    "sts:GetSessionToken": "implicitDeny",
+    "iam:ListMFADeviceTags": "implicitDeny",
+    "account:AcceptPrimaryEmailUpdate": "implicitDeny",
+    "account:CloseAccount": "implicitDeny",
+    "account:DeleteAlternateContact": "implicitDeny",
+    "account:DisableRegion": "implicitDeny",
+    "iam:GetSSHPublicKey": "implicitDeny",
+    "rolesanywhere:ListTagsForResource": "implicitDeny",
+    "iam:UpdateOpenIDConnectProviderThumbprint": "implicitDeny",
+    "ram:ListPermissionAssociations": "implicitDeny"
+   }
+  },
+  "3eb3102e9c0286533c361b5deca23d9c": {
+   "actions": [
+    "iam:ListAccessKeys",
+    "iam:GetAccessKeyLastUsed",
+    "iam:GetUser",
+    "iam:ListSigningCertificates",
+    "iam:GetAccessKeyLastUsed",
+    "iam:GetAccountSummary",
+    "iam:GetLoginProfile",
+    "iam:GetUser",
+    "iotsitewise:ListTagsForResource",
+    "a4b:CreateUser",
+    "amplify:CreateDeployment",
+    "rolesanywhere:DeleteCrl"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "iam:ListAccessKeys": "explicitDeny",
+    "iam:GetAccessKeyLastUsed": "explicitDeny",
+    "iam:GetUser": "explicitDeny",
+    "iam:ListSigningCertificates": "explicitDeny",
+    "iam:GetAccountSummary": "implicitDeny",
+    "iam:GetLoginProfile": "explicitDeny",
+    "iotsitewise:ListTagsForResource": "explicitDeny",
+    "a4b:CreateUser": "explicitDeny",
+    "amplify:CreateDeployment": "explicitDeny",
+    "rolesanywhere:DeleteCrl": "explicitDeny"
+   }
+  },
+  "22d98ddf36ecb1557d9373da348a4f70": {
+   "actions": [
+    "s3:GetObject",
+    "s3:ListBucketVersions",
+    "sqs:DeleteMessage",
+    "sqs:ChangeMessageVisibility",
+    "s3:ListBucket",
+    "s3:GetBucketLocation",
+    "sqs:ListQueues",
+    "sqs:GetQueueAttributes",
+    "sqs:ReceiveMessage",
+    "s3:GetObjectVersion",
+    "sqs:GetQueueUrl",
+    "sqs:SendMessage",
+    "s3:PutObject",
+    "kms:Decrypt",
+    "kms:GenerateDataKey",
+    "sqs:DeleteQueue",
+    "s3:GetBucketRequestPayment",
+    "kms:UntagResource",
+    "glue:StartCrawler",
+    "managedblockchain:GetAccessor"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "s3:GetObject": "explicitDeny",
+    "s3:ListBucketVersions": "explicitDeny",
+    "sqs:DeleteMessage": "explicitDeny",
+    "sqs:ChangeMessageVisibility": "explicitDeny",
+    "s3:ListBucket": "explicitDeny",
+    "s3:GetBucketLocation": "explicitDeny",
+    "sqs:ListQueues": "explicitDeny",
+    "sqs:GetQueueAttributes": "explicitDeny",
+    "sqs:ReceiveMessage": "explicitDeny",
+    "s3:GetObjectVersion": "explicitDeny",
+    "sqs:GetQueueUrl": "explicitDeny",
+    "sqs:SendMessage": "explicitDeny",
+    "s3:PutObject": "explicitDeny",
+    "kms:Decrypt": "explicitDeny",
+    "kms:GenerateDataKey": "explicitDeny",
+    "sqs:DeleteQueue": "explicitDeny",
+    "s3:GetBucketRequestPayment": "explicitDeny",
+    "kms:UntagResource": "explicitDeny",
+    "glue:StartCrawler": "explicitDeny",
+    "managedblockchain:GetAccessor": "explicitDeny"
+   }
+  },
+  "196e1d8ac5266a7d5e44ca47d1b78456": {
+   "actions": [
+    "ec2:DescribeInstanceTypeOfferings",
+    "bedrock:ListDataAutomationLibraryIngestionJobs"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "ec2:DescribeInstanceTypeOfferings": "explicitDeny",
+    "bedrock:ListDataAutomationLibraryIngestionJobs": "explicitDeny"
+   }
+  },
+  "5f26faf38c12fac171a4d1765ebb7ba8": {
+   "actions": [
+    "aoss:APIAccessAll",
+    "athena:BatchGetNamedQuery",
+    "athena:BatchGetPreparedStatement",
+    "athena:BatchGetQueryExecution",
+    "gamelift:DeleteAlias",
+    "evidently:DeleteLaunch",
+    "kinesisvideo:JoinStorageSessionAsViewer",
+    "dms:StopReplication"
+   ],
+   "resource": null,
+   "context": [],
+   "verdicts": {
+    "aoss:APIAccessAll": "implicitDeny",
+    "athena:BatchGetNamedQuery": "implicitDeny",
+    "athena:BatchGetPreparedStatement": "implicitDeny",
+    "athena:BatchGetQueryExecution": "implicitDeny",
+    "gamelift:DeleteAlias": "explicitDeny",
+    "evidently:DeleteLaunch": "explicitDeny",
+    "kinesisvideo:JoinStorageSessionAsViewer": "explicitDeny",
+    "dms:StopReplication": "explicitDeny"
+   }
+  }
+ }
+}

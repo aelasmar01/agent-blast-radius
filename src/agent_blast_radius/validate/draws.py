@@ -195,6 +195,16 @@ def _wildcard_siblings(action: str, granted: frozenset[str]) -> list[str]:
 # --- plan --------------------------------------------------------------------------------
 
 
+def _draw_order(c: Capability) -> tuple:
+    """A total, process-stable ordering for capabilities."""
+    return (
+        c.action,
+        c.resource,
+        tuple((x.operator, x.key, x.values) for x in c.conditions),
+        c.residue.unmodeled_keys,
+    )
+
+
 def plan_draws(
     role: Role,
     resolution: Resolution,
@@ -214,7 +224,11 @@ def plan_draws(
     refuses = any(u.kind in ("NotAction", "NotResource") for u in resolution.unsupported)
     deny_expected: Decision = "unsupported" if refuses else "deny"
     known = tuple(known_resources)
-    caps = sorted(resolution.capabilities, key=lambda c: (c.action, c.resource))
+    # Total order. Sorting on (action, resource) alone leaves ties — the same action and
+    # resource under different conditions — broken by frozenset iteration order, which
+    # Python randomizes per process. That silently made "seeded draws are reproducible"
+    # false: two runs asked different questions and a recorded cassette would not replay.
+    caps = sorted(resolution.capabilities, key=_draw_order)
     granted = frozenset(c.action for c in caps)
     patterns_for: dict[str, set[str]] = {}
     for c in caps:

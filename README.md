@@ -216,7 +216,15 @@ action / wrong resource, failing condition, actions just outside a wildcard boun
 `Deny`, `NotAction` exclusions), because uniform draws are trivially denied and would inflate the
 numbers. The output is a confusion matrix, not an agreement rate; the cell that matters is
 *resolver says deny, AWS says allowed*. Needs one permission (`iam:SimulateCustomPolicy`), creates
-nothing, costs nothing. **Not yet run** — see Status.
+nothing, costs nothing.
+
+**Result (2026-09-02, 1,172 draws, 253 calls): zero silent under-reports.** The `deny / allowed`
+cell — the resolver claiming something is out of reach that AWS would permit — is empty across
+every draw, including the half deliberately weighted toward near-misses. 48 over-reports and 71
+declined draws are accounted for in [docs/divergences.md](docs/divergences.md), which also records
+the one real gap the run found: the resolver ignores whether an action can apply to a resource of
+that type, which the vendored dataset already has the data to fix. Replay the whole run offline
+from the committed cassette.
 
 **Live authorization probe** *(done)*. A smaller independent check that needs no special permission:
 call read-only APIs under a known policy and compare the *authorization outcome* to the resolver's
@@ -301,16 +309,17 @@ build order.
 | Reporting (schema 1.0.0) + CI mode with independent exit codes | done |
 | Offline pre-flight + cassette record/replay | done, in CI |
 | Live authorization probe (10/10) | done |
-| Test suite | 181 tests, 93% line coverage |
-| **Differential run vs `iam:SimulateCustomPolicy`** | **harness done; first live run pending a credential** |
+| Test suite | 181 tests, 96% line coverage |
+| Differential run vs `iam:SimulateCustomPolicy` | done — 1,172 draws, **0 silent under-reports** |
 
 ### Known limits
 
 Beyond the [documented scope gaps](#scope):
 
-- The differential matrix has not been produced yet, so the entries in
-  [docs/divergences.md](docs/divergences.md) are *predictions* of where the resolver will diverge,
-  not observations. Treat them as hypotheses until the run happens.
+- **D7 is open**: the resolver ignores action-to-resource-type compatibility, so it reports pairs
+  such as `sagemaker:DescribeModel` on an `endpoint/*` ARN that AWS denies. Safe direction
+  (over-report), ~30 of the 48 observed over-reports, and fixable with `resource_types` data the
+  snapshot already ships. See [docs/divergences.md](docs/divergences.md).
 - Four condition operators are modeled. `Null` is the third most common in the managed-policy
   corpus (509 uses) and everything else lands in residue as *unconstrained but flagged*.
 - IAM users and groups are not modeled — role-based, single-account deployments only. The Rhino
