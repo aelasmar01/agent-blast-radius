@@ -92,8 +92,24 @@ is told plainly that taint propagation adds nothing, rather than being handed a 
 Cloudsplaining report.
 
 **`NotAction` / `NotResource` are refused, not approximated.** They invert the set logic and are a
-silent under-report risk. The analyzer errors out loudly with the offending statement ID. Failing
-visibly is defensible; under-reporting silently is not.
+silent under-report risk. The offending statement is skipped and recorded in the report's
+`unsupported` section with its policy and statement ID; the scan continues, and CI fails closed on
+a non-empty `unsupported` list by default. Failing visibly is defensible; under-reporting silently
+is not. The same section carries attached managed policies the vendored snapshot doesn't know and
+actions it doesn't recognise.
+
+**Conditions.** `StringEquals`, `StringLike`, `ArnLike`, and `Bool` are modeled and carried on the
+capability. Every other operator is recorded as residue and the capability is reported as
+*unconstrained but flagged* — the conservative direction. A `Deny` only removes a capability when
+it is unconditional and its resource pattern fully subsumes the capability's; a conditional or
+partial `Deny` is flagged, never trusted.
+
+**Action dataset.** Wildcards expand against a pinned snapshot of the AWS Service Authorization
+Reference (via [iam-dataset](https://github.com/iann0036/iam-dataset)), not botocore. botocore lists
+API operations, and IAM actions are not API operations: `iam:PassRole` and `s3:ListBucket` do not
+exist there, and expanding `iam:*` from it would silently drop the action the headline finding
+depends on. The snapshot commit is in `src/agent_blast_radius/data/VERSION` and printed in every
+report.
 
 **No 0–100 score.** It invites "how is that computed" and there is no good answer.
 
@@ -116,8 +132,8 @@ implemented yet. See [docs/roadmap.md](docs/roadmap.md) for the build order and
 
 | Component | State |
 |---|---|
-| IR (tools, roles, policies, taint, gating) | scaffolded |
-| IAM resolver (identity + trust, Deny, wildcards) | not started |
+| IR (tools, roles, policies, taint, gating) | done |
+| IAM resolver (identity + managed + trust, Deny, wildcards, conditions) | done |
 | Differential validation vs `iam:SimulateCustomPolicy` | not started |
 | MCP / Bedrock parsers | not started |
 | Reachability fixpoint + rule pack | rule pack format drafted |

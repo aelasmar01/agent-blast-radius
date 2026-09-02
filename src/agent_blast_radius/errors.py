@@ -14,9 +14,9 @@ class UnsupportedPolicyConstruct(AgentBlastRadiusError):
     """A policy uses a construct the resolver refuses to approximate.
 
     ``NotAction`` and ``NotResource`` invert the set logic. Approximating them either
-    over-reports (noise) or under-reports (a missed finding presented as safety). Both
-    are worse than refusing, so the resolver raises this with the offending statement
-    ID attached.
+    over-reports (noise) or under-reports (a missed finding presented as safety). On the
+    scan path the resolver records these as :class:`~agent_blast_radius.ir.Unsupported`
+    and continues; this exception exists for callers that want strict mode.
     """
 
     def __init__(self, construct: str, statement_id: str, policy_name: str) -> None:

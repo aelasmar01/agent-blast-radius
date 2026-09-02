@@ -1,0 +1,6 @@
+source: https://github.com/iann0036/iam-dataset
+commit: 8e8e0df0ce50069ec6bbf45762fe2b042ce73cc1
+built: 2026-09-02T00:53:35Z
+services: 455
+actions: 21845
+managed_policies: 1572

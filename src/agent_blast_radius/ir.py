@@ -66,12 +66,43 @@ class ConditionResidue:
 
 
 @dataclass(frozen=True, slots=True)
+class Condition:
+    """One modeled condition clause: ``operator`` applied to ``key`` with ``values``.
+
+    Only clauses whose operator the resolver understands become ``Condition``s; the rest
+    land in :class:`ConditionResidue`.
+    """
+
+    operator: str
+    key: str
+    values: tuple[str, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class Provenance:
+    """Which statement granted a capability. What makes a finding credible."""
+
+    role: str
+    policy: str
+    sid: str
+
+    def __str__(self) -> str:
+        return f"{self.role}/{self.policy}#{self.sid}"
+
+
+@dataclass(frozen=True, slots=True)
 class Capability:
-    """The unit of analysis: one action, on one resource pattern, with one residue."""
+    """The unit of analysis: one action, on one resource pattern, under some conditions.
+
+    ``provenance`` is excluded from equality and hashing: two statements granting the
+    same capability yield one set member, and the resolver merges their provenance.
+    """
 
     action: str
     resource: str
+    conditions: tuple[Condition, ...] = ()
     residue: ConditionResidue = ConditionResidue()
+    provenance: tuple[Provenance, ...] = field(default=(), compare=False)
 
     def __post_init__(self) -> None:
         if ":" not in self.action:
@@ -80,6 +111,30 @@ class Capability:
     @property
     def service(self) -> str:
         return self.action.split(":", 1)[0]
+
+    @property
+    def is_unconditional(self) -> bool:
+        return not self.conditions and self.residue.is_clean
+
+
+@dataclass(frozen=True, slots=True)
+class Unsupported:
+    """Something the resolver refused to approximate, recorded instead of guessed.
+
+    A non-empty ``unsupported`` list means the analysis is incomplete, and CI fails
+    closed on it by default. ``kind`` is one of ``NotAction``, ``NotResource``,
+    ``unresolved_managed_policy``, ``unknown_action``.
+    """
+
+    kind: str
+    role: str
+    policy: str
+    sid: str
+    detail: str = ""
+
+    def __str__(self) -> str:
+        where = f"{self.role}/{self.policy}#{self.sid}"
+        return f"{self.kind} at {where}" + (f": {self.detail}" if self.detail else "")
 
 
 @dataclass(frozen=True, slots=True)
@@ -142,6 +197,8 @@ class Role:
     name: str
     arn: str
     identity_policies: tuple[PolicyDocument, ...] = ()
+    #: Attached AWS/customer managed policies, resolved from the vendored dataset.
+    managed_policy_arns: tuple[str, ...] = ()
     trust_policy: TrustPolicy = field(default_factory=TrustPolicy)
 
 
@@ -237,11 +294,12 @@ def _role_from_dict(raw: dict[str, Any]) -> Role:
         identity_policies=tuple(
             PolicyDocument(
                 name=p.get("name", "inline"),
-                statements=tuple(_statement_from_dict(s, i) for i, s in enumerate(p["statements"])),
+                statements=tuple(statement_from_dict(s, i) for i, s in enumerate(p["statements"])),
                 source=p.get("source", ""),
             )
             for p in raw.get("identity_policies", [])
         ),
+        managed_policy_arns=_as_tuple(raw.get("managed_policy_arns")),
         trust_policy=TrustPolicy(
             service_principals=frozenset(trust.get("service_principals", ())),
             aws_principals=frozenset(trust.get("aws_principals", ())),
@@ -250,20 +308,38 @@ def _role_from_dict(raw: dict[str, Any]) -> Role:
     )
 
 
-def _statement_from_dict(raw: dict[str, Any], index: int) -> Statement:
+def statement_from_dict(raw: dict[str, Any], index: int = 0) -> Statement:
+    """Normalize one raw policy statement (AWS JSON casing or lowercase YAML)."""
+    conditions: list[tuple[str, str, tuple[str, ...]]] = []
+    for operator, clauses in (raw.get("Condition") or raw.get("condition") or {}).items():
+        for key, values in clauses.items():
+            conditions.append((operator, key, _as_tuple(values)))
     return Statement(
         sid=raw.get("Sid") or raw.get("sid") or f"statement[{index}]",
         effect=Effect(raw.get("Effect", raw.get("effect", "Allow"))),
         actions=_as_tuple(raw.get("Action", raw.get("action"))),
         resources=_as_tuple(raw.get("Resource", raw.get("resource"))),
+        conditions=tuple(conditions),
         not_actions=_as_tuple(raw.get("NotAction", raw.get("not_action"))),
         not_resources=_as_tuple(raw.get("NotResource", raw.get("not_resource"))),
+    )
+
+
+def policy_document_from_dict(raw: dict[str, Any], name: str, source: str = "") -> PolicyDocument:
+    """Build a :class:`PolicyDocument` from an AWS policy JSON object."""
+    statements = raw.get("Statement", [])
+    if isinstance(statements, dict):
+        statements = [statements]
+    return PolicyDocument(
+        name=name,
+        statements=tuple(statement_from_dict(s, i) for i, s in enumerate(statements)),
+        source=source,
     )
 
 
 def _as_tuple(value: Any) -> tuple[str, ...]:
     if value is None:
         return ()
-    if isinstance(value, str):
-        return (value,)
-    return tuple(str(v) for v in value)
+    if isinstance(value, str | bool | int | float):
+        return (str(value).lower() if isinstance(value, bool) else str(value),)
+    return tuple(str(v).lower() if isinstance(v, bool) else str(v) for v in value)
