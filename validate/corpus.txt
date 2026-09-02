@@ -1,0 +1,59 @@
+# Validation corpus: AWS managed policies chosen for construct diversity.
+# Format: <arn>  <group>  — one per line; '#' starts a comment.
+# Regenerate names->ARNs against the vendored snapshot if the dataset is bumped.
+
+# [broad-wildcard] Action * or service:* over Resource *; expansion breadth
+arn:aws:iam::aws:policy/AdministratorAccess  broad-wildcard
+arn:aws:iam::aws:policy/IAMFullAccess  broad-wildcard
+arn:aws:iam::aws:policy/AWSCloudFormationFullAccess  broad-wildcard
+arn:aws:iam::aws:policy/job-function/Billing  broad-wildcard
+arn:aws:iam::aws:policy/AWSSupportAccess  broad-wildcard
+arn:aws:iam::aws:policy/AWSKeyManagementServicePowerUser  broad-wildcard
+arn:aws:iam::aws:policy/AmazonS3FullAccess  broad-wildcard
+
+# [service-wildcard] Get*/List*/Describe* prefixes; wildcard boundary cases
+arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess  service-wildcard
+arn:aws:iam::aws:policy/IAMReadOnlyAccess  service-wildcard
+arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole  service-wildcard
+arn:aws:iam::aws:policy/ReadOnlyAccess  service-wildcard
+arn:aws:iam::aws:policy/job-function/ViewOnlyAccess  service-wildcard
+arn:aws:iam::aws:policy/SecurityAudit  service-wildcard
+arn:aws:iam::aws:policy/job-function/SystemAdministrator  service-wildcard
+arn:aws:iam::aws:policy/job-function/DatabaseAdministrator  service-wildcard
+arn:aws:iam::aws:policy/job-function/NetworkAdministrator  service-wildcard
+
+# [resource-constrained] Non-* Resource elements; ARN field matching
+arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole  resource-constrained
+arn:aws:iam::aws:policy/service-role/AWSLambdaRole  resource-constrained
+arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy  resource-constrained
+arn:aws:iam::aws:policy/AmazonDynamoDBReadOnlyAccess  resource-constrained
+arn:aws:iam::aws:policy/AmazonAPIGatewayInvokeFullAccess  resource-constrained
+arn:aws:iam::aws:policy/AWSLambda_FullAccess  resource-constrained
+arn:aws:iam::aws:policy/SecretsManagerReadWrite  resource-constrained
+arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore  resource-constrained
+arn:aws:iam::aws:policy/AmazonEKSClusterPolicy  resource-constrained
+
+# [condition-heavy] Modeled and unmodeled operators; residue behaviour
+arn:aws:iam::aws:policy/AmazonBedrockFullAccess  condition-heavy
+arn:aws:iam::aws:policy/AWSCodeBuildAdminAccess  condition-heavy
+arn:aws:iam::aws:policy/AWS-SSM-DiagnosisAutomation-AdministrationRolePolicy  condition-heavy
+arn:aws:iam::aws:policy/AWSApplicationMigrationFullAccess  condition-heavy
+arn:aws:iam::aws:policy/aws-service-role/AWSElasticBeanstalkServiceRolePolicy  condition-heavy
+arn:aws:iam::aws:policy/aws-service-role/AWSObservabilityAdminTelemetryEnablementServiceRolePolicy  condition-heavy
+arn:aws:iam::aws:policy/AmazonSageMakerFullAccess  condition-heavy
+arn:aws:iam::aws:policy/AWSTransformNetworkMigrationAgentPolicy  condition-heavy
+arn:aws:iam::aws:policy/job-function/DataScientist  condition-heavy
+
+# [explicit-deny] Deny statements, conditional and unconditional
+arn:aws:iam::aws:policy/AWSDenyAll  explicit-deny
+arn:aws:iam::aws:policy/AWSCompromisedKeyQuarantineV3  explicit-deny
+arn:aws:iam::aws:policy/AWSDeepRacerDefaultMultiUserAccess  explicit-deny
+arn:aws:iam::aws:policy/AWSCertificateManagerPrivateCAUser  explicit-deny
+arn:aws:iam::aws:policy/AWSCleanRoomsFullAccessNoQuerying  explicit-deny
+
+# [notaction] NotAction/NotResource users; the unsupported path must round-trip
+arn:aws:iam::aws:policy/PowerUserAccess  notaction
+arn:aws:iam::aws:policy/AIDevOpsAgentActionsPolicy  notaction
+arn:aws:iam::aws:policy/root-task/IAMAuditRootUserCredentials  notaction
+arn:aws:iam::aws:policy/AmazonSecurityLakePermissionsBoundary  notaction
+arn:aws:iam::aws:policy/AWSIAMIdentityCenterAllowListForIdentityContext  notaction

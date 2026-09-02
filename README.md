@@ -115,6 +115,17 @@ report.
 
 ---
 
+## Validation
+
+The resolver is differential-tested against `iam:SimulateCustomPolicy` over a fixed corpus of 44
+managed policies chosen for construct diversity plus the fixture's roles. Draws are stratified —
+half allow-expected, half deny-expected — and the deny half is weighted toward near-misses (right
+action / wrong resource, failing condition, actions just outside a wildcard boundary, explicit
+Deny, `NotAction` exclusions) because uniform draws are trivially denied and would inflate the
+numbers. The output is a confusion matrix, not an agreement rate; the cell that matters is
+*resolver says deny, AWS says allowed*. See [validate/results](validate/results/README.md) and
+[docs/divergences.md](docs/divergences.md).
+
 ## Install
 
 ```bash
@@ -134,7 +145,7 @@ implemented yet. See [docs/roadmap.md](docs/roadmap.md) for the build order and
 |---|---|
 | IR (tools, roles, policies, taint, gating) | done |
 | IAM resolver (identity + managed + trust, Deny, wildcards, conditions) | done |
-| Differential validation vs `iam:SimulateCustomPolicy` | not started |
+| Differential validation vs `iam:SimulateCustomPolicy` | harness done; first live run pending |
 | MCP / Bedrock parsers | not started |
 | Reachability fixpoint + rule pack | rule pack format drafted |
 | Reporting + CI mode | not started |

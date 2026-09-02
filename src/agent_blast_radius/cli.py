@@ -82,6 +82,39 @@ def cmd_scan(args: argparse.Namespace) -> int:
     return EXIT_INCOMPLETE
 
 
+def cmd_validate(args: argparse.Namespace) -> int:
+    from .validate.run import dry_run, load_corpus, run, write_results
+
+    entries = load_corpus(
+        Path(args.corpus) if args.corpus else None,
+        Path(args.fixture) if args.fixture else None,
+    )
+    if not entries:
+        print("error: nothing to validate; pass --corpus and/or --fixture", file=sys.stderr)
+        return EXIT_ERROR
+    if args.dry_run:
+        dry_run(entries, per_policy=args.per_policy, seed=args.seed)
+        return 0
+    try:
+        from .validate.simulate import BotoSimulator
+    except ImportError:
+        print(
+            "error: boto3 is required for a live run; install agent-blast-radius[validate]",
+            file=sys.stderr,
+        )
+        return EXIT_ERROR
+    simulator = BotoSimulator(calls_per_second=args.rate)
+    print(f"validating {len(entries)} policies against iam:SimulateCustomPolicy", file=sys.stderr)
+    matrix = run(entries, simulator, per_policy=args.per_policy, seed=args.seed)
+    md, js = write_results(matrix, Path(args.out), title="Resolver vs iam:SimulateCustomPolicy")
+    print(
+        f"\n{len(matrix.under_reports)} silent under-reports, {len(matrix.over_reports)} over-reports",
+        file=sys.stderr,
+    )
+    print(f"wrote {md} and {js} ({simulator.calls} API calls)", file=sys.stderr)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="agent-blast-radius",
@@ -96,6 +129,30 @@ def build_parser() -> argparse.ArgumentParser:
     scan = sub.add_parser("scan", help="analyze a deployment directory or agent.yaml")
     scan.add_argument("target", help="directory containing agent.yaml, or the file itself")
     scan.set_defaults(func=cmd_scan)
+
+    validate = sub.add_parser(
+        "validate",
+        help="differential-test the resolver against iam:SimulateCustomPolicy",
+        description=(
+            "Draws stratified, boundary-weighted test cases from a corpus of managed policies "
+            "and/or a fixture's roles, asks AWS, and writes a confusion matrix. Needs only "
+            "iam:SimulateCustomPolicy; creates nothing. --dry-run needs no credentials."
+        ),
+    )
+    validate.add_argument("--corpus", default="validate/corpus.txt", help="managed policy ARN list")
+    validate.add_argument("--fixture", default=None, help="deployment dir whose roles to include")
+    validate.add_argument("--out", default="validate/results", help="results directory")
+    validate.add_argument(
+        "--per-policy", type=int, default=40, help="draws per policy (half allow, half deny)"
+    )
+    validate.add_argument("--seed", type=int, default=0)
+    validate.add_argument(
+        "--rate", type=float, default=5.0, help="max SimulateCustomPolicy calls per second"
+    )
+    validate.add_argument(
+        "--dry-run", action="store_true", help="print the draw plan and call budget only"
+    )
+    validate.set_defaults(func=cmd_validate)
 
     return parser
 

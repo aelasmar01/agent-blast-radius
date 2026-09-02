@@ -55,7 +55,8 @@ class _Deny:
     provenance: Provenance
 
 
-def _documents(role: Role) -> tuple[list[PolicyDocument], list[Unsupported]]:
+def role_documents(role: Role) -> tuple[list[PolicyDocument], list[Unsupported]]:
+    """Every policy document behind a role: inline, then attached managed (if vendored)."""
     docs = list(role.identity_policies)
     unsupported: list[Unsupported] = []
     for policy_arn in role.managed_policy_arns:
@@ -89,7 +90,7 @@ def _expand_statement(
 
 
 def resolve_role(role: Role) -> Resolution:
-    docs, unsupported = _documents(role)
+    docs, unsupported = role_documents(role)
     allows: dict[tuple, Capability] = {}
     denies: list[_Deny] = []
 
