@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 — 2026-09-02
+
+The release that makes the README's claims true of the published package.
 
 - **D7 fixed**: the resolver now checks whether an action can apply to a resource of that
   type before reporting the pair, using resource-type ARN templates newly vendored from the

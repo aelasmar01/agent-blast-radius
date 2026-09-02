@@ -5,6 +5,6 @@ input, by propagating taint through an agent's tools and resolving the IAM polic
 behind them. See README.md for the threat model and scope boundaries.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 __all__ = ["__version__"]
