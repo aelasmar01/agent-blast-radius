@@ -97,6 +97,11 @@ capability set here as *what the credential permits*, not *what the tool surface
 Finding 2 is unaffected: it is a statement about the credential, which is the thing that
 matters if it ever leaves the server process.
 
+## Proposed fixes
+
+Findings 1 and 3 are small README corrections. Both are drafted, with diffs and PR text, in
+[upstream-fixes.md](upstream-fixes.md).
+
 ## Reproduce
 
 ```bash
