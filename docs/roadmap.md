@@ -1,7 +1,14 @@
 # Roadmap
 
-**Status (2026-09-01):** W1–W8 built; v0.1.0 tagged. Outstanding: the first live
-validation run (needs a personal AWS account) and a recorded demo.
+**Status (2026-09-02):** W1–W8 complete. v0.1.0 on PyPI; demo recorded; the differential
+run against `iam:SimulateCustomPolicy` is done — 1,148 draws, zero silent under-reports,
+replayable offline from the committed cassette. It found and closed one real resolver gap
+(D7). Nothing on the plan is outstanding.
+
+Deliberately **not** done, so the omissions read as choices: per-tool action attribution
+(named in the [case study](../examples/awslabs-iam-mcp-server/README.md)), condition
+operators beyond the four modeled, resource-based policies past trust policies, and IAM
+users/groups. Each is in the scope table or the divergences doc with a reason.
 
 Hard boundary: 6–8 weekends. Full reasoning lives in
 [`agent-blast-radius-analyzer-plan.md`](../agent-blast-radius-analyzer-plan.md).

@@ -75,6 +75,37 @@ taint-propagation layer those tools don't model. A few decisions worth stating o
   agreement rate, because half the draws are near-miss deny cases by design and a
   percentage would hide the one cell that matters: *we said no, AWS said yes*.
 
+## The number that matters
+
+1,148 stratified draws across 44 AWS managed policies and the fixture's roles, put to
+`iam:SimulateCustomPolicy`:
+
+| resolver \ AWS | allowed | explicitDeny | implicitDeny |
+|---|---:|---:|---:|
+| allow | 651 | 13 | 0 |
+| allow-flagged | 7 | 2 | 4 |
+| deny | **0** | 15 | 403 |
+| unsupported | 2 | 22 | 29 |
+
+The `deny / allowed` cell is empty. That is the resolver claiming an action is out of reach
+when AWS would permit it — a false clean bill of health, the only cell that is a bug by
+definition — and it stayed empty across every draw, including the half deliberately built as
+near-misses: right action with the wrong resource, a condition rigged to fail, actions one
+character outside a wildcard boundary.
+
+The thirteen over-reports are all the same refusal: `Deny` combined with `NotResource`, which
+the analyzer will not evaluate, so it keeps capabilities AWS denies. That is a decision, it is
+written down, and its cost is now measured rather than asserted.
+
+I did not get that on the first run. The first run had 48 over-reports, and chasing them found
+a real defect: the analyzer was taking the cross product of a policy's actions and resources
+and matching ARNs as text, so it happily reported `sagemaker:DescribeModel` on an `endpoint/*`
+ARN — a pair AWS grants nothing for. The fix had to be built so it could only fail in the safe
+direction: the compatibility check returns *three* values, and anything it cannot decide keeps
+its capability, because pruning is the only operation in the resolver that can invent a false
+negative. Then the same harness proved the fix held. That loop closing is the entire argument
+for building the harness first.
+
 ## What building it turned up
 
 Three things I did not expect, all of which changed the code:
