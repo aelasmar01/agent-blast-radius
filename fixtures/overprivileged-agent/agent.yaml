@@ -1,0 +1,121 @@
+# Demo fixture: an agent whose tools look scoped and whose IAM is not.
+#
+# The finding this fixture is built to produce:
+#   "This agent's four tools look scoped. Three hops of IAM later, a prompt injection
+#    is an account takeover."
+#
+# The chain:
+#   1. read_support_ticket takes attacker-controlled text (tainted input, no gating).
+#   2. Its output re-enters the model's context (returns_external_data), so every
+#      ungated tool downstream is reachable from that text.
+#   3. deploy_helper runs under agent-execution-role, which holds iam:PassRole +
+#      lambda:CreateFunction + lambda:InvokeFunction. Unremarkable in isolation.
+#   4. incident-response-role trusts lambda.amazonaws.com and holds iam:*. PassRole
+#      into a new Lambda turns the agent into that role.
+#   5. That role can read the crown-jewel secret.
+#
+# rotate_credentials is gated on human approval. It is here so the report shows
+# something taint does NOT reach — a report where everything is red proves nothing.
+
+name: overprivileged-agent
+account_id: "000000000000"
+schema_version: "0.1.0"
+
+tools:
+  - name: read_support_ticket
+    role: ticket-reader-role
+    gating: none
+    tainted_inputs: [ticket_id]
+    returns_external_data: true
+    description: Fetches a customer-authored support ticket from S3.
+
+  - name: query_customer_record
+    role: customer-lookup-role
+    gating: none
+    description: DynamoDB query against the customer table.
+
+  - name: call_internal_api
+    role: internal-api-role
+    gating: none
+    description: Signed request to an internal service.
+
+  - name: deploy_helper
+    role: agent-execution-role
+    gating: none
+    description: Creates and invokes short-lived Lambda helpers for ad-hoc work.
+
+  - name: rotate_credentials
+    role: incident-response-role
+    gating: approval_required
+    description: Break-glass rotation. Human approval required per invocation.
+
+roles:
+  - name: ticket-reader-role
+    arn: arn:aws:iam::000000000000:role/ticket-reader-role
+    trust_policy:
+      service_principals: [lambda.amazonaws.com]
+    identity_policies:
+      - name: ticket-read
+        statements:
+          - Sid: ReadTickets
+            Effect: Allow
+            Action: [s3:GetObject]
+            Resource: [arn:aws:s3:::support-tickets/*]
+
+  - name: customer-lookup-role
+    arn: arn:aws:iam::000000000000:role/customer-lookup-role
+    trust_policy:
+      service_principals: [lambda.amazonaws.com]
+    identity_policies:
+      - name: customer-read
+        statements:
+          - Sid: QueryCustomers
+            Effect: Allow
+            Action: [dynamodb:Query, dynamodb:GetItem]
+            Resource: [arn:aws:dynamodb:us-east-1:000000000000:table/customers]
+
+  - name: internal-api-role
+    arn: arn:aws:iam::000000000000:role/internal-api-role
+    trust_policy:
+      service_principals: [lambda.amazonaws.com]
+    identity_policies:
+      - name: invoke-internal
+        statements:
+          - Sid: InvokeInternalApi
+            Effect: Allow
+            Action: [execute-api:Invoke]
+            Resource: [arn:aws:execute-api:us-east-1:000000000000:abc123/prod/*]
+
+  # Unremarkable in isolation. The pivot lives here.
+  - name: agent-execution-role
+    arn: arn:aws:iam::000000000000:role/agent-execution-role
+    trust_policy:
+      service_principals: [bedrock.amazonaws.com]
+    identity_policies:
+      - name: helper-deploy
+        statements:
+          - Sid: PassRoleToLambda
+            Effect: Allow
+            Action: [iam:PassRole]
+            Resource: ["arn:aws:iam::000000000000:role/*"]
+          - Sid: ManageHelpers
+            Effect: Allow
+            Action: [lambda:CreateFunction, lambda:InvokeFunction]
+            Resource: ["*"]
+          - Sid: NoDirectSecretAccess
+            Effect: Deny
+            Action: [secretsmanager:GetSecretValue]
+            Resource: ["*"]
+
+  # The pivot target: assumable by Lambda, holds iam:*.
+  - name: incident-response-role
+    arn: arn:aws:iam::000000000000:role/incident-response-role
+    trust_policy:
+      service_principals: [lambda.amazonaws.com]
+    identity_policies:
+      - name: break-glass
+        statements:
+          - Sid: BreakGlass
+            Effect: Allow
+            Action: ["iam:*", secretsmanager:GetSecretValue, kms:Decrypt]
+            Resource: ["*"]

@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Terraform
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Credentials — never commit, even dead ones (plan §11)
+.env
+*.pem
+*.tfvars
+!example.tfvars
+credentials
+.aws/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp

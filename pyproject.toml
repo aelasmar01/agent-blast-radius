@@ -1,0 +1,57 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agent-blast-radius"
+version = "0.0.1.dev0"
+description = "Static, pre-deployment analysis of what an agentic system can reach in an AWS account from untrusted model input."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "Ali El-Asmar" }]
+keywords = ["aws", "iam", "security", "agents", "mcp", "bedrock", "privilege-escalation"]
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Security",
+]
+dependencies = [
+  "botocore>=1.34",
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+# Differential validation against iam:SimulateCustomPolicy (plan §W3).
+validate = ["boto3>=1.34"]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.6",
+]
+
+[project.scripts]
+agent-blast-radius = "agent_blast_radius.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/aelasmar01/agent-blast-radius"
+Source = "https://github.com/aelasmar01/agent-blast-radius"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/agent_blast_radius"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"rules" = "agent_blast_radius/data/rules"
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

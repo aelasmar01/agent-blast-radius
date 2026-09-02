@@ -1,0 +1,119 @@
+# agent-blast-radius
+
+**Static, pre-deployment analysis of what an agentic system can actually do to your AWS account.**
+
+> This agent's four tools look scoped. Three hops of IAM later, a prompt injection is an account takeover.
+
+That sentence is the whole project. Everything in this repo exists to make it provable against a
+real fixture, in CI, before deployment — not in production telemetry after the fact.
+
+---
+
+## Threat model
+
+An attacker controls text that reaches the model: a support ticket, a scraped page, a document in a
+bucket the agent reads. They cannot call AWS directly. They can only induce the model to call the
+tools it already has.
+
+The question this tool answers: **given that starting position, what set of AWS actions becomes
+reachable?**
+
+It answers it by:
+
+1. Marking which tool inputs are attacker-influenced (explicit annotation — no inference).
+2. Propagating taint through the tools the model can reach, respecting per-tool gating.
+3. Resolving the IAM identity *and trust* policies behind those tools into an effective capability set.
+4. Applying an escalation rule pack to a fixpoint, so multi-action chains such as
+   `iam:PassRole` + `lambda:CreateFunction` surface as single findings with a provenance path.
+
+## Reachability is not exploitability
+
+This tool computes what the tool graph **permits** if the model can be induced to make the calls.
+It does not predict whether a given model will. It is a map of unlocked doors, not a prediction of
+which door someone walks through. Every finding should be read that way.
+
+## Prior art
+
+This re-implements policy resolution that Cloudsplaining and PMapper already do well. I built it to
+understand IAM evaluation from the inside, and extended it with taint propagation from untrusted
+model input, which those tools don't model.
+
+| Prior art | What it covers |
+|---|---|
+| [Cloudsplaining](https://github.com/salesforce/cloudsplaining) (Salesforce) | Least-privilege violations, wildcard detection, roles assumable by compute services |
+| [PMapper](https://github.com/nccgroup/PMapper) (NCC) | Principal-to-principal privilege escalation graphs |
+| [Parliament](https://github.com/duo-labs/parliament) (Duo) | Policy linting |
+| Rhino Security Labs | The canonical AWS privilege-escalation method list |
+| Obsidian, Grafyn, Entrust | Commercial "agent blast radius" — runtime, SaaS-identity focused |
+| AgentWard | Published cross-server MCP escalation chains against `awslabs/mcp` |
+| AWS Agent Toolkit | IAM condition keys distinguishing agent actions from human ones |
+
+The open gap is not detection quality. Everything commercial here is **runtime observability**.
+Nobody is doing **static, pre-deployment, CI-gating analysis over Terraform plus tool manifests**.
+That is the pitch: shift-left for agent permissions — catch the chain in the PR.
+
+---
+
+## Scope
+
+**In scope (v1)**
+
+- IAM identity policy parsing: wildcards, resource ARNs, basic conditions.
+- Trust policy parsing. `iam:PassRole` + `lambda:CreateFunction` cannot be resolved without it —
+  PassRole only succeeds if the target role's trust policy admits `lambda.amazonaws.com`.
+- Explicit `Deny`, evaluated after the allow set is assembled.
+- 10–12 Rhino escalation methods as declarative, cited rules.
+- Two input formats: MCP server manifest, Bedrock agent action group.
+- Taint as explicit config annotation.
+- Terminal report plus versioned JSON output.
+- CI mode with assertion-based failure.
+
+**Out of scope, deliberately — ordered by impact on *this* threat model**
+
+1. **Resource-based policies** beyond trust policies (S3 bucket, KMS key, Lambda resource policies).
+   Highest impact, because cross-account reach lives here.
+2. Permission boundaries.
+3. SCPs.
+4. Session policies.
+
+That ordering is not the conventional one. It follows from the threat model: this tool is about what
+untrusted input reaches, and the largest unmodeled reach is cross-account via resource policies.
+
+**Single-account assumption.** Stated in the IR and enforced in the analyzer. Cross-account reach
+lives in the gap above.
+
+**`NotAction` / `NotResource` are refused, not approximated.** They invert the set logic and are a
+silent under-report risk. The analyzer errors out loudly with the offending statement ID. Failing
+visibly is defensible; under-reporting silently is not.
+
+**No 0–100 score.** It invites "how is that computed" and there is no good answer.
+
+---
+
+## Install
+
+```bash
+uvx agent-blast-radius scan ./fixtures/overprivileged-agent
+```
+
+No manual setup, no deployed AWS resources, no credentials required for a scan. The action dataset
+is pinned and offline (botocore's bundled service models).
+
+## Status
+
+Pre-v0.1. Scaffold and IR only — the resolver, taint propagation, and reachability engine are not
+implemented yet. See [docs/roadmap.md](docs/roadmap.md) for the build order and
+[agent-blast-radius-analyzer-plan.md](agent-blast-radius-analyzer-plan.md) for the full project plan.
+
+| Component | State |
+|---|---|
+| IR (tools, roles, policies, taint, gating) | scaffolded |
+| IAM resolver (identity + trust, Deny, wildcards) | not started |
+| Differential validation vs `iam:SimulateCustomPolicy` | not started |
+| MCP / Bedrock parsers | not started |
+| Reachability fixpoint + rule pack | rule pack format drafted |
+| Reporting + CI mode | not started |
+
+## License
+
+MIT. See [LICENSE](LICENSE).
