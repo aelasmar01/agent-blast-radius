@@ -94,6 +94,15 @@ def access_level(action: str) -> str:
     return _load()[service.lower()][canon].get("a", "?")
 
 
+def resource_types(action: str) -> tuple[str, ...]:
+    """Resource type names the action operates on, e.g. ``("model*",)``. Empty if none."""
+    service, _, name = action.partition(":")
+    canon = _index().get(service.lower(), {}).get(name.lower())
+    if canon is None:
+        return ()
+    return tuple(_load()[service.lower()][canon].get("r", ()))
+
+
 def condition_keys(action: str) -> frozenset[str]:
     service, _, name = action.partition(":")
     canon = _index().get(service.lower(), {}).get(name.lower())

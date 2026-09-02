@@ -1,5 +1,22 @@
 # Changelog
 
+## Unreleased
+
+- **D7 fixed**: the resolver now checks whether an action can apply to a resource of that
+  type before reporting the pair, using resource-type ARN templates newly vendored from the
+  Service Authorization Reference. Found by the first differential run. `can_apply` is
+  three-valued and keeps every capability it cannot rule out, because pruning is the only
+  operation that can create an under-report. Over-reports fell 48 → 13 with the under-report
+  cell still empty.
+- First live differential run against `iam:SimulateCustomPolicy`: 1,148 draws, **0 silent
+  under-reports**, all 13 remaining over-reports attributable to one documented refusal.
+  Recorded to a cassette that replays the matrix exactly with no credentials.
+- Fixed a determinism bug that made seeded draws irreproducible across processes: draws were
+  sorted on a non-total key, so ties fell back to hash-randomized frozenset order.
+- Draws skip grants whose conditions or resources use policy variables, which a draw cannot
+  satisfy (D8).
+- Case study against `awslabs/mcp`'s `iam-mcp-server`; demo recording.
+
 ## 0.1.0 — 2026-09-01
 
 First release. Everything the project plan called v0.1:

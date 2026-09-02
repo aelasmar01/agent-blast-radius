@@ -134,6 +134,27 @@ def _context_types(conditions: tuple[Condition, ...]) -> tuple[tuple[str, str], 
     return tuple((c.key, CONTEXT_KEY_TYPES.get(c.operator, "string")) for c in conditions)
 
 
+def has_policy_variable(conditions: tuple[Condition, ...]) -> bool:
+    """Does any condition compare against a policy variable such as ``${aws:PrincipalAccount}``?
+
+    AWS substitutes the real value at evaluation time, so a draw cannot construct a context
+    that satisfies it — passing the literal ``${...}`` string guarantees a denial and shows
+    up as a phantom over-report. Draws skip these rather than manufacture a wrong answer.
+    """
+    return any("${" in v for c in conditions for v in c.values)
+
+
+def is_drawable(c: Capability) -> bool:
+    """Can a draw against this capability be given a context AWS will evaluate as we mean?
+
+    No, if a policy variable appears in its resource pattern or in any condition value.
+    AWS substitutes the real value at evaluation time; a draw can only supply the literal
+    ``${...}``, which is guaranteed to mismatch. Such draws were 27 phantom over-reports
+    in the first live run — the resolver was right and the question was unanswerable.
+    """
+    return "${" not in c.resource and not has_policy_variable(c.conditions)
+
+
 def _satisfying_context(conditions: tuple[Condition, ...]) -> tuple[tuple[str, str], ...]:
     ctx: list[tuple[str, str]] = []
     for c in conditions:
@@ -235,9 +256,10 @@ def plan_draws(
         patterns_for.setdefault(c.action, set()).add(c.resource)
 
     # ---- allow-expected ---------------------------------------------------------------
-    unconditional = [c for c in caps if c.is_unconditional]
-    conditioned = [c for c in caps if c.conditions and c.residue.is_clean]
-    flagged = [c for c in caps if not c.residue.is_clean]
+    drawable = [c for c in caps if is_drawable(c)]
+    unconditional = [c for c in drawable if c.is_unconditional]
+    conditioned = [c for c in drawable if c.conditions and c.residue.is_clean]
+    flagged = [c for c in drawable if not c.residue.is_clean]
 
     def weight(c: Capability) -> int:
         # Prefer scoped resources and conditioned grants: the non-trivial cases.

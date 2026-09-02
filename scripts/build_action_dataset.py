@@ -4,6 +4,7 @@
 Run by hand when bumping the snapshot; never at install time. Output is committed:
 
     src/agent_blast_radius/data/actions.json.gz
+    src/agent_blast_radius/data/resource_types.json.gz
     src/agent_blast_radius/data/managed_policies.json.gz
     src/agent_blast_radius/data/VERSION
 
@@ -23,6 +24,7 @@ import argparse
 import gzip
 import io
 import json
+import re
 import subprocess
 import sys
 import tarfile
@@ -88,6 +90,27 @@ def trim_actions(definition: list[dict]) -> dict:
     return out
 
 
+def trim_resource_types(definition: list[dict]) -> dict:
+    """{prefix: {resource_type: arn_glob}}
+
+    The Service Authorization Reference publishes an ARN template per resource type, e.g.
+    ``arn:${Partition}:sagemaker:${Region}:${Account}:model/${ResourceId}``. Substituting
+    ``*`` for each ``${...}`` turns it into a pattern the ARN matcher can compare against a
+    policy's ``Resource`` element, which is what lets the resolver tell that
+    ``sagemaker:DescribeModel`` on an ``endpoint/*`` ARN grants nothing.
+    """
+    out: dict[str, dict[str, str]] = {}
+    for service in definition:
+        types = {}
+        for resource in service.get("resources", []):
+            name, template = resource.get("resource"), resource.get("arn")
+            if name and template:
+                types[name] = re.sub(r"\$\{[^}]*\}", "*", template)
+        if types:
+            out[service["prefix"]] = types
+    return out
+
+
 def trim_managed_policies(tar: tarfile.TarFile, root: str) -> dict:
     """{arn: {"n": name, "d": document, "x": deprecated}}"""
     out: dict[str, dict] = {}
@@ -141,10 +164,12 @@ def main() -> int:
 
     definition = json.load(tar.extractfile(f"{root}/aws/iam_definition.json"))
     actions = trim_actions(definition)
+    resource_types = trim_resource_types(definition)
     managed = trim_managed_policies(tar, root)
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     write_gz(OUT_DIR / "actions.json.gz", actions)
+    write_gz(OUT_DIR / "resource_types.json.gz", resource_types)
     write_gz(OUT_DIR / "managed_policies.json.gz", managed)
     (OUT_DIR / "VERSION").write_text(
         f"source: https://github.com/{REPO}\n"
@@ -152,6 +177,7 @@ def main() -> int:
         f"built: {datetime.now(UTC).strftime('%Y-%m-%dT%H:%M:%SZ')}\n"
         f"services: {len(actions)}\n"
         f"actions: {sum(len(v) for v in actions.values())}\n"
+        f"resource_types: {sum(len(v) for v in resource_types.values())}\n"
         f"managed_policies: {len(managed)}\n"
     )
     print((OUT_DIR / "VERSION").read_text(), file=sys.stderr)

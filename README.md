@@ -218,13 +218,14 @@ numbers. The output is a confusion matrix, not an agreement rate; the cell that 
 *resolver says deny, AWS says allowed*. Needs one permission (`iam:SimulateCustomPolicy`), creates
 nothing, costs nothing.
 
-**Result (2026-09-02, 1,172 draws, 253 calls): zero silent under-reports.** The `deny / allowed`
-cell — the resolver claiming something is out of reach that AWS would permit — is empty across
-every draw, including the half deliberately weighted toward near-misses. 48 over-reports and 71
-declined draws are accounted for in [docs/divergences.md](docs/divergences.md), which also records
-the one real gap the run found: the resolver ignores whether an action can apply to a resource of
-that type, which the vendored dataset already has the data to fix. Replay the whole run offline
-from the committed cassette.
+**Result (2026-09-02, 1,148 draws, 232 calls): zero silent under-reports, and every remaining
+over-report is one documented decision.** The `deny / allowed` cell — the resolver calling
+something unreachable that AWS would permit — is empty across every draw, including the half
+deliberately built as near-misses. So is `allow / implicitDeny`. The 13 that remain are all the
+same refusal (D1b), measured in [docs/divergences.md](docs/divergences.md). The run also found a
+real resolver gap (D7: action-to-resource-type compatibility), which is now fixed — over-reports
+fell 48 → 13 with the under-report cell still empty. Replay the whole run offline from the
+committed cassette; no credentials needed.
 
 **Live authorization probe** *(done)*. A smaller independent check that needs no special permission:
 call read-only APIs under a known policy and compare the *authorization outcome* to the resolver's
@@ -309,17 +310,16 @@ build order.
 | Reporting (schema 1.0.0) + CI mode with independent exit codes | done |
 | Offline pre-flight + cassette record/replay | done, in CI |
 | Live authorization probe (10/10) | done |
-| Test suite | 181 tests, 96% line coverage |
-| Differential run vs `iam:SimulateCustomPolicy` | done — 1,172 draws, **0 silent under-reports** |
+| Test suite | 202 tests, 96% line coverage |
+| Differential run vs `iam:SimulateCustomPolicy` | done — 1,148 draws, **0 silent under-reports**, replayable offline |
 
 ### Known limits
 
 Beyond the [documented scope gaps](#scope):
 
-- **D7 is open**: the resolver ignores action-to-resource-type compatibility, so it reports pairs
-  such as `sagemaker:DescribeModel` on an `endpoint/*` ARN that AWS denies. Safe direction
-  (over-report), ~30 of the 48 observed over-reports, and fixable with `resource_types` data the
-  snapshot already ships. See [docs/divergences.md](docs/divergences.md).
+- Grants whose conditions or resources use **policy variables** (`${aws:PrincipalAccount}`) are not
+  exercised by the validation harness — a draw cannot supply a value AWS will resolve the same way,
+  so those go untested (D8).
 - Four condition operators are modeled. `Null` is the third most common in the managed-policy
   corpus (509 uses) and everything else lands in residue as *unconstrained but flagged*.
 - IAM users and groups are not modeled — role-based, single-account deployments only. The Rhino

@@ -1,6 +1,6 @@
 {
  "dataset_version": "8e8e0df0ce50069ec6bbf45762fe2b042ce73cc1",
- "generated": "2026-09-02T04:00:43.515609+00:00",
+ "generated": "2026-09-02T05:04:20.363926+00:00",
  "outcomes": [
   {
    "action": "s3:GetObject",
@@ -5309,7 +5309,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "cloudwatch:StopOTelEnrichment",
+   "action": "cloudwatch:StopMetricStreams",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -5322,7 +5322,7 @@
    "aws": "allowed"
   },
   {
-   "action": "codepipeline:GetThirdPartyJobDetails",
+   "action": "codepipeline:GetPipelineState",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -5335,7 +5335,7 @@
    "aws": "allowed"
   },
   {
-   "action": "cloudwatch:DisableInsightRules",
+   "action": "cloudwatch:DisableAlarmActions",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -5348,7 +5348,7 @@
    "aws": "allowed"
   },
   {
-   "action": "ec2:ResetNetworkInterfaceAttribute",
+   "action": "ec2:ResetAddressAttribute",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -5387,7 +5387,7 @@
    "aws": "allowed"
   },
   {
-   "action": "elasticloadbalancing:DeleteSharedTrustStoreAssociation",
+   "action": "elasticloadbalancing:DeleteListener",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -5400,7 +5400,7 @@
    "aws": "allowed"
   },
   {
-   "action": "ec2:AssociateApplicationStatusCheck",
+   "action": "ec2:AllocateIpamPoolCidr",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -5413,7 +5413,7 @@
    "aws": "allowed"
   },
   {
-   "action": "ec2:ReleaseHosts",
+   "action": "ec2:PurchaseScheduledInstances",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -5426,7 +5426,7 @@
    "aws": "allowed"
   },
   {
-   "action": "elasticloadbalancing:CreateLBCookieStickinessPolicy",
+   "action": "elasticloadbalancing:AllowVendedLogDeliveryForResource",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -5439,7 +5439,7 @@
    "aws": "allowed"
   },
   {
-   "action": "ses:DeleteEmailIdentityPolicy",
+   "action": "ses:DeleteEmailTemplate",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -5452,7 +5452,7 @@
    "aws": "allowed"
   },
   {
-   "action": "config:PutThirdPartyServiceLinkedConfigurationRecorder",
+   "action": "config:PutServiceLinkedConfigurationRecorder",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -5465,7 +5465,7 @@
    "aws": "allowed"
   },
   {
-   "action": "config:GetOrganizationConformancePackDetailedStatus",
+   "action": "config:GetDiscoveredResourceCounts",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -5478,7 +5478,7 @@
    "aws": "allowed"
   },
   {
-   "action": "ses:ListAddonSubscriptions",
+   "action": "ses:ListAddressListImportJobs",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -5504,7 +5504,7 @@
    "aws": "allowed"
   },
   {
-   "action": "route53domains:GetDomainSuggestions",
+   "action": "route53domains:ListOperations",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -5517,7 +5517,7 @@
    "aws": "allowed"
   },
   {
-   "action": "rds:DescribeDBClusterAutomatedBackups",
+   "action": "rds:DescribeDBClusterParameters",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -5530,7 +5530,7 @@
    "aws": "allowed"
   },
   {
-   "action": "ec2:DescribeEgressOnlyInternetGateways",
+   "action": "ec2:DescribeConversionTasks",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -5543,7 +5543,7 @@
    "aws": "allowed"
   },
   {
-   "action": "ec2:ModifyVpcEndpointPayerResponsibility",
+   "action": "ec2:ModifyVpcAttribute",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -5556,7 +5556,7 @@
    "aws": "allowed"
   },
   {
-   "action": "ds:UpdateRadius",
+   "action": "ds:UpdateDirectorySetup",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -5570,7 +5570,7 @@
   },
   {
    "action": "iam:PassRole",
-   "resource": "arn:aws:iam::x:role/ec2-sysadminzx",
+   "resource": "arn:aws:iam::x:role/ecr-sysadminzx",
    "context": [],
    "stratum": "wrong-resource",
    "expected": "deny",
@@ -5596,7 +5596,20 @@
   },
   {
    "action": "iam:PassRole",
-   "resource": "arn:aws:iam::x:role/ecr-sysadminzx",
+   "resource": "arn:aws:iam::x:role/lambda-sysadminzx",
+   "context": [],
+   "stratum": "wrong-resource",
+   "expected": "deny",
+   "note": "",
+   "context_types": [],
+   "policy": "SystemAdministrator",
+   "group": "service-wildcard",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "iam:PassRole",
+   "resource": "arn:aws:iam::x:role/ec2-sysadminzx",
    "context": [],
    "stratum": "wrong-resource",
    "expected": "deny",
@@ -5621,7 +5634,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "iam:UpdateSAMLProvider",
+   "action": "iam:SetSecurityTokenServicePreferences",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -5634,7 +5647,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "rds:RestoreDBInstanceFromDBSnapshot",
+   "action": "rds:CopyOptionGroup",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -5647,7 +5660,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "acm:CreateAcmeExternalAccountBinding",
+   "action": "acm:RenewCertificate",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -5660,36 +5673,10 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "kms:ScheduleKeyDeletion",
+   "action": "kms:DeleteImportedKeyMaterial",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
-   "expected": "deny",
-   "note": "",
-   "context_types": [],
-   "policy": "SystemAdministrator",
-   "group": "service-wildcard",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "chatbot:UntagResource",
-   "resource": null,
-   "context": [],
-   "stratum": "uniform",
-   "expected": "deny",
-   "note": "",
-   "context_types": [],
-   "policy": "SystemAdministrator",
-   "group": "service-wildcard",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "guardduty:DeleteDetector",
-   "resource": null,
-   "context": [],
-   "stratum": "uniform",
    "expected": "deny",
    "note": "",
    "context_types": [],
@@ -5713,6 +5700,32 @@
   },
   {
    "action": "glue:ListStatements",
+   "resource": null,
+   "context": [],
+   "stratum": "uniform",
+   "expected": "deny",
+   "note": "",
+   "context_types": [],
+   "policy": "SystemAdministrator",
+   "group": "service-wildcard",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "mobiletargeting:RemoveAttributes",
+   "resource": null,
+   "context": [],
+   "stratum": "uniform",
+   "expected": "deny",
+   "note": "",
+   "context_types": [],
+   "policy": "SystemAdministrator",
+   "group": "service-wildcard",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "cognito-idp:AdminUpdateAuthEventFeedback",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -6167,7 +6180,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "networkmanager:GetLinks",
+   "action": "networkmanager:GetNetworkResourceCounts",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -6180,7 +6193,7 @@
    "aws": "allowed"
   },
   {
-   "action": "ec2:CreateInternetGateway",
+   "action": "ec2:CreateFlowLogs",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -6193,7 +6206,7 @@
    "aws": "allowed"
   },
   {
-   "action": "route53:GetHealthCheckLastFailureReason",
+   "action": "route53:GetHealthCheckStatus",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -6206,7 +6219,20 @@
    "aws": "allowed"
   },
   {
-   "action": "networkmanager:CreateCoreNetworkPrefixListAssociation",
+   "action": "networkmanager:CreateDevice",
+   "resource": null,
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "NetworkAdministrator",
+   "group": "service-wildcard",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "ec2:ReplaceNetworkAclEntry",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -6232,7 +6258,7 @@
    "aws": "allowed"
   },
   {
-   "action": "ec2:ReplaceTransitGatewayRoute",
+   "action": "ec2:DeleteVpcEndpointServiceConfigurations",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -6245,20 +6271,7 @@
    "aws": "allowed"
   },
   {
-   "action": "ec2:DeleteVpcEndpoints",
-   "resource": null,
-   "context": [],
-   "stratum": "allow-unconditional",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "NetworkAdministrator",
-   "group": "service-wildcard",
-   "resolver": "allow",
-   "aws": "allowed"
-  },
-  {
-   "action": "networkmanager:DeleteConnection",
+   "action": "networkmanager:DeleteCoreNetwork",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -6284,7 +6297,7 @@
    "aws": "allowed"
   },
   {
-   "action": "elasticloadbalancing:DeregisterTargets",
+   "action": "elasticloadbalancing:DeleteWebACLAssociation",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -6310,7 +6323,7 @@
    "aws": "allowed"
   },
   {
-   "action": "elasticloadbalancing:CreateTrustStore",
+   "action": "elasticloadbalancing:CreateTargetGroup",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -6323,7 +6336,7 @@
    "aws": "allowed"
   },
   {
-   "action": "networkmanager:ExecuteCoreNetworkChangeSet",
+   "action": "networkmanager:GetConnectAttachment",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -6336,7 +6349,7 @@
    "aws": "allowed"
   },
   {
-   "action": "networkmanager:DescribeGlobalNetworks",
+   "action": "networkmanager:DisassociateConnectPeer",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -6375,7 +6388,7 @@
    "aws": "allowed"
   },
   {
-   "action": "ec2:DescribeTransitGateways",
+   "action": "ec2:DescribeTransitGatewayVpcAttachments",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -6388,7 +6401,7 @@
    "aws": "allowed"
   },
   {
-   "action": "directconnect:DescribeLoa",
+   "action": "directconnect:DescribeLags",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -6401,7 +6414,7 @@
    "aws": "allowed"
   },
   {
-   "action": "networkmanager:CreateSite",
+   "action": "networkmanager:CreateSiteToSiteVpnAttachment",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -6433,19 +6446,6 @@
   },
   {
    "action": "iam:PassRole",
-   "resource": "arn:aws:iam::x:role/flow-logszx",
-   "context": [],
-   "stratum": "wrong-resource",
-   "expected": "deny",
-   "note": "",
-   "context_types": [],
-   "policy": "NetworkAdministrator",
-   "group": "service-wildcard",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "iam:ListRoles",
    "resource": "arn:aws:iam::x:role/flow-logszx",
    "context": [],
    "stratum": "wrong-resource",
@@ -6494,7 +6494,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "iam:GetServiceLastAccessedDetails",
+   "action": "ec2:EnableRouteServerPropagation",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -6507,7 +6507,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "sns:ListPlatformApplications",
+   "action": "autoscaling:GetPredictiveScalingForecast",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -6520,7 +6520,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "autoscaling:DeleteScheduledAction",
+   "action": "logs:GetQueryResults",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -6533,7 +6533,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "ec2:GetIpamAddressHistory",
+   "action": "sns:CreateSMSSandboxPhoneNumber",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -6546,10 +6546,36 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "logs:GetLogAnomalyDetector",
+   "action": "iam:GetGroupPolicy",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
+   "expected": "deny",
+   "note": "",
+   "context_types": [],
+   "policy": "NetworkAdministrator",
+   "group": "service-wildcard",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "panorama:ListNodes",
+   "resource": null,
+   "context": [],
+   "stratum": "uniform",
+   "expected": "deny",
+   "note": "",
+   "context_types": [],
+   "policy": "NetworkAdministrator",
+   "group": "service-wildcard",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "drs:CreateRecoveryInstanceForDrs",
+   "resource": null,
+   "context": [],
+   "stratum": "uniform",
    "expected": "deny",
    "note": "",
    "context_types": [],
@@ -6572,33 +6598,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "organizations:ListHandshakesForAccount",
-   "resource": null,
-   "context": [],
-   "stratum": "uniform",
-   "expected": "deny",
-   "note": "",
-   "context_types": [],
-   "policy": "NetworkAdministrator",
-   "group": "service-wildcard",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "lambda:InvokeFunctionUrl",
-   "resource": null,
-   "context": [],
-   "stratum": "uniform",
-   "expected": "deny",
-   "note": "",
-   "context_types": [],
-   "policy": "NetworkAdministrator",
-   "group": "service-wildcard",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "iotevents:BatchAcknowledgeAlarm",
+   "action": "organizations:ListEffectivePolicyValidationErrors",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -7430,7 +7430,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "lambda:DeleteCodeSigningConfig",
+   "action": "lambda:DeleteCapacityProvider",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -7443,7 +7443,7 @@
    "aws": "allowed"
   },
   {
-   "action": "lambda:ListAliases",
+   "action": "lambda:InvokeFunction",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -7456,7 +7456,7 @@
    "aws": "allowed"
   },
   {
-   "action": "lambda:ListCapacityProviders",
+   "action": "lambda:InvokeFunctionUrl",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -7469,7 +7469,7 @@
    "aws": "allowed"
   },
   {
-   "action": "lambda:GetNetworkConnector",
+   "action": "lambda:GetMicrovmImageBuild",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -7508,7 +7508,7 @@
    "aws": "allowed"
   },
   {
-   "action": "lambda:GetFunction",
+   "action": "lambda:GetEventSourceMapping",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -7534,7 +7534,7 @@
    "aws": "allowed"
   },
   {
-   "action": "lambda:ListEventSourceMappings",
+   "action": "lambda:ListCodeSigningConfigs",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -7547,7 +7547,7 @@
    "aws": "allowed"
   },
   {
-   "action": "lambda:GetFunctionRecursionConfig",
+   "action": "lambda:GetFunctionConfiguration",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -7560,7 +7560,7 @@
    "aws": "allowed"
   },
   {
-   "action": "lambda:SendDurableExecutionCallbackSuccess",
+   "action": "lambda:SendDurableExecutionCallbackFailure",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -7586,7 +7586,7 @@
    "aws": "allowed"
   },
   {
-   "action": "lambda:UpdateFunctionCodeSigningConfig",
+   "action": "lambda:UpdateEventSourceMapping",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -7599,7 +7599,7 @@
    "aws": "allowed"
   },
   {
-   "action": "lambda:DeleteCapacityProvider",
+   "action": "lambda:DeleteCodeSigningConfig",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -7612,7 +7612,7 @@
    "aws": "allowed"
   },
   {
-   "action": "lambda:UpdateNetworkConnector",
+   "action": "lambda:UpdateFunctionUrlConfig",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -7638,7 +7638,7 @@
    "aws": "allowed"
   },
   {
-   "action": "lambda:PutResourcePolicy",
+   "action": "lambda:PutFunctionScalingConfig",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -7651,7 +7651,7 @@
    "aws": "allowed"
   },
   {
-   "action": "lambda:GetFunctionCodeSigningConfig",
+   "action": "lambda:GetFunction",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -7700,7 +7700,7 @@
    "aws": "allowed"
   },
   {
-   "action": "logs:FilterLogEvents",
+   "action": "logs:DescribeLogStreams",
    "resource": "arn:aws:logs:x:x:log-group:/aws/lambdazx",
    "context": [],
    "stratum": "wrong-resource",
@@ -7736,7 +7736,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "logs:DescribeLogStreams",
+   "action": "logs:FilterLogEvents",
    "resource": "arn:aws:logs:x:x:log-group:/aws/lambdazx",
    "context": [],
    "stratum": "wrong-resource",
@@ -7762,7 +7762,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "logs:StopLiveTail",
+   "action": "logs:GetLogEvents",
    "resource": "arn:aws:logs:x:x:log-group:/aws/lambdazx",
    "context": [],
    "stratum": "wrong-resource",
@@ -7847,7 +7847,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "logs:StopQuery",
+   "action": "logs:DescribeFieldIndexes",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -7860,7 +7860,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "cloudformation:DescribeTypeRegistration",
+   "action": "cloudformation:DescribeStackResourceDrifts",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -7873,7 +7873,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "tag:GetTagKeys",
+   "action": "tag:GetComplianceSummary",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -7886,7 +7886,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "comprehend:StartFlywheelIteration",
+   "action": "observabilityadmin:GetTelemetryEnrichmentStatus",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -7899,7 +7899,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "aiops:GetInvestigationGroup",
+   "action": "networkmanager:CreateVpcAttachment",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -7912,7 +7912,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "observabilityadmin:GetTelemetryEvaluationStatus",
+   "action": "quicksight:RestoreAnalysis",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -7925,7 +7925,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "networkmanager:DeleteAttachment",
+   "action": "outposts:ListSites",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -9194,8 +9194,8 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "kms:DescribeKey",
-   "resource": "arn:x:kms:x:::x",
+   "action": "ec2:DescribeVpcs",
+   "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
    "expected": "allow",
@@ -9204,10 +9204,10 @@
    "policy": "AmazonBedrockFullAccess",
    "group": "condition-heavy",
    "resolver": "allow",
-   "aws": "implicitDeny"
+   "aws": "allowed"
   },
   {
-   "action": "bedrock:ListDataAutomationLibraryEntities",
+   "action": "bedrock:ListDataAutomationLibraries",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -9233,7 +9233,7 @@
    "aws": "allowed"
   },
   {
-   "action": "bedrock:GetFoundationModel",
+   "action": "bedrock:GetFlowVersion",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -9259,7 +9259,7 @@
    "aws": "allowed"
   },
   {
-   "action": "bedrock:DeleteFoundationModelAgreement",
+   "action": "bedrock:DeleteFlowVersion",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -9272,7 +9272,7 @@
    "aws": "allowed"
   },
   {
-   "action": "bedrock:CreatePromptRouter",
+   "action": "bedrock:CreatePrompt",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -9350,7 +9350,7 @@
    "aws": "allowed"
   },
   {
-   "action": "bedrock:DeleteCustomModelDeployment",
+   "action": "bedrock:DeleteCustomModel",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -9363,12 +9363,16 @@
    "aws": "allowed"
   },
   {
-   "action": "sagemaker:DescribeModel",
+   "action": "sagemaker:InvokeEndpointWithResponseStream",
    "resource": "arn:aws:sagemaker:x:x:endpoint/x",
    "context": [
     [
      "aws:CalledViaLast",
      "bedrock.amazonaws.com"
+    ],
+    [
+     "aws:ResourceTag/sagemaker-sdk:bedrock",
+     "compatible"
     ]
    ],
    "stratum": "allow-conditioned",
@@ -9378,7 +9382,7 @@
    "policy": "AmazonBedrockFullAccess",
    "group": "condition-heavy",
    "resolver": "allow",
-   "aws": "implicitDeny"
+   "aws": "allowed"
   },
   {
    "action": "sagemaker:UpdateEndpoint",
@@ -9404,7 +9408,7 @@
   },
   {
    "action": "sagemaker:UpdateEndpoint",
-   "resource": "arn:aws:sagemaker:x:x:model/x",
+   "resource": "arn:aws:sagemaker:x:x:endpoint/x",
    "context": [
     [
      "aws:CalledViaLast",
@@ -9422,10 +9426,10 @@
    "policy": "AmazonBedrockFullAccess",
    "group": "condition-heavy",
    "resolver": "allow",
-   "aws": "implicitDeny"
+   "aws": "allowed"
   },
   {
-   "action": "sagemaker:CreateModel",
+   "action": "sagemaker:CreateEndpoint",
    "resource": "arn:aws:sagemaker:x:x:endpoint-config/x",
    "context": [
     [
@@ -9444,11 +9448,11 @@
    "policy": "AmazonBedrockFullAccess",
    "group": "condition-heavy",
    "resolver": "allow",
-   "aws": "implicitDeny"
+   "aws": "allowed"
   },
   {
-   "action": "sagemaker:DescribeInferenceComponent",
-   "resource": "arn:aws:sagemaker:x:x:endpoint/x",
+   "action": "sagemaker:DescribeEndpointConfig",
+   "resource": "arn:aws:sagemaker:x:x:endpoint-config/x",
    "context": [
     [
      "aws:CalledViaLast",
@@ -9462,7 +9466,7 @@
    "policy": "AmazonBedrockFullAccess",
    "group": "condition-heavy",
    "resolver": "allow",
-   "aws": "implicitDeny"
+   "aws": "allowed"
   },
   {
    "action": "sagemaker:DeleteTags",
@@ -9544,30 +9548,7 @@
   },
   {
    "action": "sagemaker:DescribeModel",
-   "resource": "arn:aws:sagemaker:x:x:endpoint-configzx",
-   "context": [
-    [
-     "aws:CalledViaLast",
-     "bedrock.amazonaws.com"
-    ]
-   ],
-   "stratum": "wrong-resource",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:CalledViaLast",
-     "string"
-    ]
-   ],
-   "policy": "AmazonBedrockFullAccess",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "sagemaker:DescribeInferenceComponent",
-   "resource": "arn:aws:sagemaker:x:x:endpoint-configzx",
+   "resource": "arn:aws:sagemaker:x:x:modelzx",
    "context": [
     [
      "aws:CalledViaLast",
@@ -9590,7 +9571,7 @@
   },
   {
    "action": "sagemaker:DescribeHubContent",
-   "resource": "arn:aws:sagemaker:x:999999999999:hub/SageMakerPublicHub",
+   "resource": "arn:aws:sagemaker:x:999999999999:hub-content/SageMakerPublicHub/Model/x",
    "context": [],
    "stratum": "wrong-resource",
    "expected": "deny",
@@ -9602,7 +9583,30 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "sagemaker:InvokeEndpoint",
+   "action": "sagemaker:DescribeEndpointConfig",
+   "resource": "arn:aws:sagemaker:x:x:endpoint-configzx",
+   "context": [
+    [
+     "aws:CalledViaLast",
+     "bedrock.amazonaws.com"
+    ]
+   ],
+   "stratum": "wrong-resource",
+   "expected": "deny",
+   "note": "",
+   "context_types": [
+    [
+     "aws:CalledViaLast",
+     "string"
+    ]
+   ],
+   "policy": "AmazonBedrockFullAccess",
+   "group": "condition-heavy",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "sagemaker:InvokeEndpointWithResponseStream",
    "resource": "arn:aws:sagemaker:x:x:endpointzx",
    "context": [
     [
@@ -9664,39 +9668,8 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "sagemaker:CreateModel",
+   "action": "sagemaker:CreateEndpoint",
    "resource": "arn:aws:sagemaker:x:x:endpoint/x",
-   "context": [
-    [
-     "aws:CalledViaLast",
-     "bedrock.amazonaws.com-not-it"
-    ],
-    [
-     "aws:ResourceTag/sagemaker-sdk:bedrock",
-     "compatible"
-    ]
-   ],
-   "stratum": "condition-fail",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:CalledViaLast",
-     "string"
-    ],
-    [
-     "aws:ResourceTag/sagemaker-sdk:bedrock",
-     "string"
-    ]
-   ],
-   "policy": "AmazonBedrockFullAccess",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "sagemaker:CreateModel",
-   "resource": "arn:aws:sagemaker:x:x:endpoint-config/x",
    "context": [
     [
      "aws:CalledViaLast",
@@ -9727,7 +9700,38 @@
   },
   {
    "action": "sagemaker:CreateEndpointConfig",
-   "resource": "arn:aws:sagemaker:x:x:endpoint/x",
+   "resource": "arn:aws:sagemaker:x:x:endpoint-config/x",
+   "context": [
+    [
+     "aws:CalledViaLast",
+     "bedrock.amazonaws.com-not-it"
+    ],
+    [
+     "aws:ResourceTag/sagemaker-sdk:bedrock",
+     "compatible"
+    ]
+   ],
+   "stratum": "condition-fail",
+   "expected": "deny",
+   "note": "",
+   "context_types": [
+    [
+     "aws:CalledViaLast",
+     "string"
+    ],
+    [
+     "aws:ResourceTag/sagemaker-sdk:bedrock",
+     "string"
+    ]
+   ],
+   "policy": "AmazonBedrockFullAccess",
+   "group": "condition-heavy",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "sagemaker:CreateEndpoint",
+   "resource": "arn:aws:sagemaker:x:x:endpoint-config/x",
    "context": [
     [
      "aws:CalledViaLast",
@@ -9758,7 +9762,7 @@
   },
   {
    "action": "sagemaker:DescribeEndpointConfig",
-   "resource": "arn:aws:sagemaker:x:x:endpoint/x",
+   "resource": "arn:aws:sagemaker:x:x:endpoint-config/x",
    "context": [
     [
      "aws:CalledViaLast",
@@ -9806,7 +9810,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "iam:ListAttachedRolePolicies",
+   "action": "ec2:DescribeTransitGatewayConnects",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -9819,7 +9823,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "kms:DescribeCustomKeyStores",
+   "action": "iam:ListServerCertificates",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -9832,7 +9836,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "ec2:DescribeHosts",
+   "action": "sagemaker:UpdateClusterInference",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -9845,7 +9849,33 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "network-firewall:AssociateFirewallPolicy",
+   "action": "aps:ListAlertManagerReceivers",
+   "resource": null,
+   "context": [],
+   "stratum": "uniform",
+   "expected": "deny",
+   "note": "",
+   "context_types": [],
+   "policy": "AmazonBedrockFullAccess",
+   "group": "condition-heavy",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "dynamodb:RestoreTableFromAwsBackup",
+   "resource": null,
+   "context": [],
+   "stratum": "uniform",
+   "expected": "deny",
+   "note": "",
+   "context_types": [],
+   "policy": "AmazonBedrockFullAccess",
+   "group": "condition-heavy",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "network-firewall:AssociateAvailabilityZones",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -9871,30 +9901,43 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "cloudtrail:UpdateTrail",
-   "resource": null,
+   "action": "codestar-connections:TagResource",
+   "resource": "arn:aws:codestar-connections:x:x:connection/x",
    "context": [],
-   "stratum": "uniform",
-   "expected": "deny",
+   "stratum": "allow-unconditional",
+   "expected": "allow",
    "note": "",
    "context_types": [],
-   "policy": "AmazonBedrockFullAccess",
+   "policy": "AWSCodeBuildAdminAccess",
    "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
+   "resolver": "allow",
+   "aws": "allowed"
   },
   {
-   "action": "cloud9:DescribeSSHRemote",
+   "action": "codebuild:BatchDeleteBuilds",
    "resource": null,
    "context": [],
-   "stratum": "uniform",
-   "expected": "deny",
+   "stratum": "allow-unconditional",
+   "expected": "allow",
    "note": "",
    "context_types": [],
-   "policy": "AmazonBedrockFullAccess",
+   "policy": "AWSCodeBuildAdminAccess",
    "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "codecommit:GetBranch",
+   "resource": null,
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AWSCodeBuildAdminAccess",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
   },
   {
    "action": "codestar-connections:PassConnection",
@@ -9910,7 +9953,7 @@
    "aws": "allowed"
   },
   {
-   "action": "codebuild:BatchGetBuildBatches",
+   "action": "ecr:DescribeRepositories",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -9923,7 +9966,7 @@
    "aws": "allowed"
   },
   {
-   "action": "codestar-connections:GetIndividualAccessToken",
+   "action": "codestar-connections:ListTagsForResource",
    "resource": "arn:aws:codestar-connections:x:x:connection/x",
    "context": [],
    "stratum": "allow-unconditional",
@@ -9933,11 +9976,11 @@
    "policy": "AWSCodeBuildAdminAccess",
    "group": "condition-heavy",
    "resolver": "allow",
-   "aws": "implicitDeny"
+   "aws": "allowed"
   },
   {
-   "action": "codestar-connections:StartOAuthHandshake",
-   "resource": "arn:aws:codeconnections:x:x:connection/x",
+   "action": "events:DescribeRule",
+   "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
    "expected": "allow",
@@ -9946,7 +9989,98 @@
    "policy": "AWSCodeBuildAdminAccess",
    "group": "condition-heavy",
    "resolver": "allow",
-   "aws": "implicitDeny"
+   "aws": "allowed"
+  },
+  {
+   "action": "elasticfilesystem:DescribeFileSystems",
+   "resource": null,
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AWSCodeBuildAdminAccess",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "codestar-notifications:ListNotificationRules",
+   "resource": null,
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AWSCodeBuildAdminAccess",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "codebuild:CreateWebhook",
+   "resource": null,
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AWSCodeBuildAdminAccess",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "codebuild:ListCuratedEnvironmentImages",
+   "resource": null,
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AWSCodeBuildAdminAccess",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "s3:ListAllMyBuckets",
+   "resource": null,
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AWSCodeBuildAdminAccess",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "codebuild:UpdateWebhook",
+   "resource": null,
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AWSCodeBuildAdminAccess",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "codebuild:ListSharedReportGroups",
+   "resource": null,
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AWSCodeBuildAdminAccess",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
   },
   {
    "action": "codestar-connections:UpdateConnectionInstallation",
@@ -9960,136 +10094,6 @@
    "group": "condition-heavy",
    "resolver": "allow",
    "aws": "allowed"
-  },
-  {
-   "action": "codestar-connections:ListTagsForResource",
-   "resource": "arn:aws:codeconnections:x:x:connection/x",
-   "context": [],
-   "stratum": "allow-unconditional",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSCodeBuildAdminAccess",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "codestar-connections:UseConnection",
-   "resource": "arn:aws:codestar-connections:x:x:connection/x",
-   "context": [],
-   "stratum": "allow-unconditional",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSCodeBuildAdminAccess",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "allowed"
-  },
-  {
-   "action": "codestar-connections:UseConnection",
-   "resource": "arn:aws:codeconnections:x:x:connection/x",
-   "context": [],
-   "stratum": "allow-unconditional",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSCodeBuildAdminAccess",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "codestar-connections:TagResource",
-   "resource": "arn:aws:codestar-connections:x:x:connection/x",
-   "context": [],
-   "stratum": "allow-unconditional",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSCodeBuildAdminAccess",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "allowed"
-  },
-  {
-   "action": "codebuild:DeleteReportGroup",
-   "resource": null,
-   "context": [],
-   "stratum": "allow-unconditional",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSCodeBuildAdminAccess",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "allowed"
-  },
-  {
-   "action": "codebuild:RetryBuild",
-   "resource": null,
-   "context": [],
-   "stratum": "allow-unconditional",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSCodeBuildAdminAccess",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "allowed"
-  },
-  {
-   "action": "events:PutTargets",
-   "resource": null,
-   "context": [],
-   "stratum": "allow-unconditional",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSCodeBuildAdminAccess",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "allowed"
-  },
-  {
-   "action": "codestar-connections:GetIndividualAccessToken",
-   "resource": "arn:aws:codeconnections:x:x:connection/x",
-   "context": [],
-   "stratum": "allow-unconditional",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSCodeBuildAdminAccess",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "codebuild:UpdateReport",
-   "resource": null,
-   "context": [],
-   "stratum": "allow-unconditional",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSCodeBuildAdminAccess",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "allowed"
-  },
-  {
-   "action": "codestar-connections:StartOAuthHandshake",
-   "resource": "arn:aws:codestar-connections:x:x:connection/x",
-   "context": [],
-   "stratum": "allow-unconditional",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSCodeBuildAdminAccess",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
   },
   {
    "action": "codestar-notifications:DeleteNotificationRule",
@@ -10182,8 +10186,8 @@
    "aws": "allowed"
   },
   {
-   "action": "sns:CreateTopic",
-   "resource": "arn:aws:sns:x:x:codestar-notificationzx",
+   "action": "ssm:StartSession",
+   "resource": "arn:aws:ecs:x:x:taskzx/x",
    "context": [],
    "stratum": "wrong-resource",
    "expected": "deny",
@@ -10195,8 +10199,34 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "codestar-connections:ListConnections",
-   "resource": "arn:aws:codeconnections:x:x:connectionzx",
+   "action": "codestar-connections:PassConnection",
+   "resource": "arn:aws:codestar-connections:x:x:connectionzx",
+   "context": [],
+   "stratum": "wrong-resource",
+   "expected": "deny",
+   "note": "",
+   "context_types": [],
+   "policy": "AWSCodeBuildAdminAccess",
+   "group": "condition-heavy",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "ssm:PutParameter",
+   "resource": "arn:aws:ssm:x:x:parameter/CodeBuildzx",
+   "context": [],
+   "stratum": "wrong-resource",
+   "expected": "deny",
+   "note": "",
+   "context_types": [],
+   "policy": "AWSCodeBuildAdminAccess",
+   "group": "condition-heavy",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "codestar-connections:TagResource",
+   "resource": "arn:aws:codestar-connections:x:x:connectionzx",
    "context": [],
    "stratum": "wrong-resource",
    "expected": "deny",
@@ -10210,32 +10240,6 @@
   {
    "action": "sns:SetTopicAttributes",
    "resource": "arn:aws:sns:x:x:codestar-notificationzx",
-   "context": [],
-   "stratum": "wrong-resource",
-   "expected": "deny",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSCodeBuildAdminAccess",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "codestar-connections:ListConnections",
-   "resource": "arn:aws:codestar-connections:x:x:connectionzx",
-   "context": [],
-   "stratum": "wrong-resource",
-   "expected": "deny",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSCodeBuildAdminAccess",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "logs:DeleteLogGroup",
-   "resource": "arn:aws:logs:x:x:log-group:/aws/codebuildzx:log-stream:x",
    "context": [],
    "stratum": "wrong-resource",
    "expected": "deny",
@@ -10404,7 +10408,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "networkmanager:GetSiteToSiteVpnAttachment",
+   "action": "networkmanager:GetNetworkResources",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -10417,7 +10421,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "ec2:DescribeLocalGateways",
+   "action": "ec2:DescribeLocalGatewayRouteTableVirtualInterfaceGroupAssociations",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -10443,7 +10447,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "forecast:DescribeWhatIfForecast",
+   "action": "forecast:DescribeForecastExportJob",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -10560,12 +10564,24 @@
    "aws": "allowed"
   },
   {
-   "action": "s3:PutObject",
-   "resource": "arn:aws:s3:::do-not-delete-ssm-diagnosis-x/actions/x",
+   "action": "kms:GenerateDataKey",
+   "resource": "arn:aws:kms:x:x:key/x",
    "context": [
     [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
+     "kms:EncryptionContext:aws:s3:arn",
+     "arn:aws:s3:::do-not-delete-ssm-diagnosis-x"
+    ],
+    [
+     "aws:ViaAWSService",
+     "true"
+    ],
+    [
+     "aws:ResourceTag/SystemsManagerManaged",
+     "true"
+    ],
+    [
+     "kms:ViaService",
+     "s3.x.amazonaws.com"
     ]
    ],
    "stratum": "allow-conditioned",
@@ -10575,61 +10591,7 @@
    "policy": "AWS-SSM-DiagnosisAutomation-AdministrationRolePolicy",
    "group": "condition-heavy",
    "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "s3:DeleteObject",
-   "resource": "arn:aws:s3:::do-not-delete-ssm-diagnosis-x/actions/x",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWS-SSM-DiagnosisAutomation-AdministrationRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "sts:AssumeRole",
-   "resource": "arn:aws:iam::x:role/AWS-SSM-DiagnosisExecutionRolex",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWS-SSM-DiagnosisAutomation-AdministrationRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "s3:GetObject",
-   "resource": "arn:aws:s3:::do-not-delete-ssm-diagnosis-x/actions/x",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWS-SSM-DiagnosisAutomation-AdministrationRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
+   "aws": "allowed"
   },
   {
    "action": "kms:Decrypt",
@@ -10662,17 +10624,22 @@
    "aws": "allowed"
   },
   {
-   "action": "ssm:StartAutomationExecution",
-   "resource": "arn:aws:ssm:x:x:automation-definition/AWS-DiagnoseHybridActivationIssueszx",
-   "context": [],
-   "stratum": "wrong-resource",
-   "expected": "deny",
+   "action": "iam:PassRole",
+   "resource": "arn:aws:iam::x:role/AWS-SSM-DiagnosisAdminRolex",
+   "context": [
+    [
+     "iam:PassedToService",
+     "ssm.amazonaws.com"
+    ]
+   ],
+   "stratum": "allow-conditioned",
+   "expected": "allow",
    "note": "",
    "context_types": [],
    "policy": "AWS-SSM-DiagnosisAutomation-AdministrationRolePolicy",
    "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
+   "resolver": "allow",
+   "aws": "allowed"
   },
   {
    "action": "ssm:StartAutomationExecution",
@@ -10688,8 +10655,31 @@
    "aws": "implicitDeny"
   },
   {
+   "action": "s3:ListBucket",
+   "resource": "arn:aws:s3:::do-not-delete-ssm-diagnosiszx",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "stratum": "wrong-resource",
+   "expected": "deny",
+   "note": "",
+   "context_types": [
+    [
+     "aws:ResourceAccount",
+     "string"
+    ]
+   ],
+   "policy": "AWS-SSM-DiagnosisAutomation-AdministrationRolePolicy",
+   "group": "condition-heavy",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
    "action": "ssm:StartAutomationExecution",
-   "resource": "arn:aws:ssm:x:x:document/AWSzxUnmanagedEC2x",
+   "resource": "arn:aws:ssm:x:x:automation-definition/AWS-DiagnoseHybridActivationIssueszx",
    "context": [],
    "stratum": "wrong-resource",
    "expected": "deny",
@@ -10701,12 +10691,61 @@
    "aws": "implicitDeny"
   },
   {
+   "action": "ssm:StartAutomationExecution",
+   "resource": "arn:aws:ssm:x:x:automation-definition/AWSzxUnmanagedEC2x:x",
+   "context": [],
+   "stratum": "wrong-resource",
+   "expected": "deny",
+   "note": "",
+   "context_types": [],
+   "policy": "AWS-SSM-DiagnosisAutomation-AdministrationRolePolicy",
+   "group": "condition-heavy",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "ssm:StartAutomationExecution",
+   "resource": "arn:aws:ssm:x:x:document/AWS-DiagnoseHybridActivationIssuez",
+   "context": [],
+   "stratum": "wrong-resource",
+   "expected": "deny",
+   "note": "",
+   "context_types": [],
+   "policy": "AWS-SSM-DiagnosisAutomation-AdministrationRolePolicy",
+   "group": "condition-heavy",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "iam:PassRole",
+   "resource": "arn:aws:iam::x:role/AWS-SSM-DiagnosisAdminRolex",
+   "context": [
+    [
+     "iam:PassedToService",
+     "ssm.amazonaws.com-not-it"
+    ]
+   ],
+   "stratum": "condition-fail",
+   "expected": "deny",
+   "note": "",
+   "context_types": [
+    [
+     "iam:PassedToService",
+     "string"
+    ]
+   ],
+   "policy": "AWS-SSM-DiagnosisAutomation-AdministrationRolePolicy",
+   "group": "condition-heavy",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
    "action": "kms:Decrypt",
-   "resource": "arn:aws:kms:x:x:keyzx",
+   "resource": "arn:aws:kms:x:x:key/x",
    "context": [
     [
      "kms:EncryptionContext:aws:s3:arn",
-     "arn:aws:s3:::do-not-delete-ssm-diagnosis-x"
+     "arn:aws:iam::999999999999:role/definitely-not-it"
     ],
     [
      "aws:ViaAWSService",
@@ -10721,7 +10760,7 @@
      "s3.x.amazonaws.com"
     ]
    ],
-   "stratum": "wrong-resource",
+   "stratum": "condition-fail",
    "expected": "deny",
    "note": "",
    "context_types": [
@@ -10748,35 +10787,24 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "s3:GetObject",
-   "resource": "arn:aws:s3:::do-not-delete-ssm-diagnosiszx/actions/x",
+   "action": "kms:GenerateDataKey",
+   "resource": "arn:aws:kms:x:x:key/x",
    "context": [
     [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "wrong-resource",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
+     "kms:EncryptionContext:aws:s3:arn",
+     "arn:aws:iam::999999999999:role/definitely-not-it"
+    ],
     [
-     "aws:ResourceAccount",
-     "string"
-    ]
-   ],
-   "policy": "AWS-SSM-DiagnosisAutomation-AdministrationRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "s3:GetObject",
-   "resource": "arn:aws:s3:::do-not-delete-ssm-diagnosis-x/actions/x",
-   "context": [
+     "aws:ViaAWSService",
+     "true"
+    ],
     [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}-not-it"
+     "aws:ResourceTag/SystemsManagerManaged",
+     "true"
+    ],
+    [
+     "kms:ViaService",
+     "s3.x.amazonaws.com"
     ]
    ],
    "stratum": "condition-fail",
@@ -10784,7 +10812,19 @@
    "note": "",
    "context_types": [
     [
-     "aws:ResourceAccount",
+     "kms:EncryptionContext:aws:s3:arn",
+     "string"
+    ],
+    [
+     "aws:ViaAWSService",
+     "boolean"
+    ],
+    [
+     "aws:ResourceTag/SystemsManagerManaged",
+     "string"
+    ],
+    [
+     "kms:ViaService",
      "string"
     ]
    ],
@@ -10794,76 +10834,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "sts:AssumeRole",
-   "resource": "arn:aws:iam::x:role/AWS-SSM-DiagnosisExecutionRolex",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}-not-it"
-    ]
-   ],
-   "stratum": "condition-fail",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:ResourceAccount",
-     "string"
-    ]
-   ],
-   "policy": "AWS-SSM-DiagnosisAutomation-AdministrationRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "s3:PutObject",
-   "resource": "arn:aws:s3:::do-not-delete-ssm-diagnosis-x/actions/x",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}-not-it"
-    ]
-   ],
-   "stratum": "condition-fail",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:ResourceAccount",
-     "string"
-    ]
-   ],
-   "policy": "AWS-SSM-DiagnosisAutomation-AdministrationRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "s3:ListBucket",
-   "resource": "arn:aws:s3:::do-not-delete-ssm-diagnosis-x",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}-not-it"
-    ]
-   ],
-   "stratum": "condition-fail",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:ResourceAccount",
-     "string"
-    ]
-   ],
-   "policy": "AWS-SSM-DiagnosisAutomation-AdministrationRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "s3:DeleteStorageLensGroup",
+   "action": "kms:Encrypt",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -10876,7 +10847,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "sts:AssumeRoleWithWebIdentity",
+   "action": "sts:AssumeRoot",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -10889,7 +10860,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "iam:GetAccountProperties",
+   "action": "s3:PutMultiRegionAccessPointPolicy",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -10902,7 +10873,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "kms:DeleteCustomKeyStore",
+   "action": "ssm:StartChangeRequestExecution",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -10915,10 +10886,36 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "ssm:StartSession",
+   "action": "iam:DeleteGroup",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
+   "expected": "deny",
+   "note": "",
+   "context_types": [],
+   "policy": "AWS-SSM-DiagnosisAutomation-AdministrationRolePolicy",
+   "group": "condition-heavy",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "fms:UntagResource",
+   "resource": null,
+   "context": [],
+   "stratum": "uniform",
+   "expected": "deny",
+   "note": "",
+   "context_types": [],
+   "policy": "AWS-SSM-DiagnosisAutomation-AdministrationRolePolicy",
+   "group": "condition-heavy",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "servicediscovery:UpdatePrivateDnsNamespace",
+   "resource": null,
+   "context": [],
+   "stratum": "uniform",
    "expected": "deny",
    "note": "",
    "context_types": [],
@@ -10942,32 +10939,6 @@
   },
   {
    "action": "ce:UpdateReport",
-   "resource": null,
-   "context": [],
-   "stratum": "uniform",
-   "expected": "deny",
-   "note": "",
-   "context_types": [],
-   "policy": "AWS-SSM-DiagnosisAutomation-AdministrationRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "q:BatchGetUsers",
-   "resource": null,
-   "context": [],
-   "stratum": "uniform",
-   "expected": "deny",
-   "note": "",
-   "context_types": [],
-   "policy": "AWS-SSM-DiagnosisAutomation-AdministrationRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "ds:UnauthorizeApplication",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -11609,8 +11580,8 @@
    "aws": "allowed"
   },
   {
-   "action": "logs:DescribeLogStreams",
-   "resource": "arn:aws:logs:x:x:log-group:/aws/elasticbeanstalk/x",
+   "action": "sns:Publish",
+   "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
    "expected": "allow",
@@ -11648,7 +11619,7 @@
    "aws": "allowed"
   },
   {
-   "action": "elasticloadbalancing:DescribeTargetHealth",
+   "action": "elasticloadbalancing:DescribeTargetGroups",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -11687,7 +11658,7 @@
    "aws": "allowed"
   },
   {
-   "action": "logs:DescribeLogGroups",
+   "action": "logs:DescribeLogStreams",
    "resource": "arn:aws:logs:x:x:log-group:/aws/elasticbeanstalk/x",
    "context": [],
    "stratum": "allow-unconditional",
@@ -11697,7 +11668,7 @@
    "policy": "AWSElasticBeanstalkServiceRolePolicy",
    "group": "condition-heavy",
    "resolver": "allow",
-   "aws": "implicitDeny"
+   "aws": "allowed"
   },
   {
    "action": "autoscaling:DescribeNotificationConfigurations",
@@ -11726,7 +11697,7 @@
    "aws": "allowed"
   },
   {
-   "action": "elasticloadbalancing:DescribeInstanceHealth",
+   "action": "ec2:DescribeSecurityGroups",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -11752,144 +11723,99 @@
    "aws": "allowed"
   },
   {
+   "action": "cloudformation:DescribeStackResources",
+   "resource": "arn:aws:cloudformation:x:x:stack/awseb-x",
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AWSElasticBeanstalkServiceRolePolicy",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "elasticloadbalancing:DescribeInstanceHealth",
+   "resource": null,
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AWSElasticBeanstalkServiceRolePolicy",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "logs:CreateLogStream",
+   "resource": "arn:aws:logs:x:x:log-group:/aws/elasticbeanstalk/x",
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AWSElasticBeanstalkServiceRolePolicy",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "cloudformation:DescribeStacks",
+   "resource": "arn:aws:cloudformation:x:x:stack/eb-x",
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AWSElasticBeanstalkServiceRolePolicy",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "elasticloadbalancing:DescribeTargetHealth",
+   "resource": null,
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AWSElasticBeanstalkServiceRolePolicy",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "elasticloadbalancing:DescribeLoadBalancers",
+   "resource": null,
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AWSElasticBeanstalkServiceRolePolicy",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "cloudformation:DescribeStackResources",
+   "resource": "arn:aws:cloudformation:x:x:stack/eb-x",
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AWSElasticBeanstalkServiceRolePolicy",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
    "action": "cloudformation:DescribeStackEvents",
-   "resource": "arn:aws:cloudformation:x:x:stack/elasticbeanstalk-x-image-build",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSElasticBeanstalkServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "eks:DeletePodIdentityAssociation",
-   "resource": "arn:aws:eks:x:x:podidentityassociation/beanstalk-clusterx/x",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSElasticBeanstalkServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "s3:CreateBucket",
-   "resource": "arn:aws:s3:::elasticbeanstalk-x/x",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSElasticBeanstalkServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "eks:CreateAddon",
-   "resource": "arn:aws:eks:x:x:cluster/beanstalk-clusterx",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSElasticBeanstalkServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "elasticloadbalancing:DescribeListeners",
-   "resource": null,
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSElasticBeanstalkServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "elasticloadbalancing:CreateTargetGroup",
-   "resource": "arn:aws:elasticloadbalancing:x:x:targetgroup/x/x",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "allow-flagged",
-   "expected": "allow-flagged",
-   "note": "Null:aws:RequestTag/elasticbeanstalk:environment-id",
-   "context_types": [
-    [
-     "aws:ResourceAccount",
-     "string"
-    ]
-   ],
-   "policy": "AWSElasticBeanstalkServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "allow-flagged",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "elasticloadbalancing:AddTags",
-   "resource": null,
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "allow-flagged",
-   "expected": "allow-flagged",
-   "note": "Null:aws:ResourceTag/elasticbeanstalk:environment-id",
-   "context_types": [
-    [
-     "aws:ResourceAccount",
-     "string"
-    ]
-   ],
-   "policy": "AWSElasticBeanstalkServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "allow-flagged",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "cloudformation:CreateStack",
-   "resource": "arn:aws:cloudformation:x:x:stack/elasticbeanstalkzx-image-build/x",
+   "resource": "arn:aws:cloudformation:x:x:stack/beanstalkzx",
    "context": [
     [
      "aws:ResourceAccount",
@@ -11911,7 +11837,53 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "eks:DescribeAccessEntry",
+   "action": "eks:DescribeAddon",
+   "resource": "arn:aws:eks:x:x:addon/beanstalk-clustezx",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "stratum": "wrong-resource",
+   "expected": "deny",
+   "note": "",
+   "context_types": [
+    [
+     "aws:ResourceAccount",
+     "string"
+    ]
+   ],
+   "policy": "AWSElasticBeanstalkServiceRolePolicy",
+   "group": "condition-heavy",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "eks:CreateAddon",
+   "resource": "arn:aws:eks:x:x:cluster/beanstalk-clustezx",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "stratum": "wrong-resource",
+   "expected": "deny",
+   "note": "",
+   "context_types": [
+    [
+     "aws:ResourceAccount",
+     "string"
+    ]
+   ],
+   "policy": "AWSElasticBeanstalkServiceRolePolicy",
+   "group": "condition-heavy",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "eks:ListAssociatedAccessPolicies",
    "resource": "arn:aws:eks:x:x:access-entry/beanstalk-clustezx/x",
    "context": [
     [
@@ -11934,145 +11906,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "eks:CreateAddon",
-   "resource": "arn:aws:eks:x:x:cluster/beanstalk-clustezx",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "wrong-resource",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:ResourceAccount",
-     "string"
-    ]
-   ],
-   "policy": "AWSElasticBeanstalkServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "eks:DescribeUpdate",
-   "resource": "arn:aws:eks:x:x:cluster/beanstalk-clustezx",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "wrong-resource",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:ResourceAccount",
-     "string"
-    ]
-   ],
-   "policy": "AWSElasticBeanstalkServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "ecr:BatchGetImage",
-   "resource": null,
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}-not-it"
-    ]
-   ],
-   "stratum": "condition-fail",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:ResourceAccount",
-     "string"
-    ]
-   ],
-   "policy": "AWSElasticBeanstalkServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "s3:PutObject",
-   "resource": "arn:aws:s3:::elasticbeanstalk-x/x",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}-not-it"
-    ]
-   ],
-   "stratum": "condition-fail",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:ResourceAccount",
-     "string"
-    ]
-   ],
-   "policy": "AWSElasticBeanstalkServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "eks:DescribeUpdate",
-   "resource": "arn:aws:eks:x:x:cluster/beanstalk-clusterx",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}-not-it"
-    ]
-   ],
-   "stratum": "condition-fail",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:ResourceAccount",
-     "string"
-    ]
-   ],
-   "policy": "AWSElasticBeanstalkServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "eks:UpdatePodIdentityAssociation",
-   "resource": "arn:aws:eks:x:x:podidentityassociation/beanstalk-clusterx/x",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}-not-it"
-    ]
-   ],
-   "stratum": "condition-fail",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:ResourceAccount",
-     "string"
-    ]
-   ],
-   "policy": "AWSElasticBeanstalkServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "elasticloadbalancing:DescribeTrustStores",
+   "action": "codebuild:ListSandboxes",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -12085,7 +11919,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "cloudformation:DescribeGeneratedTemplate",
+   "action": "cloudwatch:PutMetricData",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -12098,7 +11932,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "iam:CreateUser",
+   "action": "acm:TagResource",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -12111,7 +11945,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "lambda:GetMicrovm",
+   "action": "aps:DescribeRuleGroupsNamespace",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -12124,7 +11958,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "elasticbeanstalk:DescribeAccountAttributes",
+   "action": "iam:ListUserPolicies",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -12137,7 +11971,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "qapps:ListCategories",
+   "action": "iq:UnlinkAwsCertification",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -12150,7 +11984,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "waf-regional:DeleteWebACL",
+   "action": "s3:PutObjectVersionTagging",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -12163,7 +11997,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "lightsail:CreateCertificate",
+   "action": "transform-custom:CreateRepository",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -12176,7 +12010,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "ec2:DescribeCapacityReservationBillingRequests",
+   "action": "batch:CreateComputeEnvironment",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -12202,34 +12036,16 @@
    "aws": "allowed"
   },
   {
-   "action": "cloudtrail:UpdateServiceLinkedChannel",
-   "resource": "arn:aws:cloudtrail:x:x:channel/aws-service-channel/cloudwatch/x",
+   "action": "iam:CreateServiceLinkedRole",
+   "resource": "arn:aws:iam::x:role/aws-service-role/resource-explorer-2.amazonaws.com/x",
    "context": [
     [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSObservabilityAdminTelemetryEnablementServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "route53resolver:TagResource",
-   "resource": "arn:aws:route53resolver:x:x:resolver-query-log-config/x",
-   "context": [
-    [
-     "aws:RequestTag/CloudWatchTelemetryRuleManaged",
+     "aws:ViaAWSService",
      "true"
     ],
     [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
+     "iam:AWSServiceName",
+     "resource-explorer-2.amazonaws.com"
     ]
    ],
    "stratum": "allow-conditioned",
@@ -12239,130 +12055,14 @@
    "policy": "AWSObservabilityAdminTelemetryEnablementServiceRolePolicy",
    "group": "condition-heavy",
    "resolver": "allow",
-   "aws": "implicitDeny"
+   "aws": "allowed"
   },
   {
-   "action": "config:PutServiceLinkedConfigurationRecorder",
-   "resource": "arn:aws:config:x:x:configuration-recorder/AWSConfigurationRecorderForObservabilityAdmin_TelemetryEnablement/x",
+   "action": "route53resolver:TagResource",
+   "resource": "arn:aws:route53resolver:x:x:resolver-query-log-configzx",
    "context": [
     [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSObservabilityAdminTelemetryEnablementServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "logs:CreateLogGroup",
-   "resource": "arn:aws:logs:x:x:log-group:aws/cloudtrail",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSObservabilityAdminTelemetryEnablementServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "cloudwatch:GetOTelEnrichment",
-   "resource": null,
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSObservabilityAdminTelemetryEnablementServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "iam:CreateServiceLinkedRole",
-   "resource": "arn:aws:iam::x:role/aws-service-role/config.amazonaws.com/AWSServiceRoleForConfig",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ],
-    [
-     "iam:AWSServiceName",
-     "config.amazonaws.com"
-    ]
-   ],
-   "stratum": "allow-flagged",
-   "expected": "allow-flagged",
-   "note": "BoolIfExists:aws:ViaAWSService",
-   "context_types": [
-    [
-     "aws:ResourceAccount",
-     "string"
-    ],
-    [
-     "iam:AWSServiceName",
-     "string"
-    ]
-   ],
-   "policy": "AWSObservabilityAdminTelemetryEnablementServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "allow-flagged",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "iam:CreateServiceLinkedRole",
-   "resource": "arn:x:iam::x:role/aws-service-role/route53resolver.amazonaws.com/AWSServiceRoleForRoute53Resolver",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ],
-    [
-     "iam:AWSServiceName",
-     "route53resolver.amazonaws.com"
-    ]
-   ],
-   "stratum": "allow-flagged",
-   "expected": "allow-flagged",
-   "note": "BoolIfExists:aws:ViaAWSService",
-   "context_types": [
-    [
-     "aws:ResourceAccount",
-     "string"
-    ],
-    [
-     "iam:AWSServiceName",
-     "string"
-    ]
-   ],
-   "policy": "AWSObservabilityAdminTelemetryEnablementServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "allow-flagged",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "eks:UpdateClusterConfig",
-   "resource": "arn:aws:eks:x:x:clusterzx",
-   "context": [
-    [
-     "eks:loggingType/scheduler",
+     "aws:RequestTag/CloudWatchTelemetryRuleManaged",
      "true"
     ],
     [
@@ -12375,7 +12075,61 @@
    "note": "",
    "context_types": [
     [
-     "eks:loggingType/scheduler",
+     "aws:RequestTag/CloudWatchTelemetryRuleManaged",
+     "string"
+    ],
+    [
+     "aws:ResourceAccount",
+     "string"
+    ]
+   ],
+   "policy": "AWSObservabilityAdminTelemetryEnablementServiceRolePolicy",
+   "group": "condition-heavy",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "config:AssociateResourceTypes",
+   "resource": "arn:aws:config:x:x:configuration-recorder/AWSConfigurationRecorderForObservabilityAdmin_TelemetryEnablementzx",
+   "context": [
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "stratum": "wrong-resource",
+   "expected": "deny",
+   "note": "",
+   "context_types": [
+    [
+     "aws:ResourceAccount",
+     "string"
+    ]
+   ],
+   "policy": "AWSObservabilityAdminTelemetryEnablementServiceRolePolicy",
+   "group": "condition-heavy",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "eks:UpdateClusterConfig",
+   "resource": "arn:aws:eks:x:x:clusterzx",
+   "context": [
+    [
+     "eks:loggingType/controllerManager",
+     "true"
+    ],
+    [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ]
+   ],
+   "stratum": "wrong-resource",
+   "expected": "deny",
+   "note": "",
+   "context_types": [
+    [
+     "eks:loggingType/controllerManager",
      "boolean"
     ],
     [
@@ -12412,85 +12166,47 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "cloudtrail:UpdateServiceLinkedChannel",
-   "resource": "arn:aws:cloudtrail:x:x:channel/aws-service-channel/cloudwatch/x",
+   "action": "iam:CreateServiceLinkedRole",
+   "resource": "arn:aws:iam::x:role/aws-service-role/resource-explorer-2.amazonaws.comzx",
    "context": [
     [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}-not-it"
-    ]
-   ],
-   "stratum": "condition-fail",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:ResourceAccount",
-     "string"
-    ]
-   ],
-   "policy": "AWSObservabilityAdminTelemetryEnablementServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "ec2:CreateFlowLogs",
-   "resource": "arn:aws:ec2:x:x:vpc/x",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}-not-it"
-    ]
-   ],
-   "stratum": "condition-fail",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:ResourceAccount",
-     "string"
-    ]
-   ],
-   "policy": "AWSObservabilityAdminTelemetryEnablementServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "cloudtrail:DeleteServiceLinkedChannel",
-   "resource": "arn:aws:cloudtrail:x:x:channel/aws-service-channel/cloudwatch/x",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}-not-it"
-    ]
-   ],
-   "stratum": "condition-fail",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:ResourceAccount",
-     "string"
-    ]
-   ],
-   "policy": "AWSObservabilityAdminTelemetryEnablementServiceRolePolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "logs:CreateLogStream",
-   "resource": null,
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}-not-it"
-    ],
-    [
-     "aws:ResourceTag/CloudWatchTelemetryRuleManaged",
+     "aws:ViaAWSService",
      "true"
+    ],
+    [
+     "iam:AWSServiceName",
+     "resource-explorer-2.amazonaws.com"
+    ]
+   ],
+   "stratum": "wrong-resource",
+   "expected": "deny",
+   "note": "",
+   "context_types": [
+    [
+     "aws:ViaAWSService",
+     "boolean"
+    ],
+    [
+     "iam:AWSServiceName",
+     "string"
+    ]
+   ],
+   "policy": "AWSObservabilityAdminTelemetryEnablementServiceRolePolicy",
+   "group": "condition-heavy",
+   "resolver": "deny",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "iam:CreateServiceLinkedRole",
+   "resource": "arn:aws:iam::x:role/aws-service-role/resource-explorer-2.amazonaws.com/x",
+   "context": [
+    [
+     "aws:ViaAWSService",
+     "false"
+    ],
+    [
+     "iam:AWSServiceName",
+     "resource-explorer-2.amazonaws.com"
     ]
    ],
    "stratum": "condition-fail",
@@ -12498,11 +12214,11 @@
    "note": "",
    "context_types": [
     [
-     "aws:ResourceAccount",
-     "string"
+     "aws:ViaAWSService",
+     "boolean"
     ],
     [
-     "aws:ResourceTag/CloudWatchTelemetryRuleManaged",
+     "iam:AWSServiceName",
      "string"
     ]
    ],
@@ -12512,7 +12228,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "config:PutConnector",
+   "action": "observabilityadmin:GetCentralizationRuleForOrganization",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -12525,7 +12241,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "elasticloadbalancing:RemoveTrustStoreRevocations",
+   "action": "config:DescribeRemediationExecutionStatus",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -12538,7 +12254,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "ec2:CreateTransitGatewayRouteTableAnnouncement",
+   "action": "kafka:DescribeTopicPartitions",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -12551,7 +12267,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "s3:InitiateReplication",
+   "action": "resource-explorer-2:CreateResourceExplorerSetup",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -12564,7 +12280,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "wafv2:PutManagedRuleSetVersions",
+   "action": "eks:UpdatePodIdentityAssociation",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -12577,7 +12293,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "personalize:DescribeSolutionVersion",
+   "action": "sagemaker:ListClusters",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -12590,7 +12306,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "quicksight:UpdateBrand",
+   "action": "datasync:DescribeLocationEfs",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -12603,7 +12319,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "rekognition:ListMediaAnalysisJobs",
+   "action": "datazone:UntagResource",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -12616,7 +12332,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "ec2:RejectTransitGatewayPeeringAttachment",
+   "action": "s3:DeleteStorageLensGroup",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -12629,8 +12345,8 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "sns:CreateTopic",
-   "resource": "arn:aws:sns:x:x:xsagemakerx",
+   "action": "servicecatalog:ListRecordHistory",
+   "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
    "expected": "allow",
@@ -12642,7 +12358,7 @@
    "aws": "allowed"
   },
   {
-   "action": "servicecatalog:ListStackInstancesForProvisionedProduct",
+   "action": "servicecatalog:ListBudgetsForResource",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -12656,19 +12372,6 @@
   },
   {
    "action": "glue:GetTable",
-   "resource": "arn:aws:glue:x:x:table/x",
-   "context": [],
-   "stratum": "allow-unconditional",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AmazonSageMakerFullAccess",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "allowed"
-  },
-  {
-   "action": "glue:GetTables",
    "resource": "arn:aws:glue:x:x:database/x",
    "context": [],
    "stratum": "allow-unconditional",
@@ -12681,8 +12384,8 @@
    "aws": "allowed"
   },
   {
-   "action": "glue:GetJobBookmark",
-   "resource": null,
+   "action": "glue:GetTables",
+   "resource": "arn:aws:glue:x:x:catalog",
    "context": [],
    "stratum": "allow-unconditional",
    "expected": "allow",
@@ -12694,8 +12397,21 @@
    "aws": "allowed"
   },
   {
-   "action": "secretsmanager:DescribeSecret",
-   "resource": "arn:aws:secretsmanager:x:x:secret:AmazonSageMaker-x",
+   "action": "glue:GetDatabases",
+   "resource": "arn:aws:glue:x:x:database/x",
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AmazonSageMakerFullAccess",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "sagemaker:ListTags",
+   "resource": "arn:aws:sagemaker:x:x:user-profile/x",
    "context": [],
    "stratum": "allow-unconditional",
    "expected": "allow",
@@ -12720,7 +12436,20 @@
    "aws": "allowed"
   },
   {
-   "action": "s3:GetBucketCORS",
+   "action": "s3:DeleteObject",
+   "resource": "arn:aws:s3:::xsagemakerx",
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AmazonSageMakerFullAccess",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "cognito-idp:AdminCreateUser",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -12733,7 +12462,7 @@
    "aws": "allowed"
   },
   {
-   "action": "cognito-idp:AdminAddUserToGroup",
+   "action": "logs:DescribeDeliveryDestinations",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -12746,7 +12475,20 @@
    "aws": "allowed"
   },
   {
-   "action": "logs:DescribeLogGroups",
+   "action": "ecr:SetRepositoryPolicy",
+   "resource": "arn:aws:ecr:x:x:repository/xsagemakerx",
+   "context": [],
+   "stratum": "allow-unconditional",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AmazonSageMakerFullAccess",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "servicecatalog:ListProvisioningArtifacts",
    "resource": null,
    "context": [],
    "stratum": "allow-unconditional",
@@ -12759,8 +12501,8 @@
    "aws": "allowed"
   },
   {
-   "action": "ecr:StartImageScan",
-   "resource": null,
+   "action": "cloudformation:ListStackResources",
+   "resource": "arn:aws:cloudformation:x:x:stack/SC-x",
    "context": [],
    "stratum": "allow-unconditional",
    "expected": "allow",
@@ -12770,72 +12512,6 @@
    "group": "condition-heavy",
    "resolver": "allow",
    "aws": "allowed"
-  },
-  {
-   "action": "sns:CreateTopic",
-   "resource": "arn:aws:sns:x:x:xSageMakerx",
-   "context": [],
-   "stratum": "allow-unconditional",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AmazonSageMakerFullAccess",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "allowed"
-  },
-  {
-   "action": "cloudwatch:DeleteAlarms",
-   "resource": null,
-   "context": [],
-   "stratum": "allow-unconditional",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AmazonSageMakerFullAccess",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "allowed"
-  },
-  {
-   "action": "s3express:CreateBucket",
-   "resource": "arn:aws:s3express:x:x:bucket/xSagemakerx",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AmazonSageMakerFullAccess",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "sagemaker:UpdateSpace",
-   "resource": "arn:aws:sagemaker:x:x:space/${sagemaker:DomainId}/x",
-   "context": [
-    [
-     "sagemaker:OwnerUserProfileArn",
-     "arn:aws:sagemaker:x:x:user-profile/${sagemaker:DomainId}/${sagemaker:UserProfileName}"
-    ],
-    [
-     "sagemaker:SpaceSharingType",
-     "Private"
-    ]
-   ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AmazonSageMakerFullAccess",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
   },
   {
    "action": "iam:PassRole",
@@ -12844,6 +12520,42 @@
     [
      "iam:PassedToService",
      "sagemaker.amazonaws.com"
+    ]
+   ],
+   "stratum": "allow-conditioned",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AmazonSageMakerFullAccess",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "servicecatalog:TerminateProvisionedProduct",
+   "resource": null,
+   "context": [
+    [
+     "servicecatalog:userLevel",
+     "self"
+    ]
+   ],
+   "stratum": "allow-conditioned",
+   "expected": "allow",
+   "note": "",
+   "context_types": [],
+   "policy": "AmazonSageMakerFullAccess",
+   "group": "condition-heavy",
+   "resolver": "allow",
+   "aws": "allowed"
+  },
+  {
+   "action": "iam:CreateServiceLinkedRole",
+   "resource": "arn:aws:iam::x:role/aws-service-role/sagemaker.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_SageMakerEndpoint",
+   "context": [
+    [
+     "iam:AWSServiceName",
+     "sagemaker.application-autoscaling.amazonaws.com"
     ]
    ],
    "stratum": "allow-conditioned",
@@ -12874,12 +12586,12 @@
    "aws": "allowed"
   },
   {
-   "action": "s3express:CreateSession",
-   "resource": "arn:aws:s3express:x:x:bucket/xSagemakerx",
+   "action": "s3:GetObject",
+   "resource": "arn:aws:s3:::x",
    "context": [
     [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
+     "s3:ExistingObjectTag/servicecatalog:provisioning",
+     "true"
     ]
    ],
    "stratum": "allow-conditioned",
@@ -12889,23 +12601,10 @@
    "policy": "AmazonSageMakerFullAccess",
    "group": "condition-heavy",
    "resolver": "allow",
-   "aws": "implicitDeny"
+   "aws": "allowed"
   },
   {
-   "action": "sagemaker:DescribeApp",
-   "resource": "arn:aws:sagemaker:x:x:flow-definition/x",
-   "context": [],
-   "stratum": "allow-flagged",
-   "expected": "allow-flagged",
-   "note": "StringEqualsIfExists:sagemaker:WorkteamType",
-   "context_types": [],
-   "policy": "AmazonSageMakerFullAccess",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "sagemaker:DescribeJob",
+   "action": "sagemaker:CreateFlowDefinition",
    "resource": "arn:aws:sagemaker:x:x:flow-definition/x",
    "context": [],
    "stratum": "allow-flagged",
@@ -12915,24 +12614,24 @@
    "policy": "AmazonSageMakerFullAccess",
    "group": "condition-heavy",
    "resolver": "allow-flagged",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "sagemaker:DescribeAppImageConfig",
-   "resource": "arn:aws:sagemaker:x:x:flow-definitionzx",
-   "context": [],
-   "stratum": "wrong-resource",
-   "expected": "unsupported",
-   "note": "",
-   "context_types": [],
-   "policy": "AmazonSageMakerFullAccess",
-   "group": "condition-heavy",
-   "resolver": "unsupported",
    "aws": "allowed"
   },
   {
-   "action": "sagemaker:CallWithBearerToken",
-   "resource": "arn:aws:sagemaker:x:x:flow-definitionzx",
+   "action": "sagemaker:DeleteFlowDefinition",
+   "resource": "arn:aws:sagemaker:x:x:flow-definition/x",
+   "context": [],
+   "stratum": "allow-flagged",
+   "expected": "allow-flagged",
+   "note": "StringEqualsIfExists:sagemaker:WorkteamType",
+   "context_types": [],
+   "policy": "AmazonSageMakerFullAccess",
+   "group": "condition-heavy",
+   "resolver": "allow-flagged",
+   "aws": "allowed"
+  },
+  {
+   "action": "glue:CreateTable",
+   "resource": "arn:aws:glue:x:x:table/sagemaker_featurestorezx",
    "context": [],
    "stratum": "wrong-resource",
    "expected": "unsupported",
@@ -12957,8 +12656,8 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "sagemaker:ListInferenceRecommendationsJobSteps",
-   "resource": "arn:aws:sagemaker:x:x:flow-definitionzx",
+   "action": "sagemaker:CreateApp",
+   "resource": "arn:aws:sagemaker:x:x:appzx/x/x/x",
    "context": [],
    "stratum": "wrong-resource",
    "expected": "unsupported",
@@ -12970,25 +12669,12 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "sagemaker:DescribePartnerApp",
-   "resource": "arn:aws:sagemaker:x:x:flow-definitionzx",
-   "context": [],
-   "stratum": "wrong-resource",
-   "expected": "unsupported",
-   "note": "",
-   "context_types": [],
-   "policy": "AmazonSageMakerFullAccess",
-   "group": "condition-heavy",
-   "resolver": "unsupported",
-   "aws": "allowed"
-  },
-  {
-   "action": "s3express:CreateBucket",
-   "resource": "arn:aws:s3express:x:x:bucket/xSageMakerx",
+   "action": "iam:PassRole",
+   "resource": "arn:aws:iam::x:role/x",
    "context": [
     [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}-not-it"
+     "iam:PassedToService",
+     "sagemaker.amazonaws.com-not-it"
     ]
    ],
    "stratum": "condition-fail",
@@ -12996,7 +12682,7 @@
    "note": "",
    "context_types": [
     [
-     "aws:ResourceAccount",
+     "iam:PassedToService",
      "string"
     ]
    ],
@@ -13007,11 +12693,11 @@
   },
   {
    "action": "iam:CreateServiceLinkedRole",
-   "resource": "arn:aws:iam::x:role/aws-service-role/sagemaker.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_SageMakerEndpoint",
+   "resource": null,
    "context": [
     [
      "iam:AWSServiceName",
-     "sagemaker.application-autoscaling.amazonaws.com-not-it"
+     "robomaker.amazonaws.com-not-it"
     ]
    ],
    "stratum": "condition-fail",
@@ -13020,6 +12706,52 @@
    "context_types": [
     [
      "iam:AWSServiceName",
+     "string"
+    ]
+   ],
+   "policy": "AmazonSageMakerFullAccess",
+   "group": "condition-heavy",
+   "resolver": "unsupported",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "sagemaker:AddTags",
+   "resource": "arn:aws:sagemaker:x:x:space/x",
+   "context": [
+    [
+     "sagemaker:TaggingAction",
+     "CreateSpace-not-it"
+    ]
+   ],
+   "stratum": "condition-fail",
+   "expected": "unsupported",
+   "note": "",
+   "context_types": [
+    [
+     "sagemaker:TaggingAction",
+     "string"
+    ]
+   ],
+   "policy": "AmazonSageMakerFullAccess",
+   "group": "condition-heavy",
+   "resolver": "unsupported",
+   "aws": "implicitDeny"
+  },
+  {
+   "action": "secretsmanager:DescribeSecret",
+   "resource": null,
+   "context": [
+    [
+     "secretsmanager:ResourceTag/SageMaker",
+     "true-not-it"
+    ]
+   ],
+   "stratum": "condition-fail",
+   "expected": "unsupported",
+   "note": "",
+   "context_types": [
+    [
+     "secretsmanager:ResourceTag/SageMaker",
      "string"
     ]
    ],
@@ -13094,7 +12826,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "transcribe:StartMedicalStreamTranscription",
+   "action": "storagegateway:ListVolumeRecoveryPoints",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -13107,7 +12839,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "shield:DisableProactiveEngagement",
+   "action": "securitylake:CreateCustomLogSource",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -13120,7 +12852,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "securityhub:ListAggregatorsV2",
+   "action": "sagemaker:StartInferenceExperiment",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -13130,7 +12862,7 @@
    "policy": "AmazonSageMakerFullAccess",
    "group": "condition-heavy",
    "resolver": "unsupported",
-   "aws": "implicitDeny"
+   "aws": "allowed"
   },
   {
    "action": "guardduty:UpdateMalwareProtectionPlan",
@@ -13159,26 +12891,39 @@
    "aws": "allowed"
   },
   {
-   "action": "s3:PutObject",
-   "resource": "arn:aws:s3:::transform-vmware-target-x/x",
+   "action": "ssm:GetResourcePolicies",
+   "resource": "arn:aws:ssm:x:x:parameter/network-migrationzx",
    "context": [
+    [
+     "aws:RequestedRegion",
+     "${aws:PrincipalTag/TargetRegion}"
+    ],
     [
      "aws:ResourceAccount",
      "${aws:PrincipalAccount}"
     ]
    ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
+   "stratum": "wrong-resource",
+   "expected": "deny",
    "note": "",
-   "context_types": [],
+   "context_types": [
+    [
+     "aws:RequestedRegion",
+     "string"
+    ],
+    [
+     "aws:ResourceAccount",
+     "string"
+    ]
+   ],
    "policy": "AWSTransformNetworkMigrationAgentPolicy",
    "group": "condition-heavy",
-   "resolver": "allow",
+   "resolver": "deny",
    "aws": "implicitDeny"
   },
   {
    "action": "cloudformation:GetTemplateSummary",
-   "resource": "arn:aws:cloudformation:x:x:stack/Nmdx",
+   "resource": "arn:aws:cloudformation:x:x:stack/Nmzx",
    "context": [
     [
      "aws:RequestedRegion",
@@ -13193,101 +12938,9 @@
      "AWSApplicationMigrationService"
     ]
    ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
+   "stratum": "wrong-resource",
+   "expected": "deny",
    "note": "",
-   "context_types": [],
-   "policy": "AWSTransformNetworkMigrationAgentPolicy",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "s3:ListMultipartUploadParts",
-   "resource": "arn:aws:s3:::transform-vmware-target-x/x",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSTransformNetworkMigrationAgentPolicy",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "ec2:CreateTags",
-   "resource": "arn:aws:ec2:x:x:transit-gateway-route-table/x",
-   "context": [
-    [
-     "aws:RequestTag/CreatedBy",
-     "AWSApplicationMigrationService"
-    ],
-    [
-     "aws:RequestedRegion",
-     "${aws:PrincipalTag/TargetRegion}"
-    ],
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ],
-    [
-     "ec2:CreateAction",
-     "AllocateAddress"
-    ]
-   ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSTransformNetworkMigrationAgentPolicy",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "ec2:DescribeSecurityGroups",
-   "resource": null,
-   "context": [
-    [
-     "aws:RequestedRegion",
-     "${aws:PrincipalTag/TargetRegion}"
-    ]
-   ],
-   "stratum": "allow-conditioned",
-   "expected": "allow",
-   "note": "",
-   "context_types": [],
-   "policy": "AWSTransformNetworkMigrationAgentPolicy",
-   "group": "condition-heavy",
-   "resolver": "allow",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "lambda:GetFunctionConfiguration",
-   "resource": "arn:aws:lambda:x:x:function:network-migrationx",
-   "context": [
-    [
-     "aws:RequestedRegion",
-     "${aws:PrincipalTag/TargetRegion}"
-    ],
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ],
-    [
-     "aws:ResourceTag/CreatedBy",
-     "AWSApplicationMigrationService"
-    ]
-   ],
-   "stratum": "allow-flagged",
-   "expected": "allow-flagged",
-   "note": "ForAnyValue:StringEquals:aws:CalledVia",
    "context_types": [
     [
      "aws:RequestedRegion",
@@ -13304,28 +12957,36 @@
    ],
    "policy": "AWSTransformNetworkMigrationAgentPolicy",
    "group": "condition-heavy",
-   "resolver": "allow-flagged",
+   "resolver": "deny",
    "aws": "implicitDeny"
   },
   {
-   "action": "ec2:AssociateVpcCidrBlock",
-   "resource": null,
+   "action": "ssm:DeleteResourcePolicy",
+   "resource": "arn:aws:ssm:x:x:parameter/network-migrationzx",
    "context": [
     [
      "aws:RequestedRegion",
      "${aws:PrincipalTag/TargetRegion}"
     ],
     [
+     "aws:ResourceAccount",
+     "${aws:PrincipalAccount}"
+    ],
+    [
      "aws:ResourceTag/CreatedBy",
      "AWSApplicationMigrationService"
     ]
    ],
-   "stratum": "allow-flagged",
-   "expected": "allow-flagged",
-   "note": "ForAnyValue:StringEquals:aws:CalledVia",
+   "stratum": "wrong-resource",
+   "expected": "deny",
+   "note": "",
    "context_types": [
     [
      "aws:RequestedRegion",
+     "string"
+    ],
+    [
+     "aws:ResourceAccount",
      "string"
     ],
     [
@@ -13335,11 +12996,11 @@
    ],
    "policy": "AWSTransformNetworkMigrationAgentPolicy",
    "group": "condition-heavy",
-   "resolver": "allow-flagged",
+   "resolver": "deny",
    "aws": "implicitDeny"
   },
   {
-   "action": "iam:ListRolePolicies",
+   "action": "iam:GetRolePolicy",
    "resource": "arn:aws:iam::x:role/NmzxmodifyTransitGatewayx",
    "context": [
     [
@@ -13370,280 +13031,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "ssm:PutParameter",
-   "resource": "arn:aws:ssm:x:x:parameter/network-migrationzx",
-   "context": [
-    [
-     "aws:RequestTag/CreatedBy",
-     "AWSApplicationMigrationService"
-    ],
-    [
-     "aws:RequestedRegion",
-     "${aws:PrincipalTag/TargetRegion}"
-    ],
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ],
-    [
-     "aws:ResourceTag/CreatedBy",
-     "AWSApplicationMigrationService"
-    ]
-   ],
-   "stratum": "wrong-resource",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:RequestTag/CreatedBy",
-     "string"
-    ],
-    [
-     "aws:RequestedRegion",
-     "string"
-    ],
-    [
-     "aws:ResourceAccount",
-     "string"
-    ],
-    [
-     "aws:ResourceTag/CreatedBy",
-     "string"
-    ]
-   ],
-   "policy": "AWSTransformNetworkMigrationAgentPolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "ec2:CreateTags",
-   "resource": "arn:aws:ec2:x:x:network-insights-access-scopezx",
-   "context": [
-    [
-     "aws:RequestTag/CreatedBy",
-     "AWSApplicationMigrationService"
-    ],
-    [
-     "aws:RequestedRegion",
-     "${aws:PrincipalTag/TargetRegion}"
-    ],
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ],
-    [
-     "ec2:CreateAction",
-     "AllocateAddress"
-    ]
-   ],
-   "stratum": "wrong-resource",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:RequestTag/CreatedBy",
-     "string"
-    ],
-    [
-     "aws:RequestedRegion",
-     "string"
-    ],
-    [
-     "aws:ResourceAccount",
-     "string"
-    ],
-    [
-     "ec2:CreateAction",
-     "string"
-    ]
-   ],
-   "policy": "AWSTransformNetworkMigrationAgentPolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "s3:PutBucketTagging",
-   "resource": "arn:aws:s3:::transform-vmware-targetzx",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ]
-   ],
-   "stratum": "wrong-resource",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:ResourceAccount",
-     "string"
-    ]
-   ],
-   "policy": "AWSTransformNetworkMigrationAgentPolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "ec2:CreateTags",
-   "resource": "arn:aws:ec2:x:x:security-group-rulezx",
-   "context": [
-    [
-     "aws:RequestTag/CreatedBy",
-     "AWSApplicationMigrationService"
-    ],
-    [
-     "aws:RequestedRegion",
-     "${aws:PrincipalTag/TargetRegion}"
-    ],
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ],
-    [
-     "ec2:CreateAction",
-     "AllocateAddress"
-    ]
-   ],
-   "stratum": "wrong-resource",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:RequestTag/CreatedBy",
-     "string"
-    ],
-    [
-     "aws:RequestedRegion",
-     "string"
-    ],
-    [
-     "aws:ResourceAccount",
-     "string"
-    ],
-    [
-     "ec2:CreateAction",
-     "string"
-    ]
-   ],
-   "policy": "AWSTransformNetworkMigrationAgentPolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "ec2:DescribeTransitGatewayRouteTables",
-   "resource": null,
-   "context": [
-    [
-     "aws:RequestedRegion",
-     "${aws:PrincipalTag/TargetRegion}-not-it"
-    ]
-   ],
-   "stratum": "condition-fail",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:RequestedRegion",
-     "string"
-    ]
-   ],
-   "policy": "AWSTransformNetworkMigrationAgentPolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "s3:GetObjectAttributes",
-   "resource": "arn:aws:s3:::transform-vmware-target-x/x",
-   "context": [
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}-not-it"
-    ]
-   ],
-   "stratum": "condition-fail",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:ResourceAccount",
-     "string"
-    ]
-   ],
-   "policy": "AWSTransformNetworkMigrationAgentPolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "mgn:TagResource",
-   "resource": "arn:aws:mgn:x:x:network-migration-definition/x",
-   "context": [
-    [
-     "aws:RequestTag/ATWorkspace",
-     "${aws:PrincipalTag/WorkspaceId}-not-it"
-    ],
-    [
-     "aws:RequestTag/CreatedBy",
-     "AWSTransform"
-    ],
-    [
-     "aws:RequestedRegion",
-     "${aws:PrincipalTag/TargetRegion}"
-    ],
-    [
-     "aws:ResourceAccount",
-     "${aws:PrincipalAccount}"
-    ],
-    [
-     "aws:ResourceTag/CreatedBy",
-     "AWSTransform"
-    ],
-    [
-     "mgn:CreateAction",
-     "CreateNetworkMigrationDefinition"
-    ]
-   ],
-   "stratum": "condition-fail",
-   "expected": "deny",
-   "note": "",
-   "context_types": [
-    [
-     "aws:RequestTag/ATWorkspace",
-     "string"
-    ],
-    [
-     "aws:RequestTag/CreatedBy",
-     "string"
-    ],
-    [
-     "aws:RequestedRegion",
-     "string"
-    ],
-    [
-     "aws:ResourceAccount",
-     "string"
-    ],
-    [
-     "aws:ResourceTag/CreatedBy",
-     "string"
-    ],
-    [
-     "mgn:CreateAction",
-     "string"
-    ]
-   ],
-   "policy": "AWSTransformNetworkMigrationAgentPolicy",
-   "group": "condition-heavy",
-   "resolver": "deny",
-   "aws": "implicitDeny"
-  },
-  {
-   "action": "elasticloadbalancing:DescribeLoadBalancerPolicyTypes",
+   "action": "ssm:PutConfigurePackageResult",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -13656,7 +13044,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "lambda:GetCodeSigningConfig",
+   "action": "s3:ListAccessGrantsInstances",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -13669,7 +13057,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "mgn:StartSnapshotGroupForMgn",
+   "action": "network-firewall:DescribeProxy",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -13682,7 +13070,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "s3:CreateAccessPointForObjectLambda",
+   "action": "iam:DeleteAccountPasswordPolicy",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -13695,7 +13083,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "ram:ReplacePermissionAssociations",
+   "action": "ram:AssociateResourceSharePermission",
    "resource": null,
    "context": [],
    "stratum": "wildcard-boundary",
@@ -13708,7 +13096,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "quicksight:DescribeFolder",
+   "action": "workspaces-web:ListDataProtectionSettings",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -13721,7 +13109,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "omics:UpdateVariantStore",
+   "action": "iottwinmaker:UpdatePricingPlan",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -13734,7 +13122,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "drs:DescribeRecoveryInstances",
+   "action": "imagebuilder:ListTagsForResource",
    "resource": null,
    "context": [],
    "stratum": "uniform",
@@ -13747,7 +13135,7 @@
    "aws": "implicitDeny"
   },
   {
-   "action": "iotwireless:UpdateEventConfigurationByResourceTypes",
+   "action": "medialive:CreateNodeRegistrationScript",
    "resource": null,
    "context": [],
    "stratum": "uniform",

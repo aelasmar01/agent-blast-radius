@@ -32,7 +32,7 @@ from ..ir import (
     Statement,
     Unsupported,
 )
-from . import actions, arn, conditions, managed
+from . import actions, arn, conditions, managed, resource_types
 
 
 @dataclass(frozen=True, slots=True)
@@ -127,6 +127,7 @@ def resolve_role(role: Role) -> Resolution:
     assumptions: list[Assumption] = []
     allows: dict[tuple, Capability] = {}
     denies: list[_Deny] = []
+    pruned = 0
 
     for doc in docs:
         for statement in doc.statements:
@@ -165,6 +166,15 @@ def resolve_role(role: Role) -> Resolution:
 
             for action in expanded:
                 for resource in statement.resources or ("*",):
+                    # AWS requires the resource to be of a type the action operates on.
+                    # A statement listing many actions against many resource ARNs would
+                    # otherwise report pairs that grant nothing: sagemaker:DescribeModel
+                    # on an endpoint ARN, kms:DescribeKey on an alias. Undecidable cases
+                    # return None and are kept — pruning on incomplete data would create
+                    # under-reports, which is the one direction this tool refuses.
+                    if resource_types.can_apply(action, resource) is False:
+                        pruned += 1
+                        continue
                     key = (action, resource, modeled, residue)
                     existing = allows.get(key)
                     allows[key] = Capability(
@@ -175,6 +185,17 @@ def resolve_role(role: Role) -> Resolution:
                         provenance=(existing.provenance if existing else ()) + (provenance,),
                     )
 
+    if pruned:
+        assumptions.append(
+            Assumption(
+                "resource_type_pruned",
+                role.name,
+                "-",
+                "-",
+                f"{pruned} (action, resource) pair(s) dropped because the action cannot "
+                f"apply to a resource of that type; undecidable pairs were kept",
+            )
+        )
     return Resolution(
         capabilities=frozenset(_apply_denies(allows.values(), denies)),
         unsupported=tuple(unsupported),

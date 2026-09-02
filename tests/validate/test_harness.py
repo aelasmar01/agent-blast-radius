@@ -127,3 +127,33 @@ def test_dry_run_reports_call_budget(fixture_entries, capsys):
     out = capsys.readouterr().out
     assert "SimulateCustomPolicy calls" in out
     assert 0 < calls < 200
+
+
+def test_draws_skip_conditions_comparing_against_policy_variables():
+    """`${aws:PrincipalAccount}` cannot be satisfied by a literal context value.
+
+    AWS substitutes the real value at evaluation time, so passing the literal guarantees a
+    denial. Those draws were 22 phantom over-reports in the first live run; skipping them
+    is honest, and manufacturing a wrong context would not be.
+    """
+    from agent_blast_radius.ir import Condition
+    from agent_blast_radius.validate.draws import has_policy_variable
+
+    assert has_policy_variable(
+        (Condition("StringEquals", "aws:ResourceAccount", ("${aws:PrincipalAccount}",)),)
+    )
+    assert not has_policy_variable(
+        (Condition("StringEquals", "aws:ResourceAccount", ("123456789012",)),)
+    )
+
+
+def test_no_allow_draw_carries_a_policy_variable(corpus_entries, fixture_entries):
+    """Neither in the context nor in the resource: AWS resolves them, a draw cannot."""
+    from agent_blast_radius.validate.draws import STRATA_ALLOW
+    from agent_blast_radius.validate.run import build_plans
+
+    for _entry, plan in build_plans(corpus_entries + fixture_entries, per_policy=40, seed=0):
+        for draw in plan.draws:
+            if draw.stratum in STRATA_ALLOW:
+                assert not any("${" in v for _, v in draw.context), draw
+                assert "${" not in (draw.resource or ""), draw
