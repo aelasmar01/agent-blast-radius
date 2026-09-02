@@ -43,9 +43,6 @@ Source = "https://github.com/aelasmar01/agent-blast-radius"
 [tool.hatch.build.targets.wheel]
 packages = ["src/agent_blast_radius"]
 
-[tool.hatch.build.targets.wheel.force-include]
-"rules" = "agent_blast_radius/data/rules"
-
 [tool.ruff]
 line-length = 100
 src = ["src", "tests"]

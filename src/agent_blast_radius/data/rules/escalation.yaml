@@ -1,0 +1,221 @@
+# Escalation rule pack.
+#
+# Rules are hyperedges over a capability set. Binding semantics — how {variables} are
+# bound, how clauses are checked, why one rule can fire several times — are specified in
+# docs/rule-semantics.md and pinned by tests/rules/test_binding.py.
+#
+# Every rule cites its source. Every rule has either requires_facts or a note saying why
+# it needs none. The rule pack *format* is the artifact; the count is not.
+#
+# Sources:
+#   rhino-2018   Spencer Gietzen, "AWS IAM Privilege Escalation – Methods and Mitigations",
+#                Rhino Security Labs, 2018. https://rhinosecuritylabs.com/aws/aws-privilege-escalation-methods-mitigation/
+#
+# Fields:
+#   id                stable identifier used in reports and provenance chains
+#   variables         roles the rule binds; {self} is implicit and ranges over reachable principals
+#   requires_actions  list of clauses; string form "svc:Action" or mapping with resource/condition
+#   requires_facts    preconditions evaluated against the deployment under the same binding
+#   grants            effective_principal: "{var}" | all_actions: true
+#   source            citation
+#   notes             why the preconditions are what they are
+
+version: 1
+
+rules:
+  # ---- PassRole into a compute service that assumes the target role -------------------
+
+  - id: passrole-lambda-createfunction
+    title: PassRole into a new Lambda function
+    variables: [target]
+    requires_actions:
+      - action: iam:PassRole
+        resource: "{target}"
+        condition: {iam:PassedToService: lambda.amazonaws.com}
+      - lambda:CreateFunction
+      - lambda:InvokeFunction
+    requires_facts:
+      - role_trusts_service: {role: "{target}", service: lambda.amazonaws.com}
+    grants:
+      effective_principal: "{target}"
+    source: rhino-2018
+    notes: >
+      The trust-policy precondition is load-bearing. PassRole in an identity policy is
+      not sufficient — the target role must admit lambda.amazonaws.com, or the call
+      fails. Resolving this from identity policies alone produces an unsound finding.
+
+  - id: passrole-ec2-runinstances
+    title: PassRole into an EC2 instance profile
+    variables: [target]
+    requires_actions:
+      - action: iam:PassRole
+        resource: "{target}"
+        condition: {iam:PassedToService: ec2.amazonaws.com}
+      - ec2:RunInstances
+    requires_facts:
+      - role_trusts_service: {role: "{target}", service: ec2.amazonaws.com}
+    grants:
+      effective_principal: "{target}"
+    source: rhino-2018
+    notes: Requires an instance profile for the role; modeled as trust in ec2.amazonaws.com.
+
+  - id: passrole-glue-createdevendpoint
+    title: PassRole into a Glue development endpoint
+    variables: [target]
+    requires_actions:
+      - action: iam:PassRole
+        resource: "{target}"
+        condition: {iam:PassedToService: glue.amazonaws.com}
+      - glue:CreateDevEndpoint
+    requires_facts:
+      - role_trusts_service: {role: "{target}", service: glue.amazonaws.com}
+    grants:
+      effective_principal: "{target}"
+    source: rhino-2018
+
+  - id: passrole-cloudformation-createstack
+    title: PassRole into a CloudFormation stack
+    variables: [target]
+    requires_actions:
+      - action: iam:PassRole
+        resource: "{target}"
+        condition: {iam:PassedToService: cloudformation.amazonaws.com}
+      - cloudformation:CreateStack
+    requires_facts:
+      - role_trusts_service: {role: "{target}", service: cloudformation.amazonaws.com}
+    grants:
+      effective_principal: "{target}"
+    source: rhino-2018
+
+  - id: passrole-sagemaker-notebook
+    title: PassRole into a SageMaker notebook instance
+    variables: [target]
+    requires_actions:
+      - action: iam:PassRole
+        resource: "{target}"
+        condition: {iam:PassedToService: sagemaker.amazonaws.com}
+      - sagemaker:CreateNotebookInstance
+      - sagemaker:CreatePresignedNotebookInstanceUrl
+    requires_facts:
+      - role_trusts_service: {role: "{target}", service: sagemaker.amazonaws.com}
+    grants:
+      effective_principal: "{target}"
+    source: rhino-2018
+
+  - id: passrole-ecs-runtask
+    title: PassRole into an ECS task
+    variables: [target]
+    requires_actions:
+      - action: iam:PassRole
+        resource: "{target}"
+        condition: {iam:PassedToService: ecs-tasks.amazonaws.com}
+      - ecs:RegisterTaskDefinition
+      - ecs:RunTask
+    requires_facts:
+      - role_trusts_service: {role: "{target}", service: ecs-tasks.amazonaws.com}
+    grants:
+      effective_principal: "{target}"
+    source: rhino-2018
+
+  - id: passrole-codebuild-project
+    title: PassRole into a CodeBuild project
+    variables: [target]
+    requires_actions:
+      - action: iam:PassRole
+        resource: "{target}"
+        condition: {iam:PassedToService: codebuild.amazonaws.com}
+      - codebuild:CreateProject
+      - codebuild:StartBuild
+    requires_facts:
+      - role_trusts_service: {role: "{target}", service: codebuild.amazonaws.com}
+    grants:
+      effective_principal: "{target}"
+    source: rhino-2018
+
+  # ---- Existing compute the attacker can repoint --------------------------------------
+
+  - id: lambda-updatefunctioncode
+    title: Replace the code of a Lambda that already runs as the target
+    variables: [target]
+    requires_actions:
+      - lambda:UpdateFunctionCode
+      - lambda:InvokeFunction
+    requires_facts:
+      - tool_backed_by_role: {role: "{target}"}
+    grants:
+      effective_principal: "{target}"
+    source: rhino-2018
+    notes: >
+      No PassRole needed: the function already has the role. The fact is that some tool
+      in the deployment executes as the target, which is the only Lambda inventory the
+      analyzer has.
+
+  # ---- Direct assumption ------------------------------------------------------------------
+
+  - id: sts-assumerole-trusted
+    title: Assume a role whose trust policy names a reachable principal
+    variables: [target]
+    requires_actions:
+      - action: sts:AssumeRole
+        resource: "{target}"
+    requires_facts:
+      - role_trusts_principal: {role: "{target}", principal: "{self}"}
+    grants:
+      effective_principal: "{target}"
+    source: rhino-2018
+
+  - id: iam-updateassumerolepolicy
+    title: Rewrite a role's trust policy, then assume it
+    variables: [target]
+    requires_actions:
+      - action: iam:UpdateAssumeRolePolicy
+        resource: "{target}"
+      - action: sts:AssumeRole
+        resource: "{target}"
+    requires_facts: []
+    grants:
+      effective_principal: "{target}"
+    source: rhino-2018
+    notes: >
+      Needs no trust-policy fact because the attacker writes the trust policy. The
+      resource constraint on both actions is the whole precondition.
+
+  # ---- Self-escalation to full control ----------------------------------------------------
+
+  - id: iam-attachrolepolicy-self
+    title: Attach AdministratorAccess to a reachable role
+    requires_actions:
+      - action: iam:AttachRolePolicy
+        resource: "{self}"
+    requires_facts: []
+    grants:
+      all_actions: true
+    source: rhino-2018
+    notes: >
+      Needs no external fact: the AWS-managed AdministratorAccess policy always exists.
+      The resource clause binds {self} to a reachable role the attacker can modify.
+
+  - id: iam-putrolepolicy-self
+    title: Write an inline admin policy onto a reachable role
+    requires_actions:
+      - action: iam:PutRolePolicy
+        resource: "{self}"
+    requires_facts: []
+    grants:
+      all_actions: true
+    source: rhino-2018
+    notes: Same shape as AttachRolePolicy; the policy document is attacker-authored.
+
+  - id: iam-createpolicyversion-attached
+    title: Publish a new default version of a policy attached to a reachable role
+    requires_actions:
+      - iam:CreatePolicyVersion
+    requires_facts:
+      - attached_policy_matches: {action: iam:CreatePolicyVersion, role: "{self}"}
+    grants:
+      all_actions: true
+    source: rhino-2018
+    notes: >
+      Only customer-managed policies can be versioned, and only a policy attached to a
+      reachable role turns into control of that role. The fact checks the resource
+      pattern of the CreatePolicyVersion grant against the role's attachments.
