@@ -9,6 +9,62 @@ real fixture, in CI, before deployment — not in production telemetry after the
 
 ---
 
+## What it looks like
+
+```
+$ agent-blast-radius scan ./fixtures/overprivileged-agent
+agent-blast-radius  deployment=overprivileged-agent  account=000000000000
+  report schema 1.0.0  dataset 8e8e0df0ce50  rules v1
+
+TOOLS
+  reachable    read_support_ticket      role=ticket-reader-role       tainted input: ticket_id
+  reachable    query_customer_record    role=customer-lookup-role     output of read_support_ticket re-enters the model context
+  reachable    call_internal_api        role=internal-api-role        output of read_support_ticket re-enters the model context
+  reachable    deploy_helper            role=agent-execution-role     output of read_support_ticket re-enters the model context
+  unreachable  run_maintenance_job      role=agent-execution-role     gated: approval_required
+  unreachable  rotate_credentials       role=incident-response-role   gated: approval_required
+
+PRINCIPALS REACHABLE FROM ATTACKER INPUT
+  depth 0  agent-execution-role         taint-reachable
+  depth 0  customer-lookup-role         taint-reachable
+  depth 0  internal-api-role            taint-reachable
+  depth 0  ticket-reader-role           taint-reachable
+  depth 1  incident-response-role       via 1 escalation hop
+
+ACCOUNT TAKEOVER
+  Attach AdministratorAccess to a reachable role  [iam-attachrolepolicy-self, rhino-2018]  depth 2
+    iam:AttachRolePolicy on *  <- incident-response-role/break-glass#BreakGlass
+
+ESCALATION CHAINS (1)
+  -> incident-response-role  via PassRole into a new Lambda function  [passrole-lambda-createfunction, rhino-2018]  depth 1
+       iam:PassRole on arn:aws:iam::000000000000:role/*  <- agent-execution-role/helper-deploy#PassRoleToLambda
+       lambda:CreateFunction on *  <- agent-execution-role/helper-deploy#ManageHelpers
+       lambda:InvokeFunction on *  <- agent-execution-role/helper-deploy#ManageHelpers
+       fact: role_trusts_service(role=incident-response-role, service=lambda.amazonaws.com)
+
+REACHABLE CAPABILITIES (199)
+  ... (see the full output in docs/post.md)
+
+UNSUPPORTED (0)
+  none — the analysis is complete for the constructs this tool models
+
+Reachability is not exploitability: this is what the tool graph permits if the model
+can be induced to make the calls, not a prediction that it will.
+
+FAIL: 9 finding(s) tripped fail_if:
+  - 'iam:*' matches 190 actions on * as incident-response-role (depth 1): iam:AcceptDelegationRequest, iam:AddClientIDToOpenIDConnectProvider, iam:AddRoleToInstanceProfile, ...  <- incident-response-role/break-glass#BreakGlass
+  - 'iam:*' matches iam:PassRole on arn:aws:iam::000000000000:role/* as agent-execution-role (depth 0): iam:PassRole  <- agent-execution-role/helper-deploy#PassRoleToLambda
+  - 'kms:Decrypt' matches kms:Decrypt on * as incident-response-role (depth 1): kms:Decrypt  <- incident-response-role/break-glass#BreakGlass
+  - escalation chain passrole-lambda-createfunction -> incident-response-role (depth 1)
+  - escalation chain iam-attachrolepolicy-self -> all_actions (depth 2)
+  - escalation chain iam-putrolepolicy-self -> all_actions (depth 2)
+  - chain passrole-lambda-createfunction -> incident-response-role at depth 1 <= max_chain_depth 2
+  - chain iam-attachrolepolicy-self -> all_actions at depth 2 <= max_chain_depth 2
+  - chain iam-putrolepolicy-self -> all_actions at depth 2 <= max_chain_depth 2
+$ echo $?
+1
+```
+
 ## Threat model
 
 An attacker controls text that reaches the model: a support ticket, a scraped page, a document in a

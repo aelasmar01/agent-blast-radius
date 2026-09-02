@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "agent-blast-radius"
-version = "0.0.1.dev0"
+version = "0.1.0"
 description = "Static, pre-deployment analysis of what an agentic system can reach in an AWS account from untrusted model input."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -12,7 +12,7 @@ license = { file = "LICENSE" }
 authors = [{ name = "Ali El-Asmar" }]
 keywords = ["aws", "iam", "security", "agents", "mcp", "bedrock", "privilege-escalation"]
 classifiers = [
-  "Development Status :: 2 - Pre-Alpha",
+  "Development Status :: 3 - Alpha",
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3.11",

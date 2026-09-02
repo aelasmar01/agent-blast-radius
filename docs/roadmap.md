@@ -1,5 +1,8 @@
 # Roadmap
 
+**Status (2026-09-01):** W1–W8 built; v0.1.0 tagged. Outstanding: the first live
+validation run (needs a personal AWS account) and a recorded demo.
+
 Hard boundary: 6–8 weekends. Full reasoning lives in
 [`agent-blast-radius-analyzer-plan.md`](../agent-blast-radius-analyzer-plan.md).
 
