@@ -118,6 +118,27 @@ class Capability:
 
 
 @dataclass(frozen=True, slots=True)
+class Assumption:
+    """A modeling choice the resolver made that a reader should be able to audit.
+
+    Distinct from :class:`Unsupported`: the analysis is *complete* here, but it rests on
+    something worth stating. An ``Allow`` + ``NotAction`` statement is the case this
+    exists for — the granted set is computed as every known action minus the exclusions,
+    which is exact only to the extent the vendored action snapshot is.
+    """
+
+    kind: str
+    role: str
+    policy: str
+    sid: str
+    detail: str = ""
+
+    def __str__(self) -> str:
+        where = f"{self.role}/{self.policy}#{self.sid}"
+        return f"{self.kind} at {where}" + (f": {self.detail}" if self.detail else "")
+
+
+@dataclass(frozen=True, slots=True)
 class Unsupported:
     """Something the resolver refused to approximate, recorded instead of guessed.
 

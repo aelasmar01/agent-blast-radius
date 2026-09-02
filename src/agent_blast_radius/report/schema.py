@@ -49,6 +49,15 @@ class ChainEntry:
 
 
 @dataclass(frozen=True, slots=True)
+class AssumptionEntry:
+    kind: str
+    role: str
+    policy: str
+    sid: str
+    detail: str
+
+
+@dataclass(frozen=True, slots=True)
 class UnsupportedEntry:
     kind: str
     role: str
@@ -67,6 +76,7 @@ class Report:
     escalation_chains: list[ChainEntry]
     account_admin: ChainEntry | None
     unsupported: list[UnsupportedEntry]
+    assumptions: list[AssumptionEntry]
     notices: list[str]
     dataset_version: str
     rules_version: int
@@ -139,6 +149,11 @@ def build_report(
         for role in sorted(resolutions)
         for u in resolutions[role].unsupported
     ]
+    assumptions = [
+        AssumptionEntry(a.kind, a.role, a.policy, a.sid, a.detail)
+        for role in sorted(resolutions)
+        for a in resolutions[role].assumptions
+    ]
 
     notices: list[str] = []
     if len(deployment.roles) == 1 and all(t.gating is Gating.NONE for t in deployment.tools):
@@ -154,6 +169,11 @@ def build_report(
             f"{len(unsupported)} unsupported construct(s): the analysis is incomplete and may "
             "under-report. See the unsupported section."
         )
+    if assumptions:
+        notices.append(
+            f"{len(assumptions)} modeling assumption(s) in play. The analysis is complete but "
+            "rests on them; see the assumptions section."
+        )
 
     return Report(
         deployment=deployment.name,
@@ -164,6 +184,7 @@ def build_report(
         escalation_chains=[_chain(f) for f in escalation.firings],
         account_admin=_chain(escalation.account_admin) if escalation.account_admin else None,
         unsupported=unsupported,
+        assumptions=assumptions,
         notices=notices,
         dataset_version=action_db.dataset_version(),
         rules_version=pack.version,

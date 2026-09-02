@@ -21,6 +21,7 @@ from collections import defaultdict
 from dataclasses import dataclass
 
 from ..ir import (
+    Assumption,
     Capability,
     ConditionResidue,
     Deployment,
@@ -38,6 +39,7 @@ from . import actions, arn, conditions, managed
 class Resolution:
     capabilities: frozenset[Capability]
     unsupported: tuple[Unsupported, ...]
+    assumptions: tuple[Assumption, ...] = ()
 
     @property
     def actions(self) -> frozenset[str]:
@@ -89,22 +91,65 @@ def _expand_statement(
     return frozenset(expanded), unsupported
 
 
+def _invert_not_action(
+    statement: Statement, role: str, policy: str
+) -> tuple[frozenset[str], Assumption]:
+    """Granted set for an ``Allow`` + ``NotAction`` statement: everything minus the exclusions.
+
+    Set inversion is exact here, unlike the ``NotResource`` case: the action universe is
+    finite and enumerable, ARNs are not. The one assumption is that the vendored snapshot
+    is complete — a service missing from it is missing from the granted set, which
+    under-reports. That is the same exposure every wildcard expansion already carries
+    (``iam:*`` has it too), so it is recorded once per statement rather than flagged on
+    each of the ~21k resulting capabilities.
+
+    ``Deny`` + ``NotAction`` is *not* inverted. There, an incomplete snapshot would shrink
+    the denied set and hand back capabilities that AWS actually blocks — a false negative,
+    which is the one direction this tool refuses to fail in.
+    """
+    excluded: set[str] = set()
+    for pattern in statement.not_actions:
+        excluded.update(actions.expand(pattern))
+    granted = actions.expand("*") - excluded
+    return frozenset(granted), Assumption(
+        "notaction_inverted",
+        role,
+        policy,
+        statement.sid,
+        f"granted set computed as {len(granted)} known actions minus "
+        f"{len(excluded)} excluded by NotAction {list(statement.not_actions)}; "
+        f"accuracy bounded by dataset {actions.dataset_version()[:12]}",
+    )
+
+
 def resolve_role(role: Role) -> Resolution:
     docs, unsupported = role_documents(role)
+    assumptions: list[Assumption] = []
     allows: dict[tuple, Capability] = {}
     denies: list[_Deny] = []
 
     for doc in docs:
         for statement in doc.statements:
             provenance = Provenance(role.name, doc.name, statement.sid)
-            negated = statement.uses_negated_construct
-            if negated:
-                unsupported.append(
-                    Unsupported(negated, role.name, doc.name, statement.sid, "statement skipped")
-                )
-                continue
-            expanded, unknown = _expand_statement(statement, role.name, doc.name)
-            unsupported.extend(unknown)
+            invertible = (
+                statement.effect is Effect.ALLOW
+                and statement.not_actions
+                and not statement.not_resources
+            )
+            if invertible:
+                expanded, assumption = _invert_not_action(statement, role.name, doc.name)
+                assumptions.append(assumption)
+            else:
+                negated = statement.uses_negated_construct
+                if negated:
+                    unsupported.append(
+                        Unsupported(
+                            negated, role.name, doc.name, statement.sid, "statement skipped"
+                        )
+                    )
+                    continue
+                expanded, unknown = _expand_statement(statement, role.name, doc.name)
+                unsupported.extend(unknown)
             modeled, residue = conditions.split(statement.conditions)
 
             if statement.effect is Effect.DENY:
@@ -133,6 +178,7 @@ def resolve_role(role: Role) -> Resolution:
     return Resolution(
         capabilities=frozenset(_apply_denies(allows.values(), denies)),
         unsupported=tuple(unsupported),
+        assumptions=tuple(assumptions),
     )
 
 

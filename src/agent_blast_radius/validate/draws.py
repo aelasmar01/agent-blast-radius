@@ -3,9 +3,9 @@
 Uniform draws from ungranted actions are trivially denied and inflate the matrix. The
 deny-expected strata here are near-misses, because that is where a resolver breaks:
 right action / wrong resource, right action and resource / failing condition, actions
-just outside a wildcard boundary, actions under an explicit Deny, and — for NotAction
-policies — actions inside the excluded set, where the resolver has declared itself
-unable to answer.
+just outside a wildcard boundary, actions under an explicit Deny, and actions inside a
+``NotAction`` exclusion — denied when the statement was inverted, unanswerable when it
+was refused.
 """
 
 from __future__ import annotations
@@ -282,11 +282,13 @@ def plan_draws(
     denied_actions = sorted(_explicitly_denied(role, granted))
     for a in rng.sample(denied_actions, min(len(denied_actions), half // 5 or 1)):
         deny.append(Draw(a, None, (), "explicit-deny", deny_expected))
-    # An excluded action that some *other* statement allows anyway is not a refusal case;
-    # the resolver answers it positively and is right to. Draw only from the genuinely
-    # unanswerable remainder.
+    # Actions inside a NotAction exclusion. For an inverted Allow statement these are a
+    # genuine deny boundary — the sharpest one the policy has. For a refused statement
+    # (Deny + NotAction) the resolver declines, hence deny_expected rather than a literal.
+    # Either way, an excluded action that some *other* statement grants anyway is not a
+    # boundary case at all: draw only from the remainder.
     for a in sorted(_notaction_excluded(role) - granted)[: half // 5 or 1]:
-        deny.append(Draw(a, None, (), "notaction-excluded", "unsupported"))
+        deny.append(Draw(a, None, (), "notaction-excluded", deny_expected))
     # Uniform tail: sanity floor.
     universe = sorted(action_db.expand("*") - granted)
     for a in rng.sample(universe, min(4, len(universe))):

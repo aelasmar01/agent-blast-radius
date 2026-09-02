@@ -50,7 +50,7 @@ def test_notaction_makes_it_exit_three(tmp_path, capsys):
         for r in raw["roles"]:
             if r["name"] == "internal-api-role":
                 r["identity_policies"][0]["statements"].append(
-                    {"Sid": "Sneaky", "Effect": "Allow", "NotAction": ["iam:*"], "Resource": "*"}
+                    {"Sid": "Sneaky", "Effect": "Deny", "NotAction": ["iam:*"], "Resource": "*"}
                 )
 
     assert main(["scan", str(_variant(tmp_path, inject)), "-q"]) == EXIT_FINDINGS_AND_INCOMPLETE
@@ -65,7 +65,7 @@ def test_unsupported_only_exits_two_not_one(tmp_path):
                 r["trust_policy"] = {"service_principals": ["ecs-tasks.amazonaws.com"]}
             if r["name"] == "internal-api-role":
                 r["identity_policies"][0]["statements"].append(
-                    {"Sid": "Sneaky", "Effect": "Allow", "NotAction": ["iam:*"], "Resource": "*"}
+                    {"Sid": "Sneaky", "Effect": "Deny", "NotAction": ["iam:*"], "Resource": "*"}
                 )
         raw["fail_if"] = {"escalation_chains_found": True}
 
@@ -88,7 +88,7 @@ def test_gates_are_independent(tmp_path):
         for r in raw["roles"]:
             if r["name"] == "internal-api-role":
                 r["identity_policies"][0]["statements"].append(
-                    {"Sid": "Sneaky", "Effect": "Allow", "NotAction": ["iam:*"], "Resource": "*"}
+                    {"Sid": "Sneaky", "Effect": "Deny", "NotAction": ["iam:*"], "Resource": "*"}
                 )
         raw["fail_if"] = {"escalation_chains_found": True, "unsupported_statements": False}
 

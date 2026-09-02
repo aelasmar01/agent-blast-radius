@@ -147,12 +147,15 @@ over gating first and the role graph second, and a single-role deployment with n
 is told plainly that taint propagation adds nothing, rather than being handed a re-skinned
 Cloudsplaining report.
 
-**`NotAction` / `NotResource` are refused, not approximated.** They invert the set logic and are a
-silent under-report risk. The offending statement is skipped and recorded in the report's
-`unsupported` section with its policy and statement ID; the scan continues, and CI fails closed on
-a non-empty `unsupported` list by default. Failing visibly is defensible; under-reporting silently
-is not. The same section carries attached managed policies the vendored snapshot doesn't know and
-actions it doesn't recognise.
+**Set inversion is done where it is exact and refused where it is not.** `Allow` + `NotAction` is
+inverted — the granted set is every known action minus the exclusions — because the action universe
+is finite and enumerable. The one exposure is snapshot staleness, recorded per statement in the
+report's `assumptions` section. `Deny` + `NotAction` is refused: inverting it on a stale snapshot
+would shrink the *denied* set and hand back capabilities AWS blocks, a false negative. `NotResource`
+is refused outright, because ARNs are not enumerable. A refused statement is skipped and recorded in
+the report's `unsupported` section with its policy and statement ID; the scan continues, and CI
+fails closed on a non-empty `unsupported` list by default. That section also carries attached
+managed policies the vendored snapshot doesn't know and actions it doesn't recognise.
 
 **Conditions.** `StringEquals`, `StringLike`, `ArnLike`, and `Bool` are modeled and carried on the
 capability. Every other operator is recorded as residue and the capability is reported as

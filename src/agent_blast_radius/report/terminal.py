@@ -109,6 +109,13 @@ def render(report: dict, *, watchlist: tuple[str, ...] = WATCHLIST) -> str:
         p(f"  {u['kind']}  {u['role']}/{u['policy']}#{u['sid']}{detail}")
     p("")
 
+    if report["assumptions"]:
+        p(f"ASSUMPTIONS ({len(report['assumptions'])})")
+        for a in report["assumptions"]:
+            p(f"  {a['kind']}  {a['role']}/{a['policy']}#{a['sid']}")
+            p(f"    {a['detail']}")
+        p("")
+
     if report["notices"]:
         p("NOTICES")
         for n in report["notices"]:

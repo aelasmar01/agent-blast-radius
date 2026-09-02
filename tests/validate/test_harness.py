@@ -59,12 +59,15 @@ def test_wrong_resource_draws_do_not_match_any_granted_pattern(fixture_entries):
             assert d.resource.startswith("arn:aws:iam::")
 
 
-def test_notaction_policy_yields_unsupported_draws(corpus_entries):
+def test_notaction_exclusions_become_deny_boundary_draws(corpus_entries):
+    """Allow + NotAction is inverted, so its exclusions are a real deny boundary."""
     entry = next(e for e in corpus_entries if e.name == "PowerUserAccess")
     res = resolve_role(entry.role)
     plan = plan_draws(entry.role, res)
-    assert any(d.stratum == "notaction-excluded" for d in plan.draws)
-    assert resolver_decision(res, "iam:CreateUser", None, {}) == "unsupported"
+    excluded = [d for d in plan.draws if d.stratum == "notaction-excluded"]
+    assert excluded and all(d.expected == "deny" for d in excluded)
+    assert resolver_decision(res, "iam:CreateUser", None, {}) == "deny"
+    assert resolver_decision(res, "s3:GetObject", None, {}) == "allow"
 
 
 def test_resolver_decision_semantics(fixture_entries):
