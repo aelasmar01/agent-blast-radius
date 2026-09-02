@@ -7,10 +7,10 @@ from pathlib import Path
 
 from agent_blast_radius.ci import EXIT_CLEAN, EXIT_FINDINGS, EXIT_INPUT_ERROR
 from agent_blast_radius.cli import main
+from agent_blast_radius.iam.resolver import resolve_role
 from agent_blast_radius.validate.cassette import RecordingSimulator
 from agent_blast_radius.validate.corpus import load_fixture_corpus
 from agent_blast_radius.validate.draws import resolver_decision
-from agent_blast_radius.iam.resolver import resolve_role
 from agent_blast_radius.validate.run import run
 from agent_blast_radius.validate.simulate import FakeSimulator
 
