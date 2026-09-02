@@ -21,3 +21,39 @@ jobs:
       - run: ruff check .
       - run: ruff format --check .
       - run: pytest -q
+
+  # The fixture must fail its own policy with a findings failure — exit code exactly 1.
+  # An unsupported-only failure (2) or a mixed one (3) is a regression, not a pass.
+  fixture-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: uv pip install --system -e .
+      - name: scan the fixture and require exit code 1
+        run: |
+          set +e
+          agent-blast-radius scan fixtures/overprivileged-agent --json report.json
+          code=$?
+          set -e
+          echo "exit code: $code"
+          test "$code" -eq 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fixture-report
+          path: report.json
+
+  # The wheel must install and run cold, with no repo checkout, from uvx.
+  cold-install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv build
+      - run: |
+          set +e
+          uvx --from ./dist/*.whl agent-blast-radius scan fixtures/overprivileged-agent -q
+          test $? -eq 1

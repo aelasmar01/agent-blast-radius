@@ -1,66 +1,60 @@
 """Command-line entry point.
 
-``scan`` is the only command that matters. Today it loads and validates a deployment
-and prints the inventory; the resolver and reachability engine are not implemented, so
-it exits non-zero rather than returning a clean bill of health it has not earned.
+``scan`` analyzes a deployment and exits with a code CI can gate on:
+
+    0  clean: no gated findings, nothing unsupported
+    1  findings (a fail_if gate tripped)
+    2  incomplete: the analysis skipped something it refuses to approximate
+    3  both
+    4  input error
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
 from . import __version__
+from .analyze import analyze
+from .ci import EXIT_INPUT_ERROR, evaluate, load_fail_if
 from .errors import AgentBlastRadiusError
-from .ir import Deployment, Gating
-from .loaders import load_deployment
+from .loaders import find_deployment_file, load_deployment
+from .report.terminal import render
 
-#: Loaded and validated the deployment, but analysis is not implemented.
-EXIT_INCOMPLETE = 2
-#: The input could not be loaded or is inconsistent.
-EXIT_ERROR = 3
-
-
-def render_inventory(deployment: Deployment, out) -> None:
-    print(f"deployment: {deployment.name}  (IR schema {deployment.schema_version})", file=out)
-    print(f"account:    {deployment.account_id or '<unspecified>'}", file=out)
-    print(f"\ntools ({len(deployment.tools)}):", file=out)
-    for tool in deployment.tools:
-        marks = []
-        if tool.is_taint_entrypoint:
-            marks.append("tainted-input:" + ",".join(sorted(tool.tainted_inputs)))
-        if tool.returns_external_data:
-            marks.append("returns-external-data")
-        if tool.gating is not Gating.NONE:
-            marks.append(f"gated:{tool.gating.value}")
-        suffix = ("  [" + " ".join(marks) + "]") if marks else ""
-        print(f"  - {tool.name}  role={tool.role}{suffix}", file=out)
-    print(f"\nroles ({len(deployment.roles)}):", file=out)
-    for role in deployment.roles:
-        trusted = ",".join(sorted(role.trust_policy.service_principals)) or "<none parsed>"
-        statements = sum(len(p.statements) for p in role.identity_policies)
-        print(
-            f"  - {role.name}  policies={len(role.identity_policies)} "
-            f"statements={statements} trusts={trusted}",
-            file=out,
-        )
+EXIT_ERROR = EXIT_INPUT_ERROR
 
 
 def cmd_scan(args: argparse.Namespace) -> int:
     try:
-        deployment = load_deployment(Path(args.target))
+        target = Path(args.target)
+        deployment_file = find_deployment_file(target)
+        deployment = load_deployment(target)
+        fail_if = load_fail_if(deployment_file, Path(args.policy) if args.policy else None)
+        report = analyze(deployment, rules=Path(args.rules) if args.rules else None)
     except AgentBlastRadiusError as exc:
         print(f"error: {exc}", file=sys.stderr)
-        return EXIT_ERROR
-    render_inventory(deployment, sys.stdout)
-    print(
-        "\nanalysis not implemented: the IAM resolver, taint propagation, and "
-        "reachability fixpoint are not built yet, so this run reports no findings "
-        "because it computed none — not because none exist. Exiting non-zero.",
-        file=sys.stderr,
-    )
-    return EXIT_INCOMPLETE
+        return EXIT_INPUT_ERROR
+
+    payload = report.to_dict()
+    if args.json:
+        Path(args.json).write_text(json.dumps(payload, indent=1))
+    if not args.quiet:
+        print(render(payload))
+
+    verdict = evaluate(report, fail_if)
+    if verdict.findings or verdict.incomplete:
+        print("", file=sys.stderr)
+    if verdict.findings:
+        print(f"FAIL: {len(verdict.findings)} finding(s) tripped fail_if:", file=sys.stderr)
+        for line in verdict.findings:
+            print(f"  - {line}", file=sys.stderr)
+    if verdict.incomplete:
+        print(f"INCOMPLETE: {len(verdict.incomplete)} unsupported construct(s):", file=sys.stderr)
+        for line in verdict.incomplete:
+            print(f"  - {line}", file=sys.stderr)
+    return verdict.exit_code
 
 
 def cmd_validate(args: argparse.Namespace) -> int:
@@ -107,6 +101,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     scan = sub.add_parser("scan", help="analyze a deployment directory or agent.yaml")
     scan.add_argument("target", help="directory containing agent.yaml, or the file itself")
+    scan.add_argument("--json", metavar="PATH", help="also write the versioned JSON report here")
+    scan.add_argument("--policy", metavar="PATH", help="fail_if policy file (overrides agent.yaml)")
+    scan.add_argument("--rules", metavar="PATH", help="alternative rule pack")
+    scan.add_argument(
+        "--quiet", "-q", action="store_true", help="no terminal report, exit code only"
+    )
     scan.set_defaults(func=cmd_scan)
 
     validate = sub.add_parser(

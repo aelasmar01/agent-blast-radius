@@ -30,6 +30,13 @@ name: overprivileged-agent
 account_id: "000000000000"
 schema_version: "0.1.0"
 
+# CI gates. Findings and incompleteness are independent: exit 1 / 2 / 3.
+fail_if:
+  reachable_actions_matching: ["iam:*", "sts:AssumeRole", "kms:Decrypt"]
+  escalation_chains_found: true
+  max_chain_depth: 2
+  unsupported_statements: true
+
 tools:
   - name: read_support_ticket
     role: ticket-reader-role

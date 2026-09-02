@@ -95,14 +95,16 @@ def escalate(
                 evidence_roles = tuple(cap_role.get(m.capability, "?") for m in b.evidence)
                 depth = 1 + max((state.principals.get(r, 0) for r in evidence_roles), default=0)
                 firing = Firing(binding=b, depth=depth, evidence_roles=evidence_roles)
-                state.firings.append(firing)
                 if rule.grants_all:
+                    state.firings.append(firing)
                     if state.account_admin is None or depth < state.account_admin.depth:
                         state.account_admin = firing
                     continue
                 target = firing.grants
                 if target in state.principals:
+                    # Re-granting a principal the attacker already has is not an escalation.
                     continue
+                state.firings.append(firing)
                 state.principals[target] = depth
                 for cap in resolutions[target].capabilities:
                     if cap not in state.capabilities:

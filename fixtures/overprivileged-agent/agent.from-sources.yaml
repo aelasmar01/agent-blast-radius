@@ -14,6 +14,11 @@ name: overprivileged-agent
 account_id: "000000000000"
 schema_version: "0.1.0"
 
+fail_if:
+  reachable_actions_matching: ["iam:*", "sts:AssumeRole", "kms:Decrypt"]
+  escalation_chains_found: true
+  max_chain_depth: 2
+
 sources:
   terraform_plan: plan.json
   mcp_tools: mcp-tools.json

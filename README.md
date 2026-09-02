@@ -126,20 +126,62 @@ numbers. The output is a confusion matrix, not an agreement rate; the cell that 
 *resolver says deny, AWS says allowed*. See [validate/results](validate/results/README.md) and
 [docs/divergences.md](docs/divergences.md).
 
-## Install
+## Install and run
 
 ```bash
 uvx agent-blast-radius scan ./fixtures/overprivileged-agent
 ```
 
-No manual setup, no deployed AWS resources, no credentials required for a scan. The action dataset
-is pinned and offline (botocore's bundled service models).
+No manual setup, no deployed AWS resources, no credentials. The action dataset and the managed
+policy documents are vendored and pinned; a scan never touches the network.
+
+`agent.yaml` describes the deployment either as inline IR or as **sources + annotations**:
+
+```yaml
+sources:
+  terraform_plan: plan.json                 # roles, trust policies, Lambda -> role links
+  mcp_tools: mcp-tools.json                 # tool names + argument schemas
+  bedrock_action_groups: [action-group.json]  # functions, requireConfirmation, shared Lambda
+annotations:                                # per tool: what no document can say
+  read_support_ticket:
+    gating: none
+    tainted_inputs: [ticket_id]             # validated against the tool's declared arguments
+    returns_external_data: true             # its output re-enters the model context
+  run_maintenance_job: {}                   # gating declared by Bedrock; still needs an entry
+```
+
+Every tool needs an annotation entry. Gating is never assumed to be `none`.
+
+### CI mode
+
+```yaml
+fail_if:
+  reachable_actions_matching: ["iam:*", "sts:AssumeRole", "kms:Decrypt"]
+  escalation_chains_found: true
+  max_chain_depth: 2               # fail on any chain reachable in <= 2 hops
+  unsupported_statements: true     # default: fail closed when the analysis skipped something
+```
+
+| exit | meaning |
+|---|---|
+| 0 | clean |
+| 1 | a findings gate tripped |
+| 2 | incomplete: `unsupported` is non-empty |
+| 3 | both |
+| 4 | input error |
+
+Findings and incompleteness are gated independently and never collapse into one code, so a run
+that skipped a `NotAction` statement cannot pass as clean, and a real finding cannot hide behind
+an incompleteness failure. The repo's own CI asserts the fixture exits with **exactly 1**.
+
+`--json report.json` writes the versioned report (schema `1.0.0`); the terminal output is rendered
+from that same model. There is no score.
 
 ## Status
 
-Pre-v0.1. Scaffold and IR only — the resolver, taint propagation, and reachability engine are not
-implemented yet. See [docs/roadmap.md](docs/roadmap.md) for the build order and
-[agent-blast-radius-analyzer-plan.md](agent-blast-radius-analyzer-plan.md) for the full project plan.
+v0.1 feature-complete; the first live validation run is pending. See [docs/roadmap.md](docs/roadmap.md)
+for the build order and [agent-blast-radius-analyzer-plan.md](agent-blast-radius-analyzer-plan.md)
+for the full project plan.
 
 | Component | State |
 |---|---|
@@ -148,7 +190,7 @@ implemented yet. See [docs/roadmap.md](docs/roadmap.md) for the build order and
 | Differential validation vs `iam:SimulateCustomPolicy` | harness done; first live run pending |
 | MCP / Bedrock / Terraform parsers + annotation overlay | done |
 | Reachability fixpoint + rule pack (13 cited rules, bound hyperedges) | done |
-| Reporting + CI mode | not started |
+| Reporting (schema 1.0.0) + CI mode with independent exit codes | done |
 
 ## License
 
