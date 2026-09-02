@@ -4,6 +4,10 @@
 #   "This agent's four tools look scoped. Three hops of IAM later, a prompt injection
 #    is an account takeover."
 #
+# Shape (from the Q2 survey, docs/q2-shared-roles.md): a Bedrock-style agent with
+# Lambda-backed tools, per-tool execution roles, and per-tool gating. Gating is the
+# load-bearing axis — the chain must NOT be reproducible by resolving any one role.
+#
 # The chain:
 #   1. read_support_ticket takes attacker-controlled text (tainted input, no gating).
 #   2. Its output re-enters the model's context (returns_external_data), so every
@@ -14,8 +18,13 @@
 #      into a new Lambda turns the agent into that role.
 #   5. That role can read the crown-jewel secret.
 #
-# rotate_credentials is gated on human approval. It is here so the report shows
-# something taint does NOT reach — a report where everything is red proves nothing.
+# Clean negatives — a report where everything is red proves nothing:
+#   - Three tool-backing roles are properly scoped.
+#   - run_maintenance_job shares agent-execution-role with deploy_helper but is
+#     approval-gated. Same role, different reachability: the report must attribute
+#     the chain to deploy_helper only.
+#   - rotate_credentials is the direct door to iam:* and it is gated. The only way
+#     taint reaches iam:* is the side door through PassRole.
 
 name: overprivileged-agent
 account_id: "000000000000"
@@ -43,6 +52,11 @@ tools:
     role: agent-execution-role
     gating: none
     description: Creates and invokes short-lived Lambda helpers for ad-hoc work.
+
+  - name: run_maintenance_job
+    role: agent-execution-role
+    gating: approval_required
+    description: Same execution role as deploy_helper, but every run needs a human.
 
   - name: rotate_credentials
     role: incident-response-role

@@ -30,7 +30,7 @@ def deployment():
 
 def test_fixture_loads_and_validates(deployment):
     assert deployment.name == "overprivileged-agent"
-    assert len(deployment.tools) == 5
+    assert len(deployment.tools) == 6
     assert len(deployment.roles) == 5
 
 
@@ -43,8 +43,17 @@ def test_fixture_has_a_taint_entrypoint_that_returns_external_data(deployment):
 def test_fixture_has_a_clean_negative(deployment):
     """A report where everything is red proves nothing — keep the gated tool."""
     gated = [t for t in deployment.tools if not t.reachable_from_model]
-    assert [t.name for t in gated] == ["rotate_credentials"]
-    assert gated[0].gating is Gating.APPROVAL_REQUIRED
+    assert [t.name for t in gated] == ["run_maintenance_job", "rotate_credentials"]
+    assert all(t.gating is Gating.APPROVAL_REQUIRED for t in gated)
+
+
+def test_gating_is_load_bearing_not_the_role_graph(deployment):
+    """Two tools on one role, one gated: resolving the role alone gets this wrong."""
+    on_shared = [t for t in deployment.tools if t.role == "agent-execution-role"]
+    assert {t.name: t.reachable_from_model for t in on_shared} == {
+        "deploy_helper": True,
+        "run_maintenance_job": False,
+    }
 
 
 def test_passrole_chain_preconditions_are_present(deployment):

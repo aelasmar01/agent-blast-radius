@@ -17,8 +17,11 @@ infrastructure-as-code, so the same finding can be produced from
 
 - The chain is **real**, not staged. Each role is individually plausible; the escalation
   comes from their composition.
-- `rotate_credentials` is gated, so the report has a clean negative in it. A report where
-  everything is red proves nothing.
-- Three tool-backing roles are properly scoped, for the same reason.
+- Gating is the load-bearing axis (see `docs/q2-shared-roles.md`). `run_maintenance_job`
+  shares `agent-execution-role` with `deploy_helper` but is approval-gated, so the same
+  role is reachable through one tool and not the other. `rotate_credentials` is the
+  gated direct door to `iam:*`; the only way in is the PassRole side door.
+- Three tool-backing roles are properly scoped. A report where everything is red
+  proves nothing.
 - Every ARN and account ID here is fake. Nothing in this repo is ever deployed from a
   real credential, and no credential value — live or dead — is ever committed.

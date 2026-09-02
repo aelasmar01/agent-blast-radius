@@ -15,7 +15,7 @@ htmlcov/
 
 # Terraform
 .terraform/
-.terraform.lock.hcl
+# (lock file committed for the fixture so plan.json is reproducible)
 *.tfstate
 *.tfstate.*
 *.tfplan

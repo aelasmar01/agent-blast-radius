@@ -82,6 +82,15 @@ untrusted input reaches, and the largest unmodeled reach is cross-account via re
 **Single-account assumption.** Stated in the IR and enforced in the analyzer. Cross-account reach
 lives in the gap above.
 
+**Gating is the load-bearing axis.** A survey of real deployments
+([docs/q2-shared-roles.md](docs/q2-shared-roles.md)) found that locally-run MCP servers and
+framework-on-Lambda agents put every tool behind one credential, while Bedrock action groups and
+Lambda-backed tools get per-tool roles — but *every* platform exposes per-tool gating (MCP client
+`autoApprove`, Bedrock `requireConfirmation`, AgentCore policy engine). So reachability is computed
+over gating first and the role graph second, and a single-role deployment with no gating annotations
+is told plainly that taint propagation adds nothing, rather than being handed a re-skinned
+Cloudsplaining report.
+
 **`NotAction` / `NotResource` are refused, not approximated.** They invert the set logic and are a
 silent under-report risk. The analyzer errors out loudly with the offending statement ID. Failing
 visibly is defensible; under-reporting silently is not.
