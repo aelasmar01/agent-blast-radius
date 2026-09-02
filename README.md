@@ -1,6 +1,15 @@
 # agent-blast-radius
 
+[![PyPI](https://img.shields.io/pypi/v/agent-blast-radius)](https://pypi.org/project/agent-blast-radius/)
+[![CI](https://github.com/aelasmar01/agent-blast-radius/actions/workflows/ci.yml/badge.svg)](https://github.com/aelasmar01/agent-blast-radius/actions/workflows/ci.yml)
+[![Python](https://img.shields.io/pypi/pyversions/agent-blast-radius)](https://pypi.org/project/agent-blast-radius/)
+[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
 **Static, pre-deployment analysis of what an agentic system can actually do to your AWS account.**
+
+```bash
+uvx agent-blast-radius scan ./fixtures/overprivileged-agent
+```
 
 > This agent's four tools look scoped. Three hops of IAM later, a prompt injection is an account takeover.
 
@@ -176,19 +185,34 @@ report.
 
 ## Validation
 
-The resolver is differential-tested against `iam:SimulateCustomPolicy` over a fixed corpus of 44
-managed policies chosen for construct diversity plus the fixture's roles. Draws are stratified —
+The resolver is only worth trusting if it agrees with AWS, and the interesting question is *where*
+it disagrees.
+
+**Differential harness.** A fixed corpus of 44 managed policies chosen for construct diversity, plus
+the fixture's roles, tested against `iam:SimulateCustomPolicy`. Draws are seeded and stratified —
 half allow-expected, half deny-expected — and the deny half is weighted toward near-misses (right
 action / wrong resource, failing condition, actions just outside a wildcard boundary, explicit
-Deny, `NotAction` exclusions) because uniform draws are trivially denied and would inflate the
+`Deny`, `NotAction` exclusions), because uniform draws are trivially denied and would inflate the
 numbers. The output is a confusion matrix, not an agreement rate; the cell that matters is
-*resolver says deny, AWS says allowed*. See [validate/results](validate/results/README.md) and
-[docs/divergences.md](docs/divergences.md).
+*resolver says deny, AWS says allowed*. Needs one permission (`iam:SimulateCustomPolicy`), creates
+nothing, costs nothing. **Not yet run** — see Status.
 
-An offline `--preflight` mode checks the resolver against each draw's own expectation with no AWS
-account, and runs in CI. It is a lint pass, not validation: it shares the resolver's assumptions and
-cannot catch a misread of IAM semantics, so passing it is not evidence of correctness. `--record`
-and `--replay` turn one live run into a permanent, credential-free regression corpus.
+**Live authorization probe** *(done)*. A smaller independent check that needs no special permission:
+call read-only APIs under a known policy and compare the *authorization outcome* to the resolver's
+prediction, classifying `AccessDenied` as denied, success as allowed, and any other service error as
+allowed-but-service-refused. That third case is the discriminator — it proves authorization passed.
+**10/10 agreement** across `PowerUserAccess`, including `iam:SimulateCustomPolicy` itself:
+[full write-up](validate/results/2026-09-01-live-authorization-probe.md).
+
+**Offline pre-flight** *(runs in CI)*. `validate --preflight` checks the resolver against each
+draw's own expectation with no AWS account at all. This is a lint pass, **not** validation: it
+shares the resolver's assumptions about IAM and so cannot catch a misread of the semantics, which is
+exactly what the differential run is for. Passing it is not evidence of correctness. It is still
+worth running — the boundary strata build their expectations in code that never consults the
+resolver's answer path, and it caught three real defects the day it was written.
+
+`--record` and `--replay` turn one live run into a permanent, credential-free regression corpus.
+Intentional divergences are numbered in [docs/divergences.md](docs/divergences.md).
 
 ## Install and run
 
@@ -243,18 +267,33 @@ from that same model. There is no score.
 
 ## Status
 
-v0.1 feature-complete; the first live validation run is pending. See [docs/roadmap.md](docs/roadmap.md)
-for the build order and [agent-blast-radius-analyzer-plan.md](agent-blast-radius-analyzer-plan.md)
-for the full project plan.
+v0.1.0 on [PyPI](https://pypi.org/project/agent-blast-radius/). Feature-complete against the
+[project plan](agent-blast-radius-analyzer-plan.md); see [docs/roadmap.md](docs/roadmap.md) for the
+build order.
 
 | Component | State |
 |---|---|
 | IR (tools, roles, policies, taint, gating) | done |
-| IAM resolver (identity + managed + trust, Deny, wildcards, conditions) | done |
-| Differential validation vs `iam:SimulateCustomPolicy` | harness done; first live run pending |
+| IAM resolver — identity + managed + trust, `Deny`, wildcards, conditions, `NotAction` inversion | done |
 | MCP / Bedrock / Terraform parsers + annotation overlay | done |
 | Reachability fixpoint + rule pack (13 cited rules, bound hyperedges) | done |
 | Reporting (schema 1.0.0) + CI mode with independent exit codes | done |
+| Offline pre-flight + cassette record/replay | done, in CI |
+| Live authorization probe (10/10) | done |
+| **Differential run vs `iam:SimulateCustomPolicy`** | **harness done; first live run pending a credential** |
+
+### Known limits
+
+Beyond the [documented scope gaps](#scope):
+
+- The differential matrix has not been produced yet, so the entries in
+  [docs/divergences.md](docs/divergences.md) are *predictions* of where the resolver will diverge,
+  not observations. Treat them as hypotheses until the run happens.
+- Four condition operators are modeled. `Null` is the third most common in the managed-policy
+  corpus (509 uses) and everything else lands in residue as *unconstrained but flagged*.
+- IAM users and groups are not modeled — role-based, single-account deployments only. The Rhino
+  methods targeting users are absent from the rule pack for that reason, not by oversight.
+- No demo recording yet.
 
 ## License
 
