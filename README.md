@@ -20,6 +20,14 @@ real fixture, in CI, before deployment — not in production telemetry after the
 
 ## What it looks like
 
+![demo](docs/demo.gif)
+
+The chain is real and so is the fix: one `gating: approval_required` annotation on the one ungated
+tool that can `PassRole`, and the same IAM resolves to no chain at all.
+
+<details>
+<summary>Text transcript</summary>
+
 ```
 $ agent-blast-radius scan ./fixtures/overprivileged-agent
 agent-blast-radius  deployment=overprivileged-agent  account=000000000000
@@ -52,7 +60,8 @@ ESCALATION CHAINS (1)
        fact: role_trusts_service(role=incident-response-role, service=lambda.amazonaws.com)
 
 REACHABLE CAPABILITIES (199)
-  ... (see the full output in docs/post.md)
+  ... (full output in docs/post.md)
+
 
 UNSUPPORTED (0)
   none — the analysis is complete for the constructs this tool models
@@ -73,6 +82,8 @@ FAIL: 9 finding(s) tripped fail_if:
 $ echo $?
 1
 ```
+
+</details>
 
 ## Threat model
 
@@ -182,6 +193,16 @@ report.
 **No 0–100 score.** It invites "how is that computed" and there is no good answer.
 
 ---
+
+## Pointed at real code
+
+[`examples/awslabs-iam-mcp-server`](examples/awslabs-iam-mcp-server/README.md) runs the analyzer
+against a published AWS Labs MCP server — 29 IAM tools under one credential — rather than against
+this repo's own fixture. It found a non-existent action (`iam:GetGroupsForUser`) in the server's
+documented permission policy, a documented CLI flag that no longer exists, and a credential that is
+not scoped to the server's own read-only default. It also names one place where *this* analyzer
+over-reports. Not a vulnerability report: everything there is public, documented, intentional
+behaviour, and their secure-by-default design is credited first.
 
 ## Validation
 
@@ -294,7 +315,12 @@ Beyond the [documented scope gaps](#scope):
   corpus (509 uses) and everything else lands in residue as *unconstrained but flagged*.
 - IAM users and groups are not modeled — role-based, single-account deployments only. The Rhino
   methods targeting users are absent from the rule pack for that reason, not by oversight.
-- No demo recording yet.
+- **Capabilities are reachable per role, not per tool.** Once any tool makes a role reachable, every
+  action that role holds counts. That is right for a Lambda-backed agent — the function code can
+  call anything its role permits — and it over-reports for a mediating server such as an MCP server,
+  whose exposed tool surface is narrower than its credential. Per-tool action attribution is the
+  natural next extension; see the [case study](examples/awslabs-iam-mcp-server/README.md), which
+  states where this bites.
 
 ## License
 

@@ -75,6 +75,36 @@ taint-propagation layer those tools don't model. A few decisions worth stating o
   agreement rate, because half the draws are near-miss deny cases by design and a
   percentage would hide the one cell that matters: *we said no, AWS said yes*.
 
+## What building it turned up
+
+Three things I did not expect, all of which changed the code:
+
+**botocore cannot expand IAM wildcards.** It lists API *operations*, and IAM actions are not API
+operations. `iam:PassRole` is not in botocore. Neither is `s3:ListBucket`. Expanding `iam:*` from it
+would have silently dropped the exact action the headline finding depends on. The tool vendors a
+pinned snapshot of the Service Authorization Reference instead, and `iam:* ⊇ iam:PassRole` is a
+permanent regression test.
+
+**Refusing `NotAction` made the tool useless on PowerUserAccess.** Its only broad grant *is* a
+`NotAction` statement, so refusing the construct meant refusing every action — `s3:GetObject`
+included — on one of the most widely attached policies in AWS. `Allow` + `NotAction` is now
+inverted: every known action minus the exclusions, which is exact because the action universe is
+finite and enumerable. `Deny` + `NotAction` is still refused, because inverting *that* on a stale
+snapshot shrinks the denied set and hands back capabilities AWS actually blocks. Same construct,
+opposite decision, for a reason that only shows up if you ask which direction the error falls in.
+
+**Writing the tests found four bugs that would have corrupted the first validation run**, three of
+them in code that only executes against real AWS: a resource-policy parameter that was plumbed but
+never populated (so trust policies — the load-bearing precondition of the whole PassRole chain —
+were never actually tested), a required `CallerArn` that was never sent, a context-key type inferred
+from the value's shape rather than the operator, and synthesized statement IDs that IAM rejects
+outright, which would have failed every policy in the corpus that lacks explicit ones. The fifth was
+found by generating a real Terraform plan instead of hand-writing one: module-relative addresses and
+cross-module variable wiring meant the parser broke on essentially every real repository.
+
+None of those are interesting features. They are the difference between a tool that runs and a tool
+you can believe.
+
 ## The full output
 
 ```

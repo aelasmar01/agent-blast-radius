@@ -1,0 +1,520 @@
+{
+ "tools": [
+  {
+   "name": "external_content",
+   "description": "STAND-IN: any tool in the same MCP client that returns content someone else wrote (a ticket reader, a web fetcher, a repo browser). Not part of iam-mcp-server.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "reference": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "list_users",
+   "description": "awslabs.iam-mcp-server: list_users",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "path_prefix": {
+      "type": "string"
+     },
+     "max_items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "get_user",
+   "description": "awslabs.iam-mcp-server: get_user",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "user_name": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "create_user",
+   "description": "awslabs.iam-mcp-server: create_user",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "user_name": {
+      "type": "string"
+     },
+     "path": {
+      "type": "string"
+     },
+     "permissions_boundary": {
+      "type": "string"
+     },
+     "confirmed": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "delete_user",
+   "description": "awslabs.iam-mcp-server: delete_user",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "user_name": {
+      "type": "string"
+     },
+     "force": {
+      "type": "string"
+     },
+     "confirmed": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "list_roles",
+   "description": "awslabs.iam-mcp-server: list_roles",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "path_prefix": {
+      "type": "string"
+     },
+     "max_items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "create_role",
+   "description": "awslabs.iam-mcp-server: create_role",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "role_name": {
+      "type": "string"
+     },
+     "assume_role_policy_document": {
+      "type": "string"
+     },
+     "path": {
+      "type": "string"
+     },
+     "description": {
+      "type": "string"
+     },
+     "max_session_duration": {
+      "type": "string"
+     },
+     "permissions_boundary": {
+      "type": "string"
+     },
+     "confirmed": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "list_policies",
+   "description": "awslabs.iam-mcp-server: list_policies",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "scope": {
+      "type": "string"
+     },
+     "only_attached": {
+      "type": "string"
+     },
+     "path_prefix": {
+      "type": "string"
+     },
+     "max_items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "get_managed_policy_document",
+   "description": "awslabs.iam-mcp-server: get_managed_policy_document",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "policy_arn": {
+      "type": "string"
+     },
+     "version_id": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "attach_user_policy",
+   "description": "awslabs.iam-mcp-server: attach_user_policy",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "user_name": {
+      "type": "string"
+     },
+     "policy_arn": {
+      "type": "string"
+     },
+     "confirmed": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "detach_user_policy",
+   "description": "awslabs.iam-mcp-server: detach_user_policy",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "user_name": {
+      "type": "string"
+     },
+     "policy_arn": {
+      "type": "string"
+     },
+     "confirmed": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "create_access_key",
+   "description": "awslabs.iam-mcp-server: create_access_key",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "user_name": {
+      "type": "string"
+     },
+     "confirmed": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "delete_access_key",
+   "description": "awslabs.iam-mcp-server: delete_access_key",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "user_name": {
+      "type": "string"
+     },
+     "access_key_id": {
+      "type": "string"
+     },
+     "confirmed": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "simulate_principal_policy",
+   "description": "awslabs.iam-mcp-server: simulate_principal_policy",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "policy_source_arn": {
+      "type": "string"
+     },
+     "action_names": {
+      "type": "string"
+     },
+     "resource_arns": {
+      "type": "string"
+     },
+     "context_entries": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "list_groups",
+   "description": "awslabs.iam-mcp-server: list_groups",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "path_prefix": {
+      "type": "string"
+     },
+     "max_items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "get_group",
+   "description": "awslabs.iam-mcp-server: get_group",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "group_name": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "create_group",
+   "description": "awslabs.iam-mcp-server: create_group",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "group_name": {
+      "type": "string"
+     },
+     "path": {
+      "type": "string"
+     },
+     "confirmed": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "delete_group",
+   "description": "awslabs.iam-mcp-server: delete_group",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "group_name": {
+      "type": "string"
+     },
+     "force": {
+      "type": "string"
+     },
+     "confirmed": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "add_user_to_group",
+   "description": "awslabs.iam-mcp-server: add_user_to_group",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "group_name": {
+      "type": "string"
+     },
+     "user_name": {
+      "type": "string"
+     },
+     "confirmed": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "remove_user_from_group",
+   "description": "awslabs.iam-mcp-server: remove_user_from_group",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "group_name": {
+      "type": "string"
+     },
+     "user_name": {
+      "type": "string"
+     },
+     "confirmed": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "attach_group_policy",
+   "description": "awslabs.iam-mcp-server: attach_group_policy",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "group_name": {
+      "type": "string"
+     },
+     "policy_arn": {
+      "type": "string"
+     },
+     "confirmed": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "detach_group_policy",
+   "description": "awslabs.iam-mcp-server: detach_group_policy",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "group_name": {
+      "type": "string"
+     },
+     "policy_arn": {
+      "type": "string"
+     },
+     "confirmed": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "put_user_policy",
+   "description": "awslabs.iam-mcp-server: put_user_policy",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "user_name": {
+      "type": "string"
+     },
+     "policy_name": {
+      "type": "string"
+     },
+     "policy_document": {
+      "type": "string"
+     },
+     "confirmed": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "get_user_policy",
+   "description": "awslabs.iam-mcp-server: get_user_policy",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "user_name": {
+      "type": "string"
+     },
+     "policy_name": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "delete_user_policy",
+   "description": "awslabs.iam-mcp-server: delete_user_policy",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "user_name": {
+      "type": "string"
+     },
+     "policy_name": {
+      "type": "string"
+     },
+     "confirmed": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "put_role_policy",
+   "description": "awslabs.iam-mcp-server: put_role_policy",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "role_name": {
+      "type": "string"
+     },
+     "policy_name": {
+      "type": "string"
+     },
+     "policy_document": {
+      "type": "string"
+     },
+     "confirmed": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "get_role_policy",
+   "description": "awslabs.iam-mcp-server: get_role_policy",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "role_name": {
+      "type": "string"
+     },
+     "policy_name": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "delete_role_policy",
+   "description": "awslabs.iam-mcp-server: delete_role_policy",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "role_name": {
+      "type": "string"
+     },
+     "policy_name": {
+      "type": "string"
+     },
+     "confirmed": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "list_user_policies",
+   "description": "awslabs.iam-mcp-server: list_user_policies",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "user_name": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "list_role_policies",
+   "description": "awslabs.iam-mcp-server: list_role_policies",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "role_name": {
+      "type": "string"
+     }
+    }
+   }
+  }
+ ]
+}

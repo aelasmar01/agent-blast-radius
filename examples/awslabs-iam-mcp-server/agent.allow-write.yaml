@@ -1,0 +1,166 @@
+name: awslabs-iam-mcp-server (--allow-write)
+account_id: '000000000000'
+schema_version: 0.1.0
+fail_if:
+  reachable_actions_matching:
+  - iam:Create*
+  - iam:Attach*
+  - iam:Put*
+  escalation_chains_found: true
+tools:
+- name: external_content
+  role: untrusted-content-source
+  gating: none
+  tainted_inputs:
+  - reference
+  returns_external_data: true
+  description: Stand-in for the untrusted-content source sharing the model context.
+- name: list_users
+  role: mcp-credential
+  gating: none
+- name: get_user
+  role: mcp-credential
+  gating: none
+- name: create_user
+  role: mcp-credential
+  gating: none
+- name: delete_user
+  role: mcp-credential
+  gating: none
+- name: list_roles
+  role: mcp-credential
+  gating: none
+- name: create_role
+  role: mcp-credential
+  gating: none
+- name: list_policies
+  role: mcp-credential
+  gating: none
+- name: get_managed_policy_document
+  role: mcp-credential
+  gating: none
+- name: attach_user_policy
+  role: mcp-credential
+  gating: none
+- name: detach_user_policy
+  role: mcp-credential
+  gating: none
+- name: create_access_key
+  role: mcp-credential
+  gating: none
+- name: delete_access_key
+  role: mcp-credential
+  gating: none
+- name: simulate_principal_policy
+  role: mcp-credential
+  gating: none
+- name: list_groups
+  role: mcp-credential
+  gating: none
+- name: get_group
+  role: mcp-credential
+  gating: none
+- name: create_group
+  role: mcp-credential
+  gating: none
+- name: delete_group
+  role: mcp-credential
+  gating: none
+- name: add_user_to_group
+  role: mcp-credential
+  gating: none
+- name: remove_user_from_group
+  role: mcp-credential
+  gating: none
+- name: attach_group_policy
+  role: mcp-credential
+  gating: none
+- name: detach_group_policy
+  role: mcp-credential
+  gating: none
+- name: put_user_policy
+  role: mcp-credential
+  gating: none
+- name: get_user_policy
+  role: mcp-credential
+  gating: none
+- name: delete_user_policy
+  role: mcp-credential
+  gating: none
+- name: put_role_policy
+  role: mcp-credential
+  gating: none
+- name: get_role_policy
+  role: mcp-credential
+  gating: none
+- name: delete_role_policy
+  role: mcp-credential
+  gating: none
+- name: list_user_policies
+  role: mcp-credential
+  gating: none
+- name: list_role_policies
+  role: mcp-credential
+  gating: none
+roles:
+- name: mcp-credential
+  arn: arn:aws:iam::000000000000:role/mcp-credential
+  identity_policies:
+  - name: documented-required-permissions
+    source: src/iam-mcp-server/README.md
+    statements:
+    - Effect: Allow
+      Action:
+      - iam:ListUsers
+      - iam:GetUser
+      - iam:CreateUser
+      - iam:DeleteUser
+      - iam:ListRoles
+      - iam:GetRole
+      - iam:CreateRole
+      - iam:DeleteRole
+      - iam:ListGroups
+      - iam:GetGroup
+      - iam:CreateGroup
+      - iam:DeleteGroup
+      - iam:AddUserToGroup
+      - iam:RemoveUserFromGroup
+      - iam:AttachGroupPolicy
+      - iam:DetachGroupPolicy
+      - iam:ListAttachedGroupPolicies
+      - iam:ListGroupPolicies
+      - iam:ListPolicies
+      - iam:GetPolicy
+      - iam:CreatePolicy
+      - iam:DeletePolicy
+      - iam:AttachUserPolicy
+      - iam:DetachUserPolicy
+      - iam:AttachRolePolicy
+      - iam:DetachRolePolicy
+      - iam:ListAttachedUserPolicies
+      - iam:ListAttachedRolePolicies
+      - iam:ListUserPolicies
+      - iam:ListRolePolicies
+      - iam:GetUserPolicy
+      - iam:GetRolePolicy
+      - iam:PutUserPolicy
+      - iam:PutRolePolicy
+      - iam:GetGroupsForUser
+      - iam:ListAccessKeys
+      - iam:CreateAccessKey
+      - iam:DeleteAccessKey
+      - iam:SimulatePrincipalPolicy
+      - iam:RemoveUserFromGroup
+      - iam:DeleteUserPolicy
+      - iam:DeleteRolePolicy
+      Resource: '*'
+- name: untrusted-content-source
+  arn: arn:aws:iam::000000000000:role/untrusted-content-source
+  identity_policies:
+  - name: none
+    statements:
+    - Sid: Nothing
+      Effect: Deny
+      Action:
+      - sts:GetCallerIdentity
+      Resource: '*'
